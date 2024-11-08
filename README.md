@@ -5,6 +5,8 @@ Esta rama contiene los documentos que se consideran importantes para el desarrol
 - Flujo de trabajo.
 - Estándares de codificación.
 - Estándares de commits.
-- Documento de requisitos.
+- Documento de requisitos (Historias de Usuario, Casos de Uso, etc).
+- Casos de Prueba.
+- Criterios de aceptacion.
 - Diagramas de diseño.
 - Etc.

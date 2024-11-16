@@ -11,13 +11,13 @@
 
 **2.1 Registro de Compra de Acciones**
 
-**RF1** : El sistema debe permitir al usuario registrar la compra de una acción en una fecha específica.
+**RF1** : El sistema debe permitir al usuario registrar la compra de una acción.
 
 - **Detalles** :
+  - Empresa.
   - Cantidad de acciones compradas.
   - Precio de compra por acción.
-  - Fecha de la compra.
-
+  - 
 **2.2 Calculo de Ganancia/Pérdida**
 
 **RF2** : El sistema debe calcular el porcentaje de ganancia o pérdida para cada acción registrada en función del valor actual.
@@ -27,24 +27,18 @@
   - Especificar los valores actuales especialmente se depende de una API, para alinear expectativas y requerimiento de rendimiento.
   - El sistema debe mostrar el porcentaje de ganancia/pérdida.
   - El sistema debe mostrar el equivalente en dólares de la ganancia/pérdida.
-  - Actualizar el valor de las acciones al meno cada hora o en tiempo real según la configuracion.
 
 **2.3 Visualización de Portafolio**
 
-- **RF3** : El sistema debe mostrar un resumen del portafolio del usuario, con detalles de cada acción registrada, incluyendo cantidad, valor de compra, valor actual y ganancia/pérdida.
+- **RF3** : El sistema debe mostrar un resumen del portafolio del usuario, con detalles de cada acción registrada, incluyendo cantidad, valor de compra, valor actual, ganancia/pérdida y valor en dólares.
 - **RF4** : El sistema debe permitir al usuario filtrar y ordenar el portafolio por diferentes criterios, como fecha de compra o ganancia/pérdida.
-
-**2.4 Gestión de Usuarios**
-
-- **RF5** : El sistema debe permitir la creación de cuentas de usuario, de manera que cada usuario tenga su propio portafolio independiente.
-- **RF6** : El sistema debe permitir a los usuarios iniciar sesión y gestionar su cuenta.
 
 3\. Requisitos no funcionales
 
 **3.1 Usabilidad**
 
 - **RNF1** : El sistema debe contar con una interfaz intuitiva que permita a los usuarios navegar y realizar operaciones con facilidad.
-- **RNF2** : La aplicación debe estar diseñada para dispositivos de escritorio y móviles, aunque algunas funciones pueden simplificarse en móviles para facilitar la visualización.
+- **RNF2** : La aplicación debe estar diseñada para dispositivos de escritorio y móviles.
 
 **3.2 Rendimiento**
 

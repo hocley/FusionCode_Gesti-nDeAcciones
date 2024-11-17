@@ -1,5 +1,6 @@
 const express = require('express');
-const { getStockPrice, getSymbolSearch, getStockChange } = require('../api/stockAPI');
+const { getStockPrice, getSymbolSearch, getOneSymbolSearch } = require('../api/stockAPI');
+const StockController = require('../controllers/stockController'); // Asegúrate de que el path es correcto
 const router = express.Router();
 
 router.get('/stock/:symbol', async (req, res) => {
@@ -13,7 +14,7 @@ router.get('/stock/:symbol', async (req, res) => {
     }
 });
 
-router.get('/search/:name', async (req, res) => {
+router.get('/search-info/:name', async (req, res) => {
     const name = req.params.name;
     try {
         const result = await getSymbolSearch(name);
@@ -24,15 +25,17 @@ router.get('/search/:name', async (req, res) => {
     }
 });
 
-router.get('/stock-change/:symbol', async (req, res) => {
-    const symbol = req.params.symbol;
+router.get('/search-name/:name', async (req, res) => {
+    const name = req.params.name;
     try {
-        const stockChange = await getStockChange(symbol);
-        res.json(stockChange);
+        const result = await getOneSymbolSearch(name);
+        res.json(result);
     } catch (error) {
-        console.error('Error al obtener el cambio porcentual:', error);
-        res.status(500).json({ error: 'No se pudo obtener el cambio porcentual' });
+        console.error('Error en la búsqueda:', error);
+        res.status(500).json({ error: 'Error en la búsqueda' });
     }
 });
+
+router.get('/stock-change/:symbol', StockController.calculateStockChange);
 
 module.exports = router;

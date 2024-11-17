@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use('/api', stockRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
     console.log(`Servidor ejecutándose en el puerto ${PORT}`);

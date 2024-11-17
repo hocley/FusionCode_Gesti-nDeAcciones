@@ -20,4 +20,4 @@ const registerPurchase = async (req, res) => {
     }
 };
 
-module.exports = { registerPurchase };
+module.exports = { registerPurchase, getStockChangePercentage  };

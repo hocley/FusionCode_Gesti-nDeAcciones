@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: '../../config/.env' });
 
-const API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
+const API_KEY = process.env.FINNHUB_API_KEY;
 
 // Función para obtener el precio actual de una acción
 const getStockPrice = async (symbol) => {
@@ -55,34 +55,56 @@ const getSymbolSearch = async (name) => {
     }
 };
 
-
-const getStockChange = async (symbol) => {
-    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${API_KEY}`;
+// Funcion para buscar el nombre de la empresa por el símbolo
+const getOneSymbolSearch = async (symbol) => {
+    const url = `https://finnhub.io/api/v1/search?q=${symbol}&token=${API_KEY}`;
 
     try {
         const response = await axios.get(url);
         const data = response.data;
 
-        console.log(data);
+        if (data.result && Array.isArray(data.result)) {
+            // Busca el resultado que coincida exactamente con el símbolo
+            const exactMatch = data.result.find((item) => item.symbol === symbol);
 
-        if (!data['Time Series (5min)']) {
-            throw new Error('Invalid response format');
+            if (exactMatch) {
+                return {
+                    name: exactMatch.description,    // Descripción de la empresa
+                };
+            } else {
+                throw new Error('No se encontró una coincidencia exacta para el símbolo');
+            }
+        } else {
+            throw new Error('No se encontraron resultados');
         }
-
-        const times = Object.keys(data['Time Series (5min)']);
-        const latestTime = times[0];
-        const previousTime = times[1];
-
-        const latestPrice = parseFloat(data['Time Series (5min)'][latestTime]['4. close']);
-        const previousPrice = parseFloat(data['Time Series (5min)'][previousTime]['4. close']);
-
-        const percentageChange = ((latestPrice - previousPrice) / previousPrice) * 100;
-
-        return { percentageChange };
     } catch (error) {
-        console.error('Error al obtener el cambio porcentual:', error);
-        throw new Error('No se pudo obtener el cambio porcentual');
+        console.error('Error al buscar el símbolo:', error.message);
+        throw new Error('No se pudo obtener el símbolo');
     }
 };
 
-module.exports = { getStockPrice, getSymbolSearch, getStockChange };
+// Funcion para obtener el cambio de precio de una acción
+const getStockChange = async (symbol) => {
+
+    const url = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`;
+
+    try {
+        const response = await axios.get(url);
+        const data = response.data;
+
+        if (!data || !data.c || !data.pc) {
+            throw new Error('Invalid response format');
+        }
+
+        const latestPrice = data.c; // Último precio actual
+        const previousPrice = data.pc; // Precio de cierre previo
+
+        return { latestPrice, previousPrice };
+    } catch (error) {
+        console.error('Error al obtener los precios:', error);
+        throw new Error('No se pudo obtener los precios');
+    }
+};
+
+
+module.exports = { getStockPrice, getSymbolSearch, getOneSymbolSearch, getStockChange };

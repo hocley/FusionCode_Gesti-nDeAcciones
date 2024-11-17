@@ -1,5 +1,6 @@
 const stockAPI = require('../api/stockAPI');
 const Stock = require('../models/stockModel');
+const { getStockChange } = require('../api/stockAPI');
 
 const registerPurchase = async (req, res) => {
     const { symbol, quantity, purchasePrice } = req.body;
@@ -20,4 +21,19 @@ const registerPurchase = async (req, res) => {
     }
 };
 
-module.exports = { registerPurchase, getStockChangePercentage  };
+const calculateStockChange = async (req, res) => {
+    const { symbol } = req.params;
+
+    try {
+        const { latestPrice, previousPrice } = await getStockChange(symbol);
+
+        const percentageChange = ((latestPrice - previousPrice) / previousPrice) * 100;
+
+        res.json({ percentageChange });
+    } catch (error) {
+        console.error('Error al calcular el cambio porcentual:', error);
+        res.status(500).json({ error: 'No se pudo calcular el cambio porcentual' });
+    }
+};
+
+module.exports = { registerPurchase, calculateStockChange };

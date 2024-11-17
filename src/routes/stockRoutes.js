@@ -1,7 +1,13 @@
 const express = require('express');
+const router = express.Router();
 const { getStockPrice, getSymbolSearch, getOneSymbolSearch } = require('../api/stockAPI');
 const StockController = require('../controllers/stockController'); // Asegúrate de que el path es correcto
-const router = express.Router();
+const {
+    createPurchase,
+    getAllPurchases,
+    deletePurchase
+} = require('../controllers/purchaseController');
+
 
 router.get('/stock/:symbol', async (req, res) => {
     const symbol = req.params.symbol;

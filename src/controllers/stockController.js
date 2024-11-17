@@ -1,5 +1,5 @@
 const stockAPI = require('../api/stockAPI');
-const Stock = require('../models/stockModel');
+const Stock = require('../models/purchaseModel');
 const { getStockChange } = require('../api/stockAPI');
 
 const registerPurchase = async (req, res) => {

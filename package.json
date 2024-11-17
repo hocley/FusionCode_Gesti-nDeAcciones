@@ -1,0 +1,22 @@
+{
+  "name": "fusioncode_gestordeacciones",
+  "version": "1.0.0",
+  "description": "RAMA DOCUMENTS\r Esta rama contiene los documentos que se consideran importantes para el desarrollo del proyecto:\r - Flujo de trabajo.\r - Estándares de codificación.\r - Estándares de commits.\r - Documento de requisitos (Historias de Usuario, Casos de Uso, etc).\r - Casos de Prueba.\r - Criterios de aceptacion.\r - Diagramas de diseño.\r - Etc.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "bcrypt": "^5.1.1",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.8.1"
+  }
+}

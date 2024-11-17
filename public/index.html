@@ -2,9 +2,132 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FC ShareFlow</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../src/css/styles.css">
 </head>
 <body>
+<nav class="header">
+    <div class="header__logo-container">
+        <div class="header__logo" style="background-image: url('../src/content/logo_fusioncode.png')"></div>
+        <div class="header__logo-text">FC ShareFlow</div>
+    </div>
+    <div class="header__created-by">Created by FusionCode</div>
+</nav>
 
+<div class="search-hint">Buscar Símbolos</div>
+
+<button class="menu-toggle">
+    <i class="fas fa-bars"></i>
+</button>
+
+<div class="search-panel">
+    <div class="search-panel__container">
+        <input type="text" class="search-panel__input" placeholder="Search company...">
+        <button class="search-panel__btn">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+    <div class="search-panel__result">
+        <div class="search-panel__company-name">Apple Inc.</div>
+        <div class="search-panel__company-details">
+            <span>AAPL</span>
+            <span>•</span>
+            <span>Technology</span>
+            <i class="fas fa-copy search-panel__copy-btn"></i>
+        </div>
+    </div>
+</div>
+
+<main class="main">
+    <div class="trading">
+        <form class="trading__form">
+            <div class="trading__form-group">
+                <label class="trading__label">Symbol</label>
+                <div class="trading__input-container">
+                    <input type="text" class="trading__input" placeholder="e.g. AAPL">
+                    <button type="button" class="trading__validate-btn">Validar</button>
+                </div>
+            </div>
+            <div class="trading__form-group">
+                <label class="trading__label">Company Name</label>
+                <input type="text" class="trading__input" readonly value="Apple Inc.">
+            </div>
+            <div class="trading__form-group">
+                <label class="trading__label">Price per Share ($)</label>
+                <input type="number" class="trading__input" step="0.01" placeholder="0.00">
+            </div>
+            <div class="trading__form-group">
+                <label class="trading__label">Number of Shares</label>
+                <input type="number" class="trading__input" placeholder="0">
+            </div>
+
+            <div class="trading__validations">
+                <ul class="trading__validation-list">
+                    <li class="trading__validation-item">Symbol is required</li>
+                </ul>
+            </div>
+
+            <div class="trading__button-container">
+                <button type="submit" class="trading__buy-btn">Buy Shares</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="transactions">
+        <div class="transactions__header-container">
+            <h2 class="transactions__title">Recent Transactions</h2>
+            <button class="transactions__refresh-btn">Actualizar</button>
+        </div>
+        <div class="transactions__wrapper">
+            <table class="transactions__table">
+                <thead>
+                <tr class="transactions__header">
+                    <th>ID</th>
+                    <th>Symbol</th>
+                    <th>Company</th>
+                    <th>Price/Share</th>
+                    <th>Shares</th>
+                    <th>Total ($)</th>
+                    <th>24h Change</th>
+                    <th>Current Price</th>
+                    <th>Gain/Loss %</th>
+                    <th>Current Total</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="transactions__row">
+                    <td class="transactions__cell">#1001</td>
+                    <td class="transactions__cell transactions__cell--symbol">AAPL</td>
+                    <td class="transactions__cell">Apple Inc.</td>
+                    <td class="transactions__cell">$150.00</td>
+                    <td class="transactions__cell">10</td>
+                    <td class="transactions__cell">$1,500.00</td>
+                    <td class="transactions__cell transactions__cell--change">+2.5%</td>
+                    <td class="transactions__cell">$153.75</td>
+                    <td class="transactions__cell transactions__cell--change">+2.5%</td>
+                    <td class="transactions__cell">$1,537.50</td>
+                    <td class="transactions__cell transactions__cell--action">
+                        <button class="transactions__delete-btn">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const searchPanel = document.querySelector('.search-panel');
+
+    menuToggle.addEventListener('click', () => {
+        searchPanel.classList.toggle('search-panel--active');
+    });
+</script>
 </body>
 </html>

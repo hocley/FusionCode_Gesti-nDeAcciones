@@ -29,15 +29,16 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/api" />
+        <entry key="$PROJECT_DIR$" value="feature/database" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -73,8 +74,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feature/database",
     "last_opened_file_path": "C:/Users/User/OneDrive/Documentos/GitHub/FusionCode_GestorDeAcciones",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -87,6 +88,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\OneDrive\Documentos\GitHub\FusionCode_GestorDeAcciones" />
       <recent name="C:\Users\User\OneDrive\Documentos\GitHub\FusionCode_GestorDeAcciones\config" />
     </key>
   </component>
@@ -144,8 +146,6 @@
       <workItem from="1731790761897" duration="1730000" />
       <workItem from="1731792539134" duration="1563000" />
       <workItem from="1731794142909" duration="1983000" />
-      <workItem from="1731868221251" duration="1845000" />
-      <workItem from="1731870188055" duration="1981000" />
     </task>
     <servers />
   </component>

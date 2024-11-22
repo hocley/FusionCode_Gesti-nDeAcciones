@@ -20,6 +20,7 @@ body {
 
 /* Header */
 .header {
+    height: 80px;
     background-color: white;
     padding: 1rem 2rem;
     display: flex;
@@ -31,17 +32,22 @@ body {
 /* Contenedor para el logo y el texto */
 .header__logo-container {
     display: flex;
-    align-items: center; /* Centra verticalmente */
+    align-items: center;
 }
 
 /* Logo */
 .header__logo {
-    width: 40px;
-    height: 40px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin-right: 1rem;
+    width: 100px; /* Aumenta el tamaño del logo */
+    height: 100px; /* Aumenta el tamaño del logo */
+    background-size: contain; /* Asegura que la imagen del logo se ajuste al contenedor */
+}
+
+.header__logo-text {
+    font-size: 2rem; /* Aumenta el tamaño del texto "FC ShareFlow" */
+    margin-left: 10px;
+    font-weight: bold;
+    color: var(--primary-blue);
+    /* Añade un margen entre el logo y el texto */
 }
 
 /* Logo de reemplazo */
@@ -52,35 +58,40 @@ body {
     margin-right: 1rem;
 }
 
-/* Texto junto al logo */
-.header__logo-text {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--primary-blue);
-}
+
 
 /* Search Hint */
 .search-hint {
     position: fixed;
     right: 1rem;
-    top: 630px; /* Positioned above the toggle button */
+    bottom: 3.5rem; /* Posicionado justo encima del botón (2rem + 70px aproximadamente) */
     color: var(--gray);
     font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/* Y agregar un media query para pantallas pequeñas */
+@media (max-height: 600px) {
+    .search-hint {
+        bottom: 4.5rem; /* Ajustado para la versión más pequeña del botón */
+        font-size: 1rem; /* Opcional: reducir el tamaño del texto en pantallas pequeñas */
+    }
 }
 
 /* Menu Toggle */
 .menu-toggle {
     position: fixed;
     right: 1rem;
-    top: 660px; /* Positioned below the hint text */
+    bottom: 0.4rem; /* Changed from top: 800px to bottom: 2rem */
     background: var(--primary-blue);
     color: white;
     border: none;
     width: 50px;
     height: 50px;
+    font-size: 1.5rem;
     border-radius: 50%;
     cursor: pointer;
-    z-index: 1001;
+    z-index: 2001;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,6 +101,15 @@ body {
 
 .menu-toggle:hover {
     transform: scale(1.1);
+}
+
+@media (max-height: 600px) {
+    .menu-toggle {
+        bottom: 10px;
+        width: 60px;
+        height: 60px;
+        font-size: 1.2rem;
+    }
 }
 
 /* Search Panel */
@@ -154,7 +174,10 @@ body {
 
 .search-panel__copy-btn {
     cursor: pointer;
+    font-weight: bold;
+    font-size: 1.5rem;
     color: var(--primary-blue);
+    margin: -10px 70px;
 }
 
 /* Main Content */
@@ -187,6 +210,7 @@ body {
     margin-left: 8px;
     cursor: pointer;
     font-size: 14px;
+    font-weight: bold;
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -197,9 +221,7 @@ body {
 }
 
 .trading__validate-btn:hover {
-    background-color: white;
-    color: var(--primary-blue);
-    border: 1px solid var(--primary-blue);
+    background: #0035D9;
 }
 
 /* Estilos para el botón de refresco en las transacciones */
@@ -255,13 +277,19 @@ body {
     width: 80%;
     margin: 0 auto;
     text-align: center;
+
+}
+
+.input--readonly {
+    cursor: default;
+    pointer-events: none;
 }
 
 .trading__validations {
     /*Poner flex para mostrar las validaciones*/
     display: flex;
     grid-column: 1 / -1;
-    margin: 1rem 0;
+    margin: 0 auto !important;
 }
 
 .trading__validation-list {
@@ -288,7 +316,7 @@ body {
     grid-column: 1 / -1;
     display: flex;
     justify-content: center;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
 .trading__buy-btn {
@@ -298,6 +326,7 @@ body {
     padding: 1rem 3rem;
     border-radius: 6px;
     cursor: pointer;
+    font-size: 1.2rem;
     font-weight: bold;
     transition: background-color 0.2s ease;
     min-width: 200px;
@@ -325,9 +354,9 @@ body {
 
 .transactions__title {
     color: var(--gray);
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 500;
-    margin: 0; /* Remove margin since it's handled by container */
+    margin: 0 0 15px;
 }
 
 .transactions__refresh-btn {
@@ -341,6 +370,7 @@ body {
     display: inline-flex;
     align-items: center;
     transition: background-color 0.2s ease;
+    margin: 0;
 }
 
 .transactions__refresh-btn i {
@@ -350,13 +380,6 @@ body {
 
 .transactions__refresh-btn:hover {
     background-color: #0035D9;
-}
-
-.transactions__title {
-    color: var(--gray);
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
-    font-weight: 500;
 }
 
 .transactions__wrapper {

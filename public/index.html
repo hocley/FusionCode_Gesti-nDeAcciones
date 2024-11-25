@@ -30,14 +30,8 @@
             <i class="fas fa-search"></i>
         </button>
     </div>
-    <div class="search-panel__result">
-        <div class="search-panel__company-name">Apple Inc.</div>
-        <div class="search-panel__company-details">
-            <span>AAPL</span>
-            <span>•</span>
-            <span>Technology</span>
-            <i class="fas fa-copy search-panel__copy-btn"></i>
-        </div>
+    <div class="search-panel__results">
+        <!-- Results will be dynamically inserted here -->
     </div>
 </div>
 
@@ -48,26 +42,26 @@
             <div class="trading__form-group">
                 <label class="trading__label">Symbol</label>
                 <div class="trading__input-container">
-                    <input type="text" class="trading__input" placeholder="e.g. AAPL">
+                    <input type="text" class="trading__input trading-symbol" placeholder="e.g. AAPL">
                     <button type="button" class="trading__validate-btn">Validar</button>
                 </div>
             </div>
             <div class="trading__form-group">
                 <label class="trading__label">Company Name</label>
-                <input type="text" class="trading__input input--readonly" readonly value="Apple Inc.">
+                <input type="text" class="trading__input input-readonly company-name" readonly value="">
             </div>
             <div class="trading__form-group">
                 <label class="trading__label">Price per Share ($)</label>
-                <input type="number" class="trading__input" step="0.01" placeholder="0.00">
+                <input type="number" class="trading__input price-share" step="0.01" placeholder="0.00" min="0.01">
             </div>
             <div class="trading__form-group">
                 <label class="trading__label">Number of Shares</label>
-                <input type="number" class="trading__input" placeholder="0">
+                <input type="number" class="trading__input number-shares" placeholder="0" min="1">
             </div>
 
             <div class="trading__validations">
                 <ul class="trading__validation-list">
-                    <li class="trading__validation-item">Symbol is required</li>
+                    <li class="trading__validation-item"></li>
                 </ul>
             </div>
 
@@ -100,36 +94,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="transactions__row">
-                    <td class="transactions__cell">#1001</td>
-                    <td class="transactions__cell transactions__cell--symbol">AAPL</td>
-                    <td class="transactions__cell">Apple Inc.</td>
-                    <td class="transactions__cell">$150.00</td>
-                    <td class="transactions__cell">10</td>
-                    <td class="transactions__cell">$1,500.00</td>
-                    <td class="transactions__cell transactions__cell--change">+2.5%</td>
-                    <td class="transactions__cell">$153.75</td>
-                    <td class="transactions__cell transactions__cell--change">+2.5%</td>
-                    <td class="transactions__cell">$1,537.50</td>
-                    <td class="transactions__cell transactions__cell--action">
-                        <button class="transactions__delete-btn">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </main>
-
-<script>
-    const menuToggle = document.querySelector('.menu-toggle');
-    const searchPanel = document.querySelector('.search-panel');
-
-    menuToggle.addEventListener('click', () => {
-        searchPanel.classList.toggle('search-panel--active');
-    });
-</script>
+<script src="../src/index.js" type="module"></script>
 </body>
 </html>

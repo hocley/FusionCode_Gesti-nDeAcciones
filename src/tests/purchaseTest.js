@@ -8,21 +8,21 @@ const purchaseData = {
     totalValue: 8750.00,
 };
 
-/*// URL del servidor local
-const url = 'http://localhost:3000/db/purchase';
+// URL del servidor local
+const url = 'http://localhost:3000/db/create-purchase';
 
 // Enviar la solicitud POST para crear una compra
-axios.post(url, purchaseData)
+/*axios.post(url, purchaseData)
     .then(response => {
         console.log('Compra insertada con éxito');
     })
     .catch(error => {
         console.error('Error al insertar la compra:', error.response ? error.response.data : error.message);
     });
-*/
 
+*/
 // ID de la compra que deseas eliminar
-const purchaseId = '2833CB';
+const purchaseId = '6E9B83';
 
 axios.delete(`http://localhost:3000/db/delete-purchase/${purchaseId}`)
     .then(response => {

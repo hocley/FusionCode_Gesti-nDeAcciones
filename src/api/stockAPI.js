@@ -29,32 +29,6 @@ const getStockPrice = async (symbol) => {
     }
 };
 
-// Función para buscar símbolos por nombre
-const getSymbolSearch = async (name) => {
-    const url = `https://finnhub.io/api/v1/search?q=${name}&token=${API_KEY}`;
-
-    try {
-        const response = await axios.get(url);
-        const data = response.data;
-
-        if (data.result && Array.isArray(data.result)) {
-            // Filtra resultados que tengan un nombre válido
-            return data.result
-                .filter((item) => item.description && item.description.trim() !== '') // Asegúrate de que 'description' no sea nulo o vacío
-                .map((item) => ({
-                    symbol: item.symbol,       // Símbolo de la acción
-                    name: item.description,    // Descripción de la empresa
-                    type: item.type,           // Tipo de activo (Ej. stock, forex, etc.)
-                }));
-        } else {
-            throw new Error('No se encontraron coincidencias');
-        }
-    } catch (error) {
-        console.error('Error al obtener el nombre de la acción:', error.message);
-        throw new Error('No se pudo obtener las acciones');
-    }
-};
-
 // Funcion para buscar el nombre de la empresa por el símbolo
 const getOneSymbolSearch = async (symbol) => {
     const url = `https://finnhub.io/api/v1/search?q=${symbol}&token=${API_KEY}`;
@@ -107,4 +81,4 @@ const getStockChange = async (symbol) => {
 };
 
 
-module.exports = { getStockPrice, getSymbolSearch, getOneSymbolSearch, getStockChange };
+module.exports = { getStockPrice, getOneSymbolSearch, getStockChange };

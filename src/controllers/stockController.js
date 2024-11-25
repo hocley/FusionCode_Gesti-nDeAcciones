@@ -29,7 +29,7 @@ const calculateStockChange = async (req, res) => {
 
         const percentageChange = ((latestPrice - previousPrice) / previousPrice) * 100;
 
-        res.json({ percentageChange });
+        res.json({ percentageChange: percentageChange.toFixed(2) });
     } catch (error) {
         console.error('Error al calcular el cambio porcentual:', error);
         res.status(500).json({ error: 'No se pudo calcular el cambio porcentual' });

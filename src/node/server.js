@@ -1,8 +1,10 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const connectDB = require('../services/database'); // Asegúrate de que la conexión a MongoDB esté en este archivo
+const cors = require('cors');
+const connectDB = require('../services/database');
 const stockRoutes = require('../routes/stockRoutes');
 const purchaseRoutes = require('../routes/purchaseRoutes');
+const searchRoutes = require('../routes/searchRoutes'); // Importar searchRoutes
 
 // Cargar las variables de entorno
 dotenv.config({ path: '../../config/.env' });
@@ -12,9 +14,13 @@ const app = express();
 // Middleware para leer el cuerpo de las solicitudes como JSON
 app.use(express.json());
 
-// Usar las rutas de las compras
+// Habilitar CORS para todas las rutas
+app.use(cors());
+
+// Usar las rutas
 app.use('/api', stockRoutes);
-app.use('/db', purchaseRoutes)
+app.use('/db', purchaseRoutes);
+app.use('/py', searchRoutes); // Usar el prefijo /py para searchRoutes
 
 // Conectar a la base de datos de MongoDB
 connectDB();

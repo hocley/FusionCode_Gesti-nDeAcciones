@@ -14,17 +14,6 @@ router.get('/stock/:symbol', async (req, res) => {
     }
 });
 
-router.get('/search-info/:name', async (req, res) => {
-    const name = req.params.name;
-    try {
-        const result = await getSymbolSearch(name);
-        res.json(result);
-    } catch (error) {
-        console.error('Error en la búsqueda:', error);
-        res.status(500).json({ error: 'Error en la búsqueda' });
-    }
-});
-
 router.get('/search-name/:name', async (req, res) => {
     const name = req.params.name;
     try {

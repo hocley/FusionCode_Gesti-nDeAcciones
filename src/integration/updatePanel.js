@@ -3,7 +3,6 @@ export async function fetchAndDisplaySearchResults(query) {
     const url = `http://localhost:3000/py/stock-info/${query}`;
 
     let resultsContainer = searchPanel.querySelector('.search-panel__results');
-    resultsContainer.innerHTML = `<div class="search-panel__no-results">Buscando...</div>`;
 
     try {
         const response = await fetch(url);
@@ -43,7 +42,7 @@ export async function fetchAndDisplaySearchResults(query) {
                     <span>${result.symbol}</span>
                     <span>•</span>
                     <span>${result.type}</span>
-                    <i class="fas fa-copy search-panel__copy-btn"></i>
+                    <i class="fas fa-copy search-panel__copy-btn" id="${result.symbol}"></i>
                 </div>
             `;
 

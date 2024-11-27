@@ -25,37 +25,37 @@
 
 <div class="search-panel">
     <div class="search-panel__container">
-        <input type="text" class="search-panel__input" placeholder="Search company...">
+        <input type="text" class="search-panel__input" placeholder="Buscar empresa...">
         <button class="search-panel__btn">
             <i class="fas fa-search"></i>
         </button>
     </div>
     <div class="search-panel__results">
-        <!-- Results will be dynamically inserted here -->
+        <div class="search-panel__no-results">Ingresa el nombre de la compañía</div>
     </div>
 </div>
 
 <main class="main">
     <div class="trading">
-        <h2 class="transactions__title">Trading Info</h2>
+        <h2 class="transactions__title">Trading</h2>
         <form class="trading__form">
             <div class="trading__form-group">
-                <label class="trading__label">Symbol</label>
+                <label class="trading__label">Símbolo</label>
                 <div class="trading__input-container">
-                    <input type="text" class="trading__input trading-symbol" placeholder="e.g. AAPL">
+                    <input type="text" class="trading__input trading-symbol" placeholder="e.j. AAPL">
                     <button type="button" class="trading__validate-btn">Validar</button>
                 </div>
             </div>
             <div class="trading__form-group">
-                <label class="trading__label">Company Name</label>
+                <label class="trading__label">Compañía</label>
                 <input type="text" class="trading__input input-readonly company-name" readonly value="">
             </div>
             <div class="trading__form-group">
-                <label class="trading__label">Price per Share ($)</label>
+                <label class="trading__label">Precio por acción ($)</label>
                 <input type="number" class="trading__input price-share" step="0.01" placeholder="0.00" min="0.01">
             </div>
             <div class="trading__form-group">
-                <label class="trading__label">Number of Shares</label>
+                <label class="trading__label">Número de acciones</label>
                 <input type="number" class="trading__input number-shares" placeholder="0" min="1">
             </div>
 
@@ -66,14 +66,14 @@
             </div>
 
             <div class="trading__button-container">
-                <button type="submit" class="trading__buy-btn">Buy Shares</button>
+                <button type="submit" class="trading__buy-btn">Comprar</button>
             </div>
         </form>
     </div>
 
     <div class="transactions">
         <div class="transactions__header-container">
-            <h2 class="transactions__title">Recent Transactions</h2>
+            <h2 class="transactions__title">Transacciones Recientes</h2>
             <button class="transactions__refresh-btn">Actualizar</button>
         </div>
         <div class="transactions__wrapper">
@@ -81,16 +81,16 @@
                 <thead>
                 <tr class="transactions__header">
                     <th>ID</th>
-                    <th>Symbol</th>
-                    <th>Company</th>
-                    <th>Price/Share</th>
-                    <th>Shares</th>
+                    <th>Símbolo</th>
+                    <th>Compañía</th>
+                    <th>Precio/Acción</th>
+                    <th>Acciones</th>
                     <th>Total ($)</th>
-                    <th>24h Change</th>
-                    <th>Current Price</th>
-                    <th>Gain/Loss %</th>
-                    <th>Current Total</th>
-                    <th>Action</th>
+                    <th>Cambio 24h</th>
+                    <th>Precio actual</th>
+                    <th>Ganancia/ Pérdida %</th>
+                    <th>Total Actual</th>
+                    <th>Eliminar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -101,4 +101,43 @@
 </main>
 <script src="../src/index.js" type="module"></script>
 </body>
+
+<div id="purchase-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Confirmar transacción</h2>
+        <p>Datos de transacción:</p>
+        <ul>
+            <li class="li__company-name">Compañía: <span>Apple Inc.</span></li>
+            <li class="li__symbol">Símbolo: <span>AAPL</span></li>
+            <li class="li__price">Precio por acción ($): <span>100.5</span></li>
+            <li class="li__shares">Número de acciones: <span>5</span></li>
+            <li class="total-purchase">Total: <span>500.25</span></li>
+        </ul>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-secondary purchase-modal-btn-cancel">Cancelar</button>
+            <button class="modal-btn modal-btn-primary purchase-modal-btn-confirm">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+<div id="success-modal" class="modal">
+    <div class="modal-content">
+        <h2>¡Transacción Exitosa!</h2>
+        <div class="success-icon">✓</div>
+        <p class="modal-message">Compra realizada con éxito</p>
+        <button class="modal-btn modal-btn-primary modal-btn-ok">OK</button>
+    </div>
+</div>
+
+<div id="warning-modal" class="modal">
+    <div class="modal-content">
+        <h2>Error en la Tabla</h2>
+        <div class="warning-icon">⚠️</div>
+        <p class="modal-message">La compra se realizó satisfactoriamente, pero no se pudo actualizar la tabla.</p>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-primary modal-btn-ok">OK</button>
+        </div>
+    </div>
+</div>
 </html>

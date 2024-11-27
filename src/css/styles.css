@@ -1,7 +1,9 @@
 :root {
     --primary-blue: #0041FF;
     --secondary-blue: #47A7FF;
+    --dark-blue: #0035D9;
     --gray: #666666;
+    --medium-gray: #cccccc;
     --light-gray: #f5f5f5;
     --success-green: #22c55e;
     --danger-red: #ef4444;
@@ -174,6 +176,13 @@ body {
     padding-right: 1rem; /* Adds space for scrollbar */
 }
 
+.search-panel__no-results {
+    color: var(--medium-gray);
+    font-size: 2.0rem;
+    font-weight: bolder;
+    text-align: center;
+    margin: 40% auto;
+}
 
 .search-panel__company-name {
     font-size: 1.2rem;
@@ -193,7 +202,7 @@ body {
     font-weight: bold;
     font-size: 1.5rem;
     color: var(--primary-blue);
-    margin: -10px 70px;
+    margin: 5px 70px;
 }
 
 .search-panel__results::-webkit-scrollbar {
@@ -400,6 +409,7 @@ body {
     padding: 10px 15px;
     cursor: pointer;
     font-size: 0.9rem;
+    font-weight: bold;
     border-radius: 4px;
     display: inline-flex;
     align-items: center;
@@ -434,8 +444,12 @@ body {
     font-size: 0.75rem;
     letter-spacing: 0.05em;
     padding: 1rem;
-    text-align: left;
+    text-align: center;
     border-bottom: 2px solid #e2e8f0;
+}
+
+td {
+    text-align: center;
 }
 
 .transactions__cell {
@@ -525,4 +539,270 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
     color: white;
+}
+
+/* Base modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Close button */
+.close-modal {
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--gray);
+    transition: color 0.3s ease;
+}
+
+.close-modal:hover {
+    color: var(--dark-blue);
+}
+
+/* Modal header */
+.modal-content h2 {
+    color: var(--dark-blue);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Modal content */
+.modal-content p {
+    color: var(--gray);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Success modal specific styles */
+#success-modal .modal-content {
+    text-align: center;
+}
+
+#success-modal .success-icon {
+    color: var(--primary-blue);
+    font-size: 5rem;
+    margin: 2rem 0;
+    animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Button container */
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+/* Modal buttons */
+.modal-btn {
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    min-width: 120px;
+    margin: auto;
+}
+
+.modal-btn-primary {
+    background-color: var(--primary-blue);
+    color: white;
+    margin: auto;
+}
+
+.modal-btn-ok {
+    margin: auto;
+}
+
+#success-modal .success-icon {
+    color: var(--primary-blue);
+    font-size: 5rem;
+    margin: 2rem 0;
+    animation: scaleIn 0.5s ease;
+}
+
+#success-modal .modal-message {
+    text-align: center;
+}
+
+#warning-modal .modal-message {
+    text-align: center;
+}
+
+#warning-modal .warning-icon {
+    color: #ffa500;
+    font-size: 4rem;
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.modal-btn-primary:hover {
+    background-color: var(--dark-blue);
+    transform: translateY(-2px);
+}
+
+.modal-btn-secondary {
+    background-color: #e0e0e0;
+    color: var(--gray);
+}
+
+.modal-btn-secondary:hover {
+    background-color: #d0d0d0;
+    transform: translateY(-2px);
+}
+/* Modal list styles */
+.modal-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 1.5rem 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.modal-content p {
+    color: var(--gray);
+    font-size: 1.1rem;
+    font-weight: bolder;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.modal-content li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.modal-content li:last-child {
+    border-bottom: none;
+}
+
+.modal-content li span {
+    color: var(--gray);
+    font-weight: 600;
+    text-align: right;
+    flex: 1 1 auto;
+}
+
+.modal-content li::before {
+    content: '';
+    flex: 0 0 auto;
+    margin-right: 1rem;
+}
+
+/* Modal text styles */
+
+.modal-content li {
+    color: var(--dark-blue);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: left;
+}
+
+/* Modal header */
+.modal-content h2 {
+    color: var(--dark-blue);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Modal buttons */
+.modal-btn {
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    min-width: 120px;
+}
+
+.modal-btn-primary {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+.modal-btn-primary:hover {
+    background-color: var(--dark-blue);
+    transform: translateY(-2px);
+}
+
+.modal-btn-secondary {
+    background-color: #e0e0e0;
+    color: var(--gray);
+}
+
+.modal-btn-secondary:hover {
+    background-color: #d0d0d0;
+    transform: translateY(-2px);
 }

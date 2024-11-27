@@ -14,8 +14,11 @@ async function updateTable() {
         for (const purchase of purchases) {
             await calculateTableValues(purchase);
         }
+
+        return { success: false };
     } catch (error) {
         console.error('Error al obtener las compras:', error.message);
+        return { success: false, message: `${error.message}` };
     }
 }
 

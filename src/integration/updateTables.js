@@ -72,6 +72,7 @@ async function calculateTableValues(purchase) {
         }
 
         const gainLossPercentage = calculateGainLoss(pricePerShare, currentPrice);
+        const gainLossDollar = (gainLossPercentage / 100) * pricePerShare * shares;
         const totalCurrentValue = currentPrice * shares;
 
         let data = {
@@ -85,6 +86,7 @@ async function calculateTableValues(purchase) {
             change24h: stockChange,
             currentPrice: currentPrice,
             gainLossPercentage: gainLossPercentage,
+            gainLossDollar: gainLossDollar,
             totalCurrentValue: totalCurrentValue
         };
         
@@ -129,6 +131,7 @@ function addRowToTable(data) {
         <td class="${change24hClass}">${data.change24h}%</td>
         <td class="transactions__cell">$${data.currentPrice.toFixed(2)}</td>
         <td class="${gainLossClass}">${data.gainLossPercentage.toFixed(2)}%</td>
+        <td class="transactions__cell">$${data.gainLossDollar.toFixed(2)}</td>
         <td class="transactions__cell">$${data.totalCurrentValue.toFixed(2)}</td>
         <td class="transactions__cell transactions__cell--action">
             <button class="transactions__delete-btn" id="${data.id}">

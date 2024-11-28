@@ -236,6 +236,7 @@ buyBtn.addEventListener('click', async (event) => {
 
     const tradingSymbol = document.querySelector('.trading-symbol').value;
     const companyName = document.querySelector('.company-name').value;
+    console.log(companyName);
     const pricePerShare = parseFloat(document.querySelector('.price-share').value);
     const numberOfShares = parseInt(document.querySelector('.number-shares').value);
 

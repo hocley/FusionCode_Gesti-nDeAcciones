@@ -1,5 +1,5 @@
 :root {
-    --primary-blue: #0041FF;
+    --primary-blue: #0F29F4;
     --secondary-blue: #47A7FF;
     --dark-blue: #0035D9;
     --gray: #666666;
@@ -60,31 +60,81 @@ body {
     margin-right: 1rem;
 }
 
+/* Footer Styles */
+.footer {
+    height: 60px;
+    background-color: var(--primary-blue);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
 
+.footer__content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
 
-/* Search Hint */
+.footer__logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.footer__logo {
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    margin-right: 1rem;
+}
+
+.footer__text {
+    color: white;
+    font-size: 0.9rem;
+}
+
+.footer__links {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer__link {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.footer__link:hover {
+    color: var(--primary-blue);
+}
+
+.footer__copyright {
+    color: white;
+    font-size: 0.9rem;
+}
+
+/* Adjust search button and hint positioning */
 .search-hint {
     position: fixed;
     right: 1rem;
-    bottom: 3.5rem; /* Posicionado justo encima del botón (2rem + 70px aproximadamente) */
+    bottom: 150px; /* Increased to avoid footer */
     color: var(--gray);
     font-size: 0.9rem;
     font-weight: bold;
 }
 
-/* Y agregar un media query para pantallas pequeñas */
-@media (max-height: 600px) {
-    .search-hint {
-        bottom: 4.5rem; /* Ajustado para la versión más pequeña del botón */
-        font-size: 1rem; /* Opcional: reducir el tamaño del texto en pantallas pequeñas */
-    }
-}
-
-/* Menu Toggle */
 .menu-toggle {
     position: fixed;
     right: 1rem;
-    bottom: 0.4rem; /* Changed from top: 800px to bottom: 2rem */
+    bottom: 95px; /* Increased to avoid footer */
     background: var(--primary-blue);
     color: white;
     border: none;
@@ -97,20 +147,34 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
 }
 
-.menu-toggle:hover {
-    transform: scale(1.1);
+/* Adjust main content to account for footer */
+.main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-bottom: 100px; /* Add margin to prevent content from being hidden by footer */
 }
 
-@media (max-height: 600px) {
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer__links {
+        display: none;
+    }
+
+    .footer__copyright {
+        font-size: 0.8rem;
+    }
+
+    .search-hint {
+        bottom: 110px;
+    }
+
     .menu-toggle {
-        bottom: 10px;
-        width: 60px;
-        height: 60px;
-        font-size: 1.2rem;
+        bottom: 90px;
     }
 }
 
@@ -221,13 +285,6 @@ body {
 
 .search-panel__results::-webkit-scrollbar-thumb:hover {
     background: #555;
-}
-
-/* Main Content */
-.main {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 /* Trading Section */
@@ -539,6 +596,7 @@ td {
     font-size: 1.5rem;
     font-weight: bold;
     color: white;
+    background-repeat: no-repeat;
 }
 
 /* DateTime styles */

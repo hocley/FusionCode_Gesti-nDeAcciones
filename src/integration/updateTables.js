@@ -1,18 +1,21 @@
-// Ensure this code is at the top of your file to select the refresh button
-const refreshBtn = document.querySelector('.transactions__refresh-btn');
-
+/**
+ * Actualiza la tabla de transacciones obteniendo las compras desde el servidor.
+ *
+ * @returns {Promise<Object>} Objeto con estado de éxito de la actualización.
+ */
 async function updateTable() {
+    console.log('Actualizando tabla de transacciones...');
     const url = 'http://localhost:3000/db/get-purchases';
 
     try {
-        const response = await fetch(url);
-        const purchases = await response.json();
+        const respuesta = await fetch(url);
+        const compras = await respuesta.json();
 
-        const tableBody = document.querySelector('.transactions__table tbody');
-        tableBody.innerHTML = ''; // Limpiar la tabla antes de actualizarla
+        const cuerpoTabla = document.querySelector('.transactions__table tbody');
+        cuerpoTabla.innerHTML = ''; // Limpiar la tabla antes de actualizarla
 
-        for (const purchase of purchases) {
-            await calculateTableValues(purchase);
+        for (const compra of compras) {
+            await calculateTableValues(compra);
         }
 
         return { success: true };
@@ -21,76 +24,101 @@ async function updateTable() {
     }
 }
 
-async function fetchStockChange(symbol) {
-    const url = `http://localhost:3000/api/stock-change/${symbol}`;
+/**
+ * Obtiene el cambio porcentual de una acción específica.
+ *
+ * @param {string} simbolo - Símbolo de la acción.
+ * @returns {Promise<number|null>} Porcentaje de cambio o null si hay un error.
+ */
+async function fetchStockChange(simbolo) {
+    const url = `http://localhost:3000/api/stock-change/${simbolo}`;
     try {
-        const response = await fetch(url);
-        if (!response.ok) {
+        const respuesta = await fetch(url);
+        if (!respuesta.ok) {
             throw new Error('Error al obtener el cambio de stock');
         }
-        const data = await response.json();
-        return data.percentageChange;
+        const datosRespuesta = await respuesta.json();
+        return datosRespuesta.percentageChange;
     } catch (error) {
         console.error('Error al obtener el cambio de stock:', error.message);
         return null;
     }
 }
 
-async function fetchCurrentPrice(symbol) {
-    const url = `http://localhost:3000/api/stock/${symbol}`;
+/**
+ * Obtiene el precio actual de una acción.
+ *
+ * @param {string} simbolo - Símbolo de la acción.
+ * @returns {Promise<number|null>} Precio actual de la acción o null si hay un error.
+ */
+async function fetchCurrentPrice(simbolo) {
+    const url = `http://localhost:3000/api/stock/${simbolo}`;
     try {
-        const response = await fetch(url);
-        if (!response.ok) {
+        const respuesta = await fetch(url);
+        if (!respuesta.ok) {
             throw new Error('Error al obtener el precio actual de la acción');
         }
-        return await response.json();
+        return await respuesta.json();
     } catch (error) {
         console.error('Error al obtener el precio actual de la acción:', error.message);
         return null;
     }
 }
 
-function calculateGainLoss(initialPrice, currentPrice) {
-    if (initialPrice === 0) {
+/**
+ * Calcula el porcentaje de ganancia o pérdida.
+ *
+ * @param {number} precioInicial - Precio inicial de la acción.
+ * @param {number} precioActual - Precio actual de la acción.
+ * @returns {number} Porcentaje de ganancia o pérdida.
+ */
+function calculateGainLoss(precioInicial, precioActual) {
+    if (precioInicial === 0) {
         return 0;
     }
-    return ((currentPrice - initialPrice) / initialPrice) * 100;
+    return ((precioActual - precioInicial) / precioInicial) * 100;
 }
 
-async function calculateTableValues(purchase) {
-    const symbol = purchase.symbol;
-    const pricePerShare = purchase.stockPrice;
-    const shares = purchase.numOfShares;
+/**
+ * Calcula los valores para una fila de la tabla de transacciones.
+ *
+ * @param {Object} compra - Objeto con los detalles de la compra.
+ * @returns {Promise<boolean|Object>} Resultado del cálculo de valores.
+ */
+async function calculateTableValues(compra) {
+    const simbolo = compra.symbol;
+    const precioPorAccion = compra.stockPrice;
+    const cantidadAcciones = compra.numOfShares;
 
     try {
-        const stockChange = await fetchStockChange(symbol);
-        const currentPrice = await fetchCurrentPrice(symbol);
+        const cambioAccion = await fetchStockChange(simbolo);
+        const precioActual = await fetchCurrentPrice(simbolo);
 
-        if (pricePerShare == null || currentPrice == null || shares == null) {
-            console.error('Undefined values detected', { pricePerShare, currentPrice, shares });
+        if (precioPorAccion == null || precioActual == null || cantidadAcciones == null) {
+            console.error('Valores no definidos detectados', { precioPorAccion, precioActual, cantidadAcciones });
             return;
         }
 
-        const gainLossPercentage = calculateGainLoss(pricePerShare, currentPrice);
-        const gainLossDollar = (gainLossPercentage / 100) * pricePerShare * shares;
-        const totalCurrentValue = currentPrice * shares;
+        const porcentajeGanancia = calculateGainLoss(precioPorAccion, precioActual);
+        const gananciaPerdidaDolares = (porcentajeGanancia / 100) * precioPorAccion * cantidadAcciones;
+        const valorTotalActual = precioActual * cantidadAcciones;
 
-        let data = {
-            id: purchase.purchaseId,
-            date: purchase.date,
-            symbol: symbol,
-            company: purchase.companyName,
-            pricePerShare: pricePerShare,
-            shares: shares,
-            total: pricePerShare * shares,
-            change24h: stockChange,
-            currentPrice: currentPrice,
-            gainLossPercentage: gainLossPercentage,
-            gainLossDollar: gainLossDollar,
-            totalCurrentValue: totalCurrentValue
+        const datosTabla = {
+            id: compra.purchaseId,
+            date: compra.date,
+            symbol: simbolo,
+            company: compra.companyName,
+            pricePerShare: precioPorAccion,
+            shares: cantidadAcciones,
+            total: precioPorAccion * cantidadAcciones,
+            change24h: cambioAccion,
+            currentPrice: precioActual,
+            gainLossPercentage: porcentajeGanancia,
+            gainLossDollar: gananciaPerdidaDolares,
+            totalCurrentValue: valorTotalActual
         };
-        
-        addRowToTable(data);
+
+        addRowToTable(datosTabla);
         return true;
     } catch (error) {
         console.error('Error al calcular los valores de la tabla:', error.message);
@@ -98,48 +126,60 @@ async function calculateTableValues(purchase) {
     }
 }
 
+/**
+ * Elimina una compra del sistema por su ID.
+ *
+ * @param {number} id - Identificador de la compra a eliminar.
+ * @returns {Promise<{success: boolean}>}
+ */
 async function deletePurchase(id) {
     const url = `http://localhost:3000/db/delete-purchase/${id}`;
 
     try {
-        const response = await fetch(url, { method: 'DELETE' });
-        if (!response.ok) {
+        const respuesta = await fetch(url, { method: 'DELETE' });
+        if (!respuesta.ok) {
             throw new Error('Error al eliminar la compra');
         }
-        await updateTable();
+        return { success: true };
     } catch (error) {
         console.error('Error al eliminar la compra:', error.message);
+        return { success: false, message: error.message };
     }
 }
 
-function addRowToTable(data) {
-    const tableBody = document.querySelector('.transactions__table tbody');
-    const row = document.createElement('tr');
-    row.classList.add('transactions__row');
+/**
+ * Agrega una nueva fila a la tabla de transacciones.
+ *
+ * @param {Object} datos - Datos de la transacción para crear la fila.
+ */
+function addRowToTable(datos) {
+    const cuerpoTabla = document.querySelector('.transactions__table tbody');
+    const fila = document.createElement('tr');
+    fila.classList.add('transactions__row');
 
-    const change24hClass = data.change24h < 0 ? 'transactions__cell--change down' : 'transactions__cell--change';
-    const gainLossClass = data.gainLossPercentage < 0 ? 'transactions__cell--change down' : 'transactions__cell--change';
+    const clasesCambio24h = datos.change24h < 0 ? 'transactions__cell--change down' : 'transactions__cell--change';
+    const clasesPerdidaGanancia = datos.gainLossPercentage < 0 ? 'transactions__cell--change down' : 'transactions__cell--change';
 
-    row.innerHTML = `
-        <td class="transactions__cell">#${data.id}</td>
-        <td class="transactions__cell">${data.date}</td>
-        <td class="transactions__cell transactions__cell--symbol">${data.symbol}</td>
-        <td class="transactions__cell">${data.company}</td>
-        <td class="transactions__cell">$${data.pricePerShare.toFixed(2)}</td>
-        <td class="transactions__cell">${data.shares}</td>
-        <td class="transactions__cell">$${data.total.toFixed(2)}</td>
-        <td class="${change24hClass}">${data.change24h}%</td>
-        <td class="transactions__cell">$${data.currentPrice.toFixed(2)}</td>
-        <td class="${gainLossClass}">${data.gainLossPercentage.toFixed(2)}%</td>
-        <td class="transactions__cell">$${data.gainLossDollar.toFixed(2)}</td>
-        <td class="transactions__cell">$${data.totalCurrentValue.toFixed(2)}</td>
+    fila.innerHTML = `
+        <td class="transactions__cell">#${datos.id}</td>
+        <td class="transactions__cell">${datos.date}</td>
+        <td class="transactions__cell transactions__cell--symbol">${datos.symbol}</td>
+        <td class="transactions__cell">${datos.company}</td>
+        <td class="transactions__cell">${datos.pricePerShare.toFixed(2)}</td>
+        <td class="transactions__cell">${datos.shares}</td>
+        <td class="transactions__cell">${datos.total.toFixed(2)}</td>
+        <td class="${clasesCambio24h}">${datos.change24h}%</td>
+        <td class="transactions__cell">${datos.currentPrice.toFixed(2)}</td>
+        <td class="${clasesPerdidaGanancia}">${datos.gainLossPercentage.toFixed(2)}%</td>
+        <td class="transactions__cell">${datos.gainLossDollar.toFixed(2)}</td>
+        <td class="transactions__cell">${datos.totalCurrentValue.toFixed(2)}</td>
         <td class="transactions__cell transactions__cell--action">
-            <button class="transactions__delete-btn" id="${data.id}">
+            <button class="transactions__delete-btn" id="${datos.id}">
                 <i class="fas fa-trash"></i>
             </button>
         </td>
     `;
-    tableBody.appendChild(row);
+    cuerpoTabla.appendChild(fila);
 }
 
 export { updateTable, deletePurchase, addRowToTable };

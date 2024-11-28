@@ -1,57 +1,71 @@
-export async function fetchAndDisplaySearchResults(query) {
-    const searchPanel = document.querySelector('.search-panel');
-    const url = `http://localhost:3000/py/stock-info/${query}`;
+/**
+ * Busca información de acciones y muestra los resultados en el panel de búsqueda.
+ *
+ * @param {string} consulta - Término de búsqueda para encontrar acciones.
+ * @returns {Promise<Object>} Resultado de la búsqueda y visualización.
+ */
+export async function fetchAndDisplaySearchResults(consulta) {
+    const panelBusqueda = document.querySelector('.search-panel');
+    const url = `http://localhost:3000/py/stock-info/${consulta}`;
 
-    let resultsContainer = searchPanel.querySelector('.search-panel__results');
+    let contenedorResultados = panelBusqueda.querySelector('.search-panel__results');
 
     try {
-        const response = await fetch(url);
-        const results = await response.json();
-
-        if (!searchPanel) {
-            console.error('Cannot find .search-panel element');
-            return { success: false, message: 'Error: No se encontró el contenedor de búsqueda' };
+        // Verificar existencia del panel de búsqueda
+        if (!panelBusqueda) {
+            console.error('No se encuentra el elemento .search-panel');
+            return {
+                success: false,
+                message: 'Error: No se encontró el contenedor de búsqueda'
+            };
         }
 
-        // Create a container for results if it doesn't exist
-        if (!resultsContainer) {
-            resultsContainer = document.createElement('div');
-            resultsContainer.classList.add('search-panel__results');
-            searchPanel.appendChild(resultsContainer);
+        // Realizar la solicitud de búsqueda
+        const respuesta = await fetch(url);
+        const resultados = await respuesta.json();
+
+        // Crear contenedor de resultados si no existe
+        if (!contenedorResultados) {
+            contenedorResultados = document.createElement('div');
+            contenedorResultados.classList.add('search-panel__results');
+            panelBusqueda.appendChild(contenedorResultados);
         }
 
-        console.log(results);
+        // Limpiar resultados anteriores
+        contenedorResultados.innerHTML = '';
 
-        // Clear previous results
-        resultsContainer.innerHTML = '';
-
-        // Verificar si el objeto tiene la propiedad "output" y es un arreglo
-        if (!results.output || !Array.isArray(results.output)) {
-            resultsContainer.innerHTML = `<div class="search-panel__no-results">No se encontraron resultados</div>`;
+        // Validar estructura de resultados
+        if (!resultados.output || !Array.isArray(resultados.output)) {
+            contenedorResultados.innerHTML = `
+                <div class="search-panel__no-results">No se encontraron resultados</div>
+            `;
             return { success: false };
         }
 
-        // Procesar los resultados
-        results.output.forEach(result => {
-            const resultDiv = document.createElement('div');
-            resultDiv.classList.add('search-panel__result');
+        // Procesar y mostrar resultados
+        resultados.output.forEach(resultado => {
+            const elementoResultado = document.createElement('div');
+            elementoResultado.classList.add('search-panel__result');
 
-            resultDiv.innerHTML = `
-                <div class="search-panel__company-name">${result.name}</div>
+            elementoResultado.innerHTML = `
+                <div class="search-panel__company-name">${resultado.name}</div>
                 <div class="search-panel__company-details">
-                    <span>${result.symbol}</span>
+                    <span>${resultado.symbol}</span>
                     <span>•</span>
-                    <span>${result.type}</span>
-                    <i class="fas fa-copy search-panel__copy-btn" id="${result.symbol}"></i>
+                    <span>${resultado.type}</span>
+                    <i class="fas fa-copy search-panel__copy-btn" id="${resultado.symbol}"></i>
                 </div>
             `;
 
-            resultsContainer.appendChild(resultDiv);
+            contenedorResultados.appendChild(elementoResultado);
         });
 
         return { success: true };
     } catch (error) {
-        console.error('Error:', error);
-        return { success: false, message: 'Error en la búsqueda' };
+        console.error('Error en la búsqueda:', error);
+        return {
+            success: false,
+            message: 'Error en la búsqueda de resultados'
+        };
     }
 }

@@ -1,37 +1,51 @@
+/**
+ * Realiza una compra de acciones, enviando los datos al servidor.
+ *
+ * @param {string} simboloAccion - Símbolo de cotización de la acción.
+ * @param {string} nombreEmpresa - Nombre de la empresa.
+ * @param {number} precioPorAccion - Precio de cada acción.
+ * @param {number} cantidadAcciones - Número de acciones a comprar.
+ * @returns {Promise<Object>} Resultado de la operación de compra.
+ */
+async function attemptPurchase(simboloAccion, nombreEmpresa, precioPorAccion, cantidadAcciones) {
+    // Calcular el valor total de la compra
+    const valorTotal = precioPorAccion * cantidadAcciones;
 
-
-// Función principal para realizar la compra
-async function attemptPurchase(tradingSymbol, companyName, pricePerShare, numberOfShares) {
-
-    // Calcular el valor total
-    const totalValue = pricePerShare * numberOfShares;
-
-    // Datos a enviar
-    const purchaseData = {
-        symbol: tradingSymbol,
-        companyName: companyName,
-        stockPrice: pricePerShare,
-        numOfShares: numberOfShares,
-        totalValue: totalValue
+    // Preparar datos para enviar al servidor
+    const datosCompra = {
+        symbol: simboloAccion,
+        companyName: nombreEmpresa,
+        stockPrice: precioPorAccion,
+        numOfShares: cantidadAcciones,
+        totalValue: valorTotal
     };
 
     try {
-        // Enviar los datos al servidor
-        const response = await fetch('http://localhost:3000/db/create-purchase', {
+        // Enviar solicitud de compra al servidor
+        const respuesta = await fetch('http://localhost:3000/db/create-purchase', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(purchaseData)
+            body: JSON.stringify(datosCompra)
         });
 
-        if (!response.ok) {
-            throw new Error(`${response.statusText}`);
+        // Verificar si la respuesta del servidor es válida
+        if (!respuesta.ok) {
+            throw new Error(`Error en la solicitud: ${respuesta.statusText}`);
         }
 
-        return { success: true, message: 'Compra realizada con éxito' };
+        // Retornar resultado exitoso
+        return {
+            success: true,
+            message: 'Compra realizada con éxito'
+        };
     } catch (error) {
-        return { success: false, message: `Error al realizar la compra: ${error.message}` };
+        // Manejar errores de la solicitud
+        return {
+            success: false,
+            message: `Error al realizar la compra: ${error.message}`
+        };
     }
 }
 

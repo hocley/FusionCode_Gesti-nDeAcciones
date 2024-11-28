@@ -1,7 +1,7 @@
 // Importaciones de módulos
-import { attemptPurchase } from './integration/stockPurchases.js';
-import { updateTable, deletePurchase } from './integration/updateTables.js';
-import { fetchAndDisplaySearchResults } from './integration/updatePanel.js';
+import {attemptPurchase} from './integration/stockPurchases.js';
+import {updateTable, deletePurchase} from './integration/updateTables.js';
+import {fetchAndDisplaySearchResults} from './integration/updatePanel.js';
 
 // Constantes para elementos DOM
 const DOM_ELEMENTS = {
@@ -15,6 +15,9 @@ const DOM_ELEMENTS = {
     searchBtn: document.querySelector('.search-panel__btn'),
     confirmTransactionBtn: document.querySelector('.purchase-modal-btn-confirm'),
     cancelTransactionBtn: document.querySelector('.purchase-modal-btn-cancel'),
+    confirmDeleteBtn: document.querySelector('.delete-modal-btn-confirm'),
+    cancelDeleteBtn: document.querySelector('.delete-modal-btn-cancel'),
+    closeDeleteModalBtn: document.querySelector('.close-delete-modal'),
     closeModalBtn: document.querySelector('.close-modal')
 };
 
@@ -31,6 +34,8 @@ const state = {
     symbolTemp: '',
     validated: false
 };
+
+let BTN_ID = '';
 
 /**
  * Verifica si un símbolo está validado
@@ -249,7 +254,6 @@ function showSuccessModal(title, icon, message) {
  */
 async function validateSymbol(symbol) {
     const url = `${CONFIG.API_BASE_URL}/search-name/${symbol}`;
-    const sharesItem = createValidationItem();
     const error = 'Error en la búsqueda';
 
     if (!isSymbolEmpty(symbol)) {
@@ -300,6 +304,10 @@ function initializeEventListeners() {
     DOM_ELEMENTS.confirmTransactionBtn.addEventListener('click', handleConfirmTransaction);
     DOM_ELEMENTS.cancelTransactionBtn.addEventListener('click', closePurchaseModal);
     DOM_ELEMENTS.closeModalBtn.addEventListener('click', closePurchaseModal);
+    DOM_ELEMENTS.confirmDeleteBtn.addEventListener('click', manageDeletePurchase);
+    DOM_ELEMENTS.cancelDeleteBtn.addEventListener('click', closeDeleteModal);
+    DOM_ELEMENTS.closeDeleteModalBtn.addEventListener('click', closeDeleteModal);
+
 
     // Modal button
     document.addEventListener('click', (e) => {
@@ -381,6 +389,7 @@ function getPurchaseFormData() {
     };
 }
 
+
 /**
  * Valida los datos de compra
  * @param {Object} data - Datos a validar
@@ -407,6 +416,10 @@ function updatePurchaseModal(data) {
     document.querySelector('.total-purchase span').textContent = totalPurchase.toFixed(2);
 }
 
+function updateDeleteModal(data) {
+    document.querySelector('.li__id-purchase span').textContent = data;
+}
+
 /**
  * Muestra el modal de compra
  */
@@ -414,11 +427,19 @@ function showPurchaseModal() {
     document.getElementById('purchase-modal').style.display = 'flex';
 }
 
+function showDeleteModal() {
+    document.getElementById('delete-modal').style.display = 'flex';
+}
+
 /**
  * Cierra el modal de compra
  */
 function closePurchaseModal() {
     document.getElementById('purchase-modal').style.display = 'none';
+}
+
+function closeDeleteModal() {
+    document.getElementById('delete-modal').style.display = 'none';
 }
 
 /**
@@ -462,20 +483,31 @@ async function handleSearch() {
 function initializeTableDelegate() {
     document.querySelector('.transactions__table').addEventListener('click', async (event) => {
         const deleteBtn = event.target.closest('.transactions__delete-btn');
+        BTN_ID = deleteBtn.id;
         if (deleteBtn) {
-            await handleDeletePurchase(deleteBtn.id);
+            updateDeleteModal(BTN_ID);
+            showDeleteModal();
         }
     });
 }
 
 /**
  * Maneja la eliminación de una compra
- * @param {string} purchaseId - ID de la compra a eliminar
  */
-async function handleDeletePurchase(purchaseId) {
-    await deletePurchase(purchaseId);
-    await manageUpdateTable();
-}
+const manageDeletePurchase = async () => {
+    closeDeleteModal();
+    const purchaseDeleted = await deletePurchase(BTN_ID);
+    if (!purchaseDeleted.success) {
+        showValidationError(purchaseDeleted.message);
+        showErrorModal('¡Error al eliminar la compra!', '❌', purchaseDeleted.message);
+    } else {
+        const tableUpdated = await manageUpdateTable();
+        if (tableUpdated) {
+            showSuccessModal('¡Transacción Exitosa!', '✓', purchaseDeleted.message);
+            await manageUpdateTable();
+        }
+    }
+};
 
 /**
  * Inicializa el delegado de resultados de búsqueda

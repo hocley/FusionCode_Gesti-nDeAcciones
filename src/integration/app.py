@@ -3,36 +3,63 @@ import json
 import pandas as pd
 
 # Ruta al dataset
-DATA_PATH = '../data/data_stocks.csv'
+RUTA_DATOS = '../data/data_stocks.csv'
 
-def search_stock(name):
+def buscar_accion(nombre_accion):
+    """
+    Busca acciones en el dataset basándose en un nombre parcial o completo.
+
+    Args:
+        nombre_accion (str): Nombre de la acción a buscar.
+
+    Returns:
+        list or int: Lista de diccionarios con información de acciones coincidentes
+                     o -1 si no se encuentran coincidencias.
+        dict: Diccionario de error si ocurre una excepción.
+    """
     try:
         # Cargar el dataset
-        data = pd.read_csv(DATA_PATH)
+        conjunto_datos = pd.read_csv(RUTA_DATOS)
 
         # Filtrar las filas que coinciden con el nombre (ignorando mayúsculas y minúsculas)
-        matches = data[data['Longname'].str.contains(name, case=False, na=False)]
+        coincidencias = conjunto_datos[
+            conjunto_datos['Longname'].str.contains(nombre_accion, case=False, na=False)
+        ]
 
         # Si se encuentran coincidencias, construir la respuesta
-        if not matches.empty:
-            result = [
-                {"name": row['Longname'], "symbol": row['Symbol'], "type": row['Sector']}
-                for _, row in matches.iterrows()
+        if not coincidencias.empty:
+            resultados = [
+                {
+                    "name": fila['Longname'],
+                    "symbol": fila['Symbol'],
+                    "type": fila['Sector']
+                }
+                for _, fila in coincidencias.iterrows()
             ]
         else:
-            result = -1  # Devuelve -1 si no hay coincidencias
+            resultados = -1  # Devuelve -1 si no hay coincidencias
 
-        return result
-    except Exception as e:
-        # Manejo de errores
-        return {"error": str(e)}
+        return resultados
 
-if __name__ == "__main__":
+    except Exception as error:
+        # Manejo de errores con mensaje descriptivo
+        return {
+            "error": f"Error al buscar la acción: {str(error)}",
+            "detalles": str(error)
+        }
+
+def main():
+    """
+    Función principal para ejecutar la búsqueda de acciones desde la línea de comandos.
+    """
     # Leer argumentos (nombre a buscar)
-    stock_name = sys.argv[1] if len(sys.argv) > 1 else ""
+    nombre_accion = sys.argv[1] if len(sys.argv) > 1 else ""
 
     # Buscar el stock
-    response = search_stock(stock_name)
+    respuesta = buscar_accion(nombre_accion)
 
     # Devolver el resultado como JSON
-    print(json.dumps(response))
+    print(json.dumps(respuesta))
+
+if __name__ == "__main__":
+    main()

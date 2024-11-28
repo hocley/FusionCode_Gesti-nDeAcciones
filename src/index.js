@@ -24,18 +24,18 @@ function isValidated() {
     sharesItem.classList.add('trading__validation-item');
     if (!validated) {
         sharesItem.textContent = 'Debe validar el símbolo';
-        validationList.appendChild(sharesItem);    
+        validationList.appendChild(sharesItem);
         return false;
     }
     return true;
 }
 
 function validateSymbolChange(tradingSymbol) {
-    
+
     const sharesItem = document.createElement('li');
-    
+
     sharesItem.classList.add('trading__validation-item');
-    
+
     if (tradingSymbol.toUpperCase() !== symbolTemp.toUpperCase()) {
         sharesItem.textContent = 'Debe validar el símbolo';
         validationList.appendChild(sharesItem);
@@ -108,9 +108,9 @@ function clearTable(tableBody) {
 async function manageUpdateTable() {
 
     const tableBody = document.querySelector('.transactions__table tbody');
-    
+
     clearTable(tableBody); // Limpia todos los nodos existentes
-    
+
     const tableUpdated = await updateTable();
 
     if (!tableUpdated.success) {
@@ -120,7 +120,7 @@ async function manageUpdateTable() {
         document.querySelector('#one-btn-modal p').textContent = `${tableUpdated.message}`;
 
         document.getElementById('one-btn-modal').style.display = 'flex';
-        
+
         return false;
 
     } else {
@@ -207,15 +207,15 @@ menuToggle.addEventListener('click', () => {
 validateBtn.addEventListener('click', async () => {
     const tradingSymbol = document.querySelector('.trading-symbol').value;
     const companyName = document.querySelector('.company-name');
-    
+
     // Limpiar todos los items de la lista de validación
     validationList.innerHTML = '';
-    
+
     // Cambiar el texto del botón de validar
     validateBtn.textContent = 'Validando...';
-    
+
     let data = await validateSymbol(tradingSymbol.toUpperCase());
-    
+
     if (data === 0 || data === -1) {
         validationList.style.display = 'flex';
         validationItem.style.display = 'flex';
@@ -261,7 +261,7 @@ buyBtn.addEventListener('click', async (event) => {
 
         document.getElementById('purchase-modal').style.display = 'flex';
     }
-    
+
 });
 
 confirmTransactionBtn.addEventListener('click', async () => {
@@ -272,7 +272,7 @@ confirmTransactionBtn.addEventListener('click', async () => {
     const numberOfShares = parseInt(document.querySelector('.number-shares').value);
 
     document.getElementById('purchase-modal').style.display = 'none';
-    
+
     await manageCretePurchase(tradingSymbol, companyName, pricePerShare, numberOfShares);
 
 });
@@ -331,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (deleteBtn) {
             const id = deleteBtn.id;
             await deletePurchase(id);
-            
+
             await manageUpdateTable();
         }
     });
@@ -359,4 +359,4 @@ setInterval(updateDateTime, 1000);
 updateDateTime();
 
 // Llamar a la función updateTable al cargar la página
-window.addEventListener('load',  updateTable());
+window.addEventListener('load',  manageUpdateTable());

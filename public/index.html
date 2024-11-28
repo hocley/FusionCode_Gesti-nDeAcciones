@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../src/css/styles.css">
 </head>
 <body>
+<!-- Header -->
 <nav class="header">
     <div class="header__logo-container">
         <div class="header__logo" style="background-image: url('../src/content/logo_fusioncode80.png')"></div>
@@ -21,12 +22,11 @@
     <div class="header__created-by">Powered by FusionCode</div>
 </nav>
 
+<!-- Panel de búsqueda -->
 <div class="search-hint">Buscar Símbolos</div>
-
 <button class="menu-toggle">
     <i class="fas fa-bars"></i>
 </button>
-
 <div class="search-panel">
     <div class="search-panel__container">
         <input type="text" class="search-panel__input" placeholder="Buscar empresa...">
@@ -39,7 +39,9 @@
     </div>
 </div>
 
+<!-- Main -->
 <main class="main">
+    <!-- Sección de compra -->
     <div class="trading">
         <h2 class="transactions__title">Trading</h2>
         <form class="trading__form">
@@ -62,19 +64,18 @@
                 <label class="trading__label">Número de acciones</label>
                 <input type="number" class="trading__input number-shares" placeholder="0" min="1">
             </div>
-
             <div class="trading__validations">
                 <ul class="trading__validation-list">
                     <li class="trading__validation-item"></li>
                 </ul>
             </div>
-
             <div class="trading__button-container">
                 <button type="submit" class="trading__buy-btn">Comprar</button>
             </div>
         </form>
     </div>
 
+    <!-- Sección de transacciones recientes -->
     <div class="transactions">
         <div class="transactions__header-container">
             <h2 class="transactions__title">Transacciones Recientes</h2>
@@ -105,20 +106,20 @@
         </div>
     </div>
 </main>
-<script src="../src/index.js" type="module"></script>
-</body>
+
+<!-- Footer -->
 <footer class="footer">
     <div class="footer__content">
         <div class="footer__logo-container">
             <div class="footer__logo" style="background-image: url('../src/content/logo_fusioncode_white80.png')"></div>
             <span class="footer__text">FusionCode</span>
         </div>
-        <div class="footer__links">
-        </div>
+        <div class="footer__links"></div>
     </div>
     <div class="footer__copyright">© 2024 FusionCode. Todos los derechos reservados.</div>
 </footer>
 
+<!-- Ventanas modales -->
 <div id="purchase-modal" class="modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
@@ -144,20 +145,12 @@
         <div class="success-icon">✓</div>
         <p class="modal-message">Compra realizada con éxito</p>
         <div class="modal-buttons">
-        <button class="modal-btn modal-btn-primary modal-btn-ok">OK</button>
-        </div>
-    </div>
-</div>
-
-<div id="warning-modal" class="modal">
-    <div class="modal-content">
-        <h2>Error en la Tabla</h2>
-        <div class="warning-icon">⚠️</div>
-        <p class="modal-message">La compra se realizó satisfactoriamente, pero no se pudo actualizar la tabla.</p>
-        <div class="modal-buttons">
             <button class="modal-btn modal-btn-primary modal-btn-ok">OK</button>
         </div>
     </div>
 </div>
 
+<!-- Scripts -->
+<script src="../src/index.js" type="module"></script>
+</body>
 </html>

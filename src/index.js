@@ -1,362 +1,528 @@
+// Importaciones de módulos
 import { attemptPurchase } from './integration/stockPurchases.js';
-import { updateTable, deletePurchase} from './integration/updateTables.js';
+import { updateTable, deletePurchase } from './integration/updateTables.js';
 import { fetchAndDisplaySearchResults } from './integration/updatePanel.js';
 
-// Selecciona el botón de alternar menú y el panel de búsqueda
-const menuToggle = document.querySelector('.menu-toggle');
-const searchPanel = document.querySelector('.search-panel');
-const validateBtn = document.querySelector('.trading__validate-btn');
-const validationList = document.querySelector('.trading__validation-list');
-const validationItem = document.querySelector('.trading__validation-item');
-const buyBtn = document.querySelector('.trading__buy-btn');
-const refreshBtn = document.querySelector('.transactions__refresh-btn');
-const searchBtn = document.querySelector('.search-panel__btn');
-const confirmTransactionBtn = document.querySelector('.purchase-modal-btn-confirm');
-const cancelTransactionBtn = document.querySelector('.purchase-modal-btn-cancel');
-const closeModalBtn = document.querySelector('.close-modal');
+// Constantes para elementos DOM
+const DOM_ELEMENTS = {
+    menuToggle: document.querySelector('.menu-toggle'),
+    searchPanel: document.querySelector('.search-panel'),
+    validateBtn: document.querySelector('.trading__validate-btn'),
+    validationList: document.querySelector('.trading__validation-list'),
+    validationItem: document.querySelector('.trading__validation-item'),
+    buyBtn: document.querySelector('.trading__buy-btn'),
+    refreshBtn: document.querySelector('.transactions__refresh-btn'),
+    searchBtn: document.querySelector('.search-panel__btn'),
+    confirmTransactionBtn: document.querySelector('.purchase-modal-btn-confirm'),
+    cancelTransactionBtn: document.querySelector('.purchase-modal-btn-cancel'),
+    closeModalBtn: document.querySelector('.close-modal')
+};
 
-// Variable para almacenar el símbolo actual
-let symbolTemp = '';
-let validated = false;
+// Constantes de configuración
+const CONFIG = {
+    MIN_PRICE: 0.01,
+    MIN_SHARES: 1,
+    API_BASE_URL: 'http://localhost:3000/api',
+    UPDATE_INTERVAL: 1000
+};
 
+// Estado global
+const state = {
+    symbolTemp: '',
+    validated: false
+};
+
+/**
+ * Verifica si un símbolo está validado
+ * @returns {boolean} - Estado de validación
+ */
 function isValidated() {
-    const sharesItem = document.createElement('li');
-    sharesItem.classList.add('trading__validation-item');
-    if (!validated) {
+    const sharesItem = createValidationItem();
+    if (!state.validated) {
         sharesItem.textContent = 'Debe validar el símbolo';
-        validationList.appendChild(sharesItem);
+        DOM_ELEMENTS.validationList.appendChild(sharesItem);
         return false;
     }
     return true;
 }
 
+/**
+ * Valida si el símbolo ha cambiado
+ * @param {string} tradingSymbol - Símbolo a validar
+ * @returns {boolean} - Estado de validación
+ */
 function validateSymbolChange(tradingSymbol) {
-
-    const sharesItem = document.createElement('li');
-
-    sharesItem.classList.add('trading__validation-item');
-
-    if (tradingSymbol.toUpperCase() !== symbolTemp.toUpperCase()) {
+    const sharesItem = createValidationItem();
+    if (tradingSymbol.toUpperCase() !== state.symbolTemp.toUpperCase()) {
         sharesItem.textContent = 'Debe validar el símbolo';
-        validationList.appendChild(sharesItem);
+        DOM_ELEMENTS.validationList.appendChild(sharesItem);
         return false;
     }
     return true;
 }
 
+/**
+ * Actualiza la fecha y hora en la interfaz
+ */
 function updateDateTime() {
     const timeElement = document.querySelector('.header__time');
     const dateElement = document.querySelector('.header__date');
-
     const now = new Date();
 
-    // Update time
     const timeOptions = {
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
         hour12: true
     };
-    timeElement.textContent = now.toLocaleTimeString('es-ES', timeOptions);
 
-    // Update date
     const dateOptions = {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     };
+
+    timeElement.textContent = now.toLocaleTimeString('es-ES', timeOptions);
     dateElement.textContent = now.toLocaleDateString('es-ES', dateOptions);
 }
 
+/**
+ * Valida el precio por acción
+ * @param {number} pricePerShare - Precio por acción
+ * @returns {boolean} - Estado de validación
+ */
 function validatePricePerShare(pricePerShare) {
-    const sharesItem = document.createElement('li');
-    sharesItem.classList.add('trading__validation-item');
-
-    if (pricePerShare < 0.01 || isNaN(pricePerShare)) {
+    const sharesItem = createValidationItem();
+    if (pricePerShare < CONFIG.MIN_PRICE || isNaN(pricePerShare)) {
         sharesItem.textContent = 'El precio debe ser mayor o igual a $0.01';
-        validationList.appendChild(sharesItem);
+        DOM_ELEMENTS.validationList.appendChild(sharesItem);
         return false;
     }
     return true;
 }
 
+/**
+ * Valida el número de acciones
+ * @param {number} numberOfShares - Número de acciones
+ * @returns {boolean} - Estado de validación
+ */
 function validateNumberOfShares(numberOfShares) {
+    const sharesItem = createValidationItem();
+    if (numberOfShares < CONFIG.MIN_SHARES || isNaN(numberOfShares)) {
+        sharesItem.textContent = 'Debe comprar al menos una acción';
+        DOM_ELEMENTS.validationList.appendChild(sharesItem);
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Crea un elemento de validación
+ * @returns {HTMLElement} - Elemento de validación
+ */
+function createValidationItem() {
     const sharesItem = document.createElement('li');
     sharesItem.classList.add('trading__validation-item');
-
-    if (numberOfShares < 1 || isNaN(numberOfShares)) {
-        sharesItem.textContent = 'Debe comprar al menos una acción';
-        validationList.appendChild(sharesItem);
-        return false;
-    }
-    return true;
+    return sharesItem;
 }
 
-
-// Define the isSymbolEmpty function
+/**
+ * Verifica si un símbolo está vacío
+ * @param {string} symbol - Símbolo a verificar
+ * @returns {boolean} - Estado de validación
+ */
 function isSymbolEmpty(symbol) {
     return symbol === '';
 }
 
+/**
+ * Limpia una tabla
+ * @param {HTMLElement} tableBody - Cuerpo de la tabla a limpiar
+ */
 function clearTable(tableBody) {
     while (tableBody.firstChild) {
         tableBody.removeChild(tableBody.firstChild);
     }
 }
 
+/**
+ * Gestiona la actualización de la tabla
+ * @returns {Promise<boolean>} - Estado de la actualización
+ */
 async function manageUpdateTable() {
-
     const tableBody = document.querySelector('.transactions__table tbody');
-
-    clearTable(tableBody); // Limpia todos los nodos existentes
+    clearTable(tableBody);
 
     const tableUpdated = await updateTable();
-
     if (!tableUpdated.success) {
-
-        document.querySelector('#one-btn-modal h2').textContent = '¡Error en la Tabla!';
-        document.querySelector('#one-btn-modal .success-icon').textContent = '⚠️';
-        document.querySelector('#one-btn-modal p').textContent = `${tableUpdated.message}`;
-
-        document.getElementById('one-btn-modal').style.display = 'flex';
-
+        showErrorModal('¡Error en la Tabla!', '⚠️', tableUpdated.message);
         return false;
-
-    } else {
-        return true;
     }
+    return true;
 }
 
-async function manageCretePurchase(tradingSymbol, companyName, pricePerShare, numberOfShares) {
+/**
+ * Gestiona la creación de una compra
+ * @param {string} tradingSymbol - Símbolo de trading
+ * @param {string} companyName - Nombre de la compañía
+ * @param {number} pricePerShare - Precio por acción
+ * @param {number} numberOfShares - Número de acciones
+ */
+async function managePurchase(tradingSymbol, companyName, pricePerShare, numberOfShares) {
     const result = await attemptPurchase(tradingSymbol, companyName, pricePerShare, numberOfShares);
+
     if (result.success) {
-
-        document.querySelector('.trading-symbol').value = '';
-        document.querySelector('.company-name').value = '';
-        document.querySelector('.price-share').value = '';
-        document.querySelector('.number-shares').value = '';
-
-        symbolTemp = '';
-        validated = false;
+        clearPurchaseForm();
+        resetState();
 
         const tableUpdated = await manageUpdateTable();
-        console.log(tableUpdated);
-
         if (tableUpdated) {
-
-            document.querySelector('#one-btn-modal h2').textContent = '¡Transacción Exitosa!';
-            document.querySelector('#one-btn-modal .success-icon').textContent = '✓';
-            document.querySelector('#one-btn-modal p').textContent = `${result.message}`;
-
-            document.getElementById('one-btn-modal').style.display = 'flex';
-
+            showSuccessModal('¡Transacción Exitosa!', '✓', result.message);
         }
-
     } else {
-        const sharesItem = document.createElement('li');
-        sharesItem.classList.add('trading__validation-item');
-        sharesItem.textContent = result.message;
-        validationList.appendChild(sharesItem);
-
-        document.querySelector('#one-btn-modal h2').textContent = '¡Error en la Compra!';
-        document.querySelector('#one-btn-modal .success-icon').textContent = '❌';
-        document.querySelector('#one-btn-modal p').textContent = `${result.message}`;
-
-        document.getElementById('one-btn-modal').style.display = 'flex';
+        showValidationError(result.message);
+        showErrorModal('¡Error en la Compra!', '❌', result.message);
     }
 }
 
-async function validateSymbol(symbol) {
-    const url = `http://localhost:3000/api/search-name/${symbol}`;
-    const sharesItem = document.createElement('li');
-    const error = 'Error en la búsqueda';
+/**
+ * Limpia el formulario de compra
+ */
+function clearPurchaseForm() {
+    document.querySelector('.trading-symbol').value = '';
+    document.querySelector('.company-name').value = '';
+    document.querySelector('.price-share').value = '';
+    document.querySelector('.number-shares').value = '';
+}
 
-    sharesItem.classList.add('trading__validation-item');
+/**
+ * Reinicia el estado
+ */
+function resetState() {
+    state.symbolTemp = '';
+    state.validated = false;
+}
+
+/**
+ * Muestra un mensaje de error de validación
+ * @param {string} message - Mensaje de error
+ */
+function showValidationError(message) {
+    const sharesItem = createValidationItem();
+    sharesItem.textContent = message;
+    DOM_ELEMENTS.validationList.appendChild(sharesItem);
+}
+
+/**
+ * Muestra un modal de error
+ * @param {string} title - Título del modal
+ * @param {string} icon - Ícono del modal
+ * @param {string} message - Mensaje del modal
+ */
+function showErrorModal(title, icon, message) {
+    const modal = document.getElementById('one-btn-modal');
+    modal.querySelector('h2').textContent = title;
+    modal.querySelector('.success-icon').textContent = icon;
+    modal.querySelector('p').textContent = message;
+    modal.style.display = 'flex';
+}
+
+/**
+ * Muestra un modal de éxito
+ * @param {string} title - Título del modal
+ * @param {string} icon - Ícono del modal
+ * @param {string} message - Mensaje del modal
+ */
+function showSuccessModal(title, icon, message) {
+    const modal = document.getElementById('one-btn-modal');
+    modal.querySelector('h2').textContent = title;
+    modal.querySelector('.success-icon').textContent = icon;
+    modal.querySelector('p').textContent = message;
+    modal.style.display = 'flex';
+}
+
+/**
+ * Valida un símbolo
+ * @param {string} symbol - Símbolo a validar
+ * @returns {Promise<string|number>} - Resultado de la validación
+ */
+async function validateSymbol(symbol) {
+    const url = `${CONFIG.API_BASE_URL}/search-name/${symbol}`;
+    const sharesItem = createValidationItem();
+    const error = 'Error en la búsqueda';
 
     if (!isSymbolEmpty(symbol)) {
         try {
             const response = await fetch(url);
             const data = await response.json();
             if (data.error === error) {
-                sharesItem.textContent = 'El símbolo no existe';
-                validationList.appendChild(sharesItem);
+                showValidationError('El símbolo no existe');
                 return 0;
-            } else {
-                symbolTemp = symbol;
-                return data.name;
             }
+            state.symbolTemp = symbol;
+            return data.name;
         } catch (error) {
-            sharesItem.textContent = 'El símbolo no existe';
-            validationList.appendChild(sharesItem);
+            showValidationError('El símbolo no existe');
             return -1;
         }
+    }
+
+    showValidationError('Debe insertar un símbolo');
+    return -1;
+}
+
+// Event Listeners
+function initializeEventListeners() {
+    // Toggle menu
+    DOM_ELEMENTS.menuToggle.addEventListener('click', () => {
+        DOM_ELEMENTS.searchPanel.classList.toggle('search-panel--active');
+    });
+
+    // Validate button
+    DOM_ELEMENTS.validateBtn.addEventListener('click', async () => {
+        const tradingSymbol = document.querySelector('.trading-symbol').value;
+        const companyName = document.querySelector('.company-name');
+
+        DOM_ELEMENTS.validationList.innerHTML = '';
+        DOM_ELEMENTS.validateBtn.textContent = 'Validando...';
+
+        const data = await validateSymbol(tradingSymbol.toUpperCase());
+        handleValidationResult(data, companyName);
+
+        DOM_ELEMENTS.validateBtn.textContent = 'Validar';
+    });
+
+    // Buy button
+    DOM_ELEMENTS.buyBtn.addEventListener('click', handleBuyButtonClick);
+
+    // Transaction buttons
+    DOM_ELEMENTS.confirmTransactionBtn.addEventListener('click', handleConfirmTransaction);
+    DOM_ELEMENTS.cancelTransactionBtn.addEventListener('click', closePurchaseModal);
+    DOM_ELEMENTS.closeModalBtn.addEventListener('click', closePurchaseModal);
+
+    // Modal button
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-btn-ok')) {
+            document.getElementById('one-btn-modal').style.display = 'none';
+        }
+    });
+
+    // Refresh button
+    DOM_ELEMENTS.refreshBtn.addEventListener('click', manageUpdateTable);
+
+    // Search button
+    DOM_ELEMENTS.searchBtn.addEventListener('click', handleSearch);
+
+    // Table and search results delegates
+    initializeTableDelegate();
+    initializeSearchResultsDelegate();
+}
+
+/**
+ * Maneja el resultado de la validación
+ * @param {string|number} data - Resultado de la validación
+ * @param {HTMLElement} companyName - Elemento del nombre de la compañía
+ */
+function handleValidationResult(data, companyName) {
+    if (data === 0 || data === -1) {
+        showValidationElements();
     } else {
-        sharesItem.textContent = 'Debe insertar un símbolo';
-        validationList.appendChild(sharesItem);
-        return -1;
+        companyName.value = data;
+        hideValidationElements();
+        state.validated = true;
     }
 }
 
-// Agrega un evento de clic al botón de alternar menú para mostrar/ocultar el panel de búsqueda
-menuToggle.addEventListener('click', () => {
-    searchPanel.classList.toggle('search-panel--active');
-});
+/**
+ * Muestra los elementos de validación
+ */
+function showValidationElements() {
+    DOM_ELEMENTS.validationList.style.display = 'flex';
+    DOM_ELEMENTS.validationItem.style.display = 'flex';
+}
 
-// Agrega un evento de clic al botón de validar
-validateBtn.addEventListener('click', async () => {
-    const tradingSymbol = document.querySelector('.trading-symbol').value;
-    const companyName = document.querySelector('.company-name');
+/**
+ * Oculta los elementos de validación
+ */
+function hideValidationElements() {
+    DOM_ELEMENTS.validationList.style.display = 'none';
+    DOM_ELEMENTS.validationItem.style.display = 'none';
+}
 
-    // Limpiar todos los items de la lista de validación
-    validationList.innerHTML = '';
-
-    // Cambiar el texto del botón de validar
-    validateBtn.textContent = 'Validando...';
-
-    let data = await validateSymbol(tradingSymbol.toUpperCase());
-
-    if (data === 0 || data === -1) {
-        validationList.style.display = 'flex';
-        validationItem.style.display = 'flex';
-    } else {
-        companyName.value = data;
-        validationList.style.display = 'none';
-        validationItem.style.display = 'none';
-        validated = true;
-    }
-
-    validateBtn.textContent = 'Validar';
-});
-
-// Agrega un evento de clic al botón de comprar
-buyBtn.addEventListener('click', async (event) => {
-
+/**
+ * Maneja el clic en el botón de compra
+ * @param {Event} event - Evento del clic
+ */
+async function handleBuyButtonClick(event) {
     event.preventDefault();
 
-    const tradingSymbol = document.querySelector('.trading-symbol').value;
-    const companyName = document.querySelector('.company-name').value;
-    console.log(companyName);
-    const pricePerShare = parseFloat(document.querySelector('.price-share').value);
-    const numberOfShares = parseInt(document.querySelector('.number-shares').value);
+    const purchaseData = getPurchaseFormData();
+    DOM_ELEMENTS.validationList.innerHTML = '';
 
-    // Limpiar todos los items de la lista de validación
-    validationList.innerHTML = '';
-
-    if (!isValidated() || !validateSymbolChange(tradingSymbol)) {
-        validationList.style.display = 'flex';
-        validationItem.style.display = 'flex';
-    } else if (!validatePricePerShare(pricePerShare) || !validateNumberOfShares(numberOfShares)) {
-        validationList.style.display = 'flex';
-        validationItem.style.display = 'flex';
+    if (!validatePurchaseData(purchaseData)) {
+        showValidationElements();
     } else {
-
-        const totalPurchase = pricePerShare * numberOfShares;
-
-        document.querySelector('.li__company-name span').textContent = companyName;
-        document.querySelector('.li__symbol span').textContent = tradingSymbol;
-        document.querySelector('.li__price span').textContent = pricePerShare.toFixed(2);
-        document.querySelector('.li__shares span').textContent = numberOfShares.toString();
-        document.querySelector('.total-purchase span').textContent = totalPurchase.toFixed(2);
-
-        document.getElementById('purchase-modal').style.display = 'flex';
+        updatePurchaseModal(purchaseData);
+        showPurchaseModal();
     }
+}
 
-});
+/**
+ * Obtiene los datos del formulario de compra
+ * @returns {Object} - Datos del formulario
+ */
+function getPurchaseFormData() {
+    return {
+        tradingSymbol: document.querySelector('.trading-symbol').value,
+        companyName: document.querySelector('.company-name').value,
+        pricePerShare: parseFloat(document.querySelector('.price-share').value),
+        numberOfShares: parseInt(document.querySelector('.number-shares').value)
+    };
+}
 
-confirmTransactionBtn.addEventListener('click', async () => {
+/**
+ * Valida los datos de compra
+ * @param {Object} data - Datos a validar
+ * @returns {boolean} - Estado de validación
+ */
+function validatePurchaseData(data) {
+    return isValidated() &&
+        validateSymbolChange(data.tradingSymbol) &&
+        validatePricePerShare(data.pricePerShare) &&
+        validateNumberOfShares(data.numberOfShares);
+}
 
-    const tradingSymbol = document.querySelector('.trading-symbol').value;
-    const companyName = document.querySelector('.company-name').value;
-    const pricePerShare = parseFloat(document.querySelector('.price-share').value);
-    const numberOfShares = parseInt(document.querySelector('.number-shares').value);
+/**
+ * Actualiza el modal de compra
+ * @param {Object} data - Datos para el modal
+ */
+function updatePurchaseModal(data) {
+    const totalPurchase = data.pricePerShare * data.numberOfShares;
 
+    document.querySelector('.li__company-name span').textContent = data.companyName;
+    document.querySelector('.li__symbol span').textContent = data.tradingSymbol;
+    document.querySelector('.li__price span').textContent = data.pricePerShare.toFixed(2);
+    document.querySelector('.li__shares span').textContent = data.numberOfShares.toString();
+    document.querySelector('.total-purchase span').textContent = totalPurchase.toFixed(2);
+}
+
+/**
+ * Muestra el modal de compra
+ */
+function showPurchaseModal() {
+    document.getElementById('purchase-modal').style.display = 'flex';
+}
+
+/**
+ * Cierra el modal de compra
+ */
+function closePurchaseModal() {
     document.getElementById('purchase-modal').style.display = 'none';
+}
 
-    await manageCretePurchase(tradingSymbol, companyName, pricePerShare, numberOfShares);
+/**
+ * Maneja la confirmación de la transacción
+ */
+async function handleConfirmTransaction() {
+    const data = getPurchaseFormData();
+    closePurchaseModal();
+    await managePurchase(data.tradingSymbol, data.companyName, data.pricePerShare, data.numberOfShares);
+}
 
-});
-
-cancelTransactionBtn.addEventListener('click', () => {
-    document.getElementById('purchase-modal').style.display = 'none';
-});
-
-closeModalBtn.addEventListener('click', () => {
-    document.getElementById('purchase-modal').style.display = 'none';
-});
-
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('modal-btn-ok')) {
-        document.getElementById('one-btn-modal').style.display = 'none';
-    }
-});
-
-refreshBtn.addEventListener('click', async () => {
-    await manageUpdateTable();
-});
-
-searchBtn.addEventListener('click', async () => {
-
+/**
+ * Maneja la búsqueda
+ */
+async function handleSearch() {
     const searchQuery = document.querySelector('.search-panel__input').value;
-    const regex = /^[^a-zA-Z]*$/;
+    const resultsContainer = DOM_ELEMENTS.searchPanel.querySelector('.search-panel__results');
+    const invalidCharsRegex = /^[^a-zA-Z]*$/;
 
-
-    let resultsContainer = searchPanel.querySelector('.search-panel__results');
-
-    resultsContainer.innerHTML = `<div class="search-panel__no-results">Buscando...</div>`;
+    resultsContainer.innerHTML = '<div class="search-panel__no-results">Buscando...</div>';
 
     if (!searchQuery.trim()) {
-        resultsContainer.innerHTML = `<div class="search-panel__no-results">Entrada vacía...</div>`;
+        resultsContainer.innerHTML = '<div class="search-panel__no-results">Entrada vacía...</div>';
         return;
     }
 
-    if (regex.test(searchQuery)) {
-        resultsContainer.innerHTML = `<div class="search-panel__no-results">Caracteres inválidos...</div>`;
+    if (invalidCharsRegex.test(searchQuery)) {
+        resultsContainer.innerHTML = '<div class="search-panel__no-results">Caracteres inválidos...</div>';
         return;
     }
 
     const result = await fetchAndDisplaySearchResults(searchQuery);
-    console.log(result);
     if (!result.success) {
         console.error(result.message);
     }
-});
+}
 
-// Agrega un evento de clic al botón de actualizar tabla
-document.addEventListener('DOMContentLoaded', () => {
-
-    // Agregar la delegación de eventos para los botones de eliminar
+/**
+ * Inicializa el delegado de la tabla
+ */
+function initializeTableDelegate() {
     document.querySelector('.transactions__table').addEventListener('click', async (event) => {
         const deleteBtn = event.target.closest('.transactions__delete-btn');
         if (deleteBtn) {
-            const id = deleteBtn.id;
-            await deletePurchase(id);
-
-            await manageUpdateTable();
+            await handleDeletePurchase(deleteBtn.id);
         }
     });
+}
 
+/**
+ * Maneja la eliminación de una compra
+ * @param {string} purchaseId - ID de la compra a eliminar
+ */
+async function handleDeletePurchase(purchaseId) {
+    await deletePurchase(purchaseId);
+    await manageUpdateTable();
+}
+
+/**
+ * Inicializa el delegado de resultados de búsqueda
+ */
+function initializeSearchResultsDelegate() {
     document.querySelector('.search-panel__results').addEventListener('click', async (event) => {
         const copyBtn = event.target.closest('.search-panel__copy-btn');
         if (copyBtn) {
-            const symbol = copyBtn.id;
-            try {
-                await navigator.clipboard.writeText(symbol);
-                const element = document.getElementById(`${symbol}`);
-                element.style.color = '#47A7FF';
-                setTimeout(() => {
-                    element.style.color = '#0041FF';
-                }, 2000);
-            } catch (err) {
-                console.error('Failed to copy symbol:', err);
-            }
+            await handleSymbolCopy(copyBtn.id);
         }
     });
-});
-setInterval(updateDateTime, 1000);
+}
 
-// Initial update
-updateDateTime();
+/**
+ * Maneja la copia de un símbolo
+ * @param {string} symbol - Símbolo a copiar
+ */
+async function handleSymbolCopy(symbol) {
+    try {
+        await navigator.clipboard.writeText(symbol);
+        const element = document.getElementById(symbol);
+        animateCopyButton(element);
+    } catch (error) {
+        console.error('Error al copiar el símbolo:', error);
+    }
+}
 
-// Llamar a la función updateTable al cargar la página
-window.addEventListener('load',  manageUpdateTable());
+/**
+ * Anima el botón de copiar
+ * @param {HTMLElement} element - Elemento a animar
+ */
+function animateCopyButton(element) {
+    element.style.color = '#47A7FF';
+    setTimeout(() => {
+        element.style.color = '#0041FF';
+    }, 2000);
+}
+
+/**
+ * Inicializa la aplicación
+ */
+function initializeApp() {
+    initializeEventListeners();
+    setInterval(updateDateTime, CONFIG.UPDATE_INTERVAL);
+    updateDateTime();
+    window.addEventListener('load', manageUpdateTable);
+}
+
+// Inicialización de la aplicación
+initializeApp();

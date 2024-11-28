@@ -15,10 +15,9 @@ async function updateTable() {
             await calculateTableValues(purchase);
         }
 
-        return { success: false };
+        return { success: true };
     } catch (error) {
-        console.error('Error al obtener las compras:', error.message);
-        return { success: false, message: `${error.message}` };
+        return { success: false, message: `Error al actualizar la tabla: ${error.message}` };
     }
 }
 
@@ -77,6 +76,7 @@ async function calculateTableValues(purchase) {
 
         let data = {
             id: purchase.purchaseId,
+            date: purchase.date,
             symbol: symbol,
             company: purchase.companyName,
             pricePerShare: pricePerShare,
@@ -120,6 +120,7 @@ function addRowToTable(data) {
 
     row.innerHTML = `
         <td class="transactions__cell">#${data.id}</td>
+        <td class="transactions__cell">${data.date}</td>
         <td class="transactions__cell transactions__cell--symbol">${data.symbol}</td>
         <td class="transactions__cell">${data.company}</td>
         <td class="transactions__cell">$${data.pricePerShare.toFixed(2)}</td>
@@ -137,12 +138,5 @@ function addRowToTable(data) {
     `;
     tableBody.appendChild(row);
 }
-
-refreshBtn.addEventListener('click', async () => {
-    await updateTable();
-});
-
-// Llamar a la función updateTable al cargar la página
-window.addEventListener('load', updateTable);
 
 export { updateTable, deletePurchase, addRowToTable };

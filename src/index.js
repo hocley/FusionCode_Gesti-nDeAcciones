@@ -14,7 +14,6 @@ const searchBtn = document.querySelector('.search-panel__btn');
 const confirmTransactionBtn = document.querySelector('.purchase-modal-btn-confirm');
 const cancelTransactionBtn = document.querySelector('.purchase-modal-btn-cancel');
 const closeModalBtn = document.querySelector('.close-modal');
-const okBtn = document.querySelector('.modal-btn-ok');
 
 // Variable para almacenar el símbolo actual
 let symbolTemp = '';
@@ -45,6 +44,31 @@ function validateSymbolChange(tradingSymbol) {
     return true;
 }
 
+function updateDateTime() {
+    const timeElement = document.querySelector('.header__time');
+    const dateElement = document.querySelector('.header__date');
+
+    const now = new Date();
+
+    // Update time
+    const timeOptions = {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    };
+    timeElement.textContent = now.toLocaleTimeString('es-ES', timeOptions);
+
+    // Update date
+    const dateOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+    dateElement.textContent = now.toLocaleDateString('es-ES', dateOptions);
+}
+
 function validatePricePerShare(pricePerShare) {
     const sharesItem = document.createElement('li');
     sharesItem.classList.add('trading__validation-item');
@@ -73,6 +97,74 @@ function validateNumberOfShares(numberOfShares) {
 // Define the isSymbolEmpty function
 function isSymbolEmpty(symbol) {
     return symbol === '';
+}
+
+function clearTable(tableBody) {
+    while (tableBody.firstChild) {
+        tableBody.removeChild(tableBody.firstChild);
+    }
+}
+
+async function manageUpdateTable() {
+
+    const tableBody = document.querySelector('.transactions__table tbody');
+    
+    clearTable(tableBody); // Limpia todos los nodos existentes
+    
+    const tableUpdated = await updateTable();
+
+    if (!tableUpdated.success) {
+
+        document.querySelector('#one-btn-modal h2').textContent = '¡Error en la Tabla!';
+        document.querySelector('#one-btn-modal .success-icon').textContent = '⚠️';
+        document.querySelector('#one-btn-modal p').textContent = `${tableUpdated.message}`;
+
+        document.getElementById('one-btn-modal').style.display = 'flex';
+        
+        return false;
+
+    } else {
+        return true;
+    }
+}
+
+async function manageCretePurchase(tradingSymbol, companyName, pricePerShare, numberOfShares) {
+    const result = await attemptPurchase(tradingSymbol, companyName, pricePerShare, numberOfShares);
+    if (result.success) {
+
+        document.querySelector('.trading-symbol').value = '';
+        document.querySelector('.company-name').value = '';
+        document.querySelector('.price-share').value = '';
+        document.querySelector('.number-shares').value = '';
+
+        symbolTemp = '';
+        validated = false;
+
+        const tableUpdated = await manageUpdateTable();
+        console.log(tableUpdated);
+
+        if (tableUpdated) {
+
+            document.querySelector('#one-btn-modal h2').textContent = '¡Transacción Exitosa!';
+            document.querySelector('#one-btn-modal .success-icon').textContent = '✓';
+            document.querySelector('#one-btn-modal p').textContent = `${result.message}`;
+
+            document.getElementById('one-btn-modal').style.display = 'flex';
+
+        }
+
+    } else {
+        const sharesItem = document.createElement('li');
+        sharesItem.classList.add('trading__validation-item');
+        sharesItem.textContent = result.message;
+        validationList.appendChild(sharesItem);
+
+        document.querySelector('#one-btn-modal h2').textContent = '¡Error en la Compra!';
+        document.querySelector('#one-btn-modal .success-icon').textContent = '❌';
+        document.querySelector('#one-btn-modal p').textContent = `${result.message}`;
+
+        document.getElementById('one-btn-modal').style.display = 'flex';
+    }
 }
 
 async function validateSymbol(symbol) {
@@ -180,43 +272,8 @@ confirmTransactionBtn.addEventListener('click', async () => {
 
     document.getElementById('purchase-modal').style.display = 'none';
     
-    
-        const result = await attemptPurchase(tradingSymbol.toUpperCase(), companyName, pricePerShare, numberOfShares);
-        console.log(result.success);
-        if (result.success) {
+    await manageCretePurchase(tradingSymbol, companyName, pricePerShare, numberOfShares);
 
-            document.querySelector('.trading-symbol').value = '';
-            document.querySelector('.company-name').value = '';
-            document.querySelector('.price-share').value = '';
-            document.querySelector('.number-shares').value = '';
-
-            symbolTemp = '';
-            validated = false;
-
-            const tableUpdated = await updateTable();
-            console.log(tableUpdated);
-
-            if (!tableUpdated.success) {
-                const sharesItem = document.createElement('li');
-                sharesItem.classList.add('trading__validation-item');
-                sharesItem.textContent = tableUpdated.message;
-                validationList.appendChild(sharesItem);
-                document.getElementById('warning-modal').style.display = 'flex';
-
-            } else {
-
-                document.querySelector('#success-modal h2').textContent = '¡Transacción Exitosa!';
-                document.querySelector('#success-modal .success-icon').textContent = '✓';
-                document.querySelector('#success-modal p').textContent = 'Compra realizada con éxito';
-
-                document.getElementById('success-modal').style.display = 'flex';
-            }
-        } else {
-            const sharesItem = document.createElement('li');
-            sharesItem.classList.add('trading__validation-item');
-            sharesItem.textContent = result.message;
-            validationList.appendChild(sharesItem);
-        }
 });
 
 cancelTransactionBtn.addEventListener('click', () => {
@@ -229,19 +286,12 @@ closeModalBtn.addEventListener('click', () => {
 
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('modal-btn-ok')) {
-        document.getElementById('success-modal').style.display = 'none';
-        document.getElementById('warning-modal').style.display = 'none';
+        document.getElementById('one-btn-modal').style.display = 'none';
     }
 });
 
 refreshBtn.addEventListener('click', async () => {
-    const tableUpdated = await updateTable();
-    if (!tableUpdated.success) {
-        const sharesItem = document.createElement('li');
-        sharesItem.classList.add('trading__validation-item');
-        sharesItem.textContent = tableUpdated.message;
-        validationList.appendChild(sharesItem);
-    }
+    await manageUpdateTable();
 });
 
 searchBtn.addEventListener('click', async () => {
@@ -267,7 +317,6 @@ searchBtn.addEventListener('click', async () => {
     const result = await fetchAndDisplaySearchResults(searchQuery);
     console.log(result);
     if (!result.success) {
-        //TODO MOSTRAR VENTANA MODAL
         console.error(result.message);
     }
 });
@@ -281,7 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (deleteBtn) {
             const id = deleteBtn.id;
             await deletePurchase(id);
-            await updateTable();
+            
+            await manageUpdateTable();
         }
     });
 
@@ -302,6 +352,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+setInterval(updateDateTime, 1000);
+
+// Initial update
+updateDateTime();
 
 // Llamar a la función updateTable al cargar la página
-window.addEventListener('load', updateTable);
+window.addEventListener('load',  updateTable());

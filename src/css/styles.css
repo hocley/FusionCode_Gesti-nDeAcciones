@@ -541,6 +541,65 @@ td {
     color: white;
 }
 
+/* DateTime styles */
+.header {
+    height: 80px;
+    background-color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative; /* Added for absolute positioning of datetime */
+}
+
+/* DateTime styles - now absolutely positioned */
+.header__datetime {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    padding: 0.5rem 1.5rem;
+}
+
+.header__time {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-blue);
+    text-align: center;
+}
+
+.header__date {
+    font-size: 0.9rem;
+    color: var(--gray);
+    margin-top: 0.2rem;
+    text-align: center;
+}
+
+/* Update header media query */
+@media (max-width: 768px) {
+    .header__datetime {
+        padding: 0.3rem 0.8rem;
+    }
+
+    .header__time {
+        font-size: 1.2rem;
+    }
+
+    .header__date {
+        font-size: 0.8rem;
+    }
+
+    /* Ensure the datetime component doesn't overlap with the logo on small screens */
+    .header__logo-container {
+        margin-right: auto;
+    }
+}
+
 /* Base modal styles */
 .modal {
     display: none;
@@ -620,11 +679,11 @@ td {
 }
 
 /* Success modal specific styles */
-#success-modal .modal-content {
+#one-btn-modal .modal-content {
     text-align: center;
 }
 
-#success-modal .success-icon {
+#one-btn-modal .success-icon {
     color: var(--primary-blue);
     font-size: 5rem;
     margin: 2rem 0;
@@ -671,14 +730,14 @@ td {
     margin: auto;
 }
 
-#success-modal .success-icon {
+#one-btn-modal .success-icon {
     color: var(--primary-blue);
     font-size: 5rem;
     margin: 2rem 0;
     animation: scaleIn 0.5s ease;
 }
 
-#success-modal .modal-message {
+#one-btn-modal .modal-message {
     text-align: center;
 }
 

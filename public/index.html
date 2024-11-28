@@ -14,6 +14,10 @@
         <div class="header__logo" style="background-image: url('../src/content/logo_fusioncode80.png')"></div>
         <div class="header__logo-text">FC ShareFlow</div>
     </div>
+    <div class="header__datetime">
+        <div class="header__time"></div>
+        <div class="header__date"></div>
+    </div>
     <div class="header__created-by">Created by FusionCode</div>
 </nav>
 
@@ -81,6 +85,7 @@
                 <thead>
                 <tr class="transactions__header">
                     <th>ID</th>
+                    <th>Fecha</th>
                     <th>Símbolo</th>
                     <th>Compañía</th>
                     <th>Precio/Acción</th>
@@ -121,12 +126,14 @@
     </div>
 </div>
 
-<div id="success-modal" class="modal">
+<div id="one-btn-modal" class="modal">
     <div class="modal-content">
         <h2>¡Transacción Exitosa!</h2>
         <div class="success-icon">✓</div>
         <p class="modal-message">Compra realizada con éxito</p>
+        <div class="modal-buttons">
         <button class="modal-btn modal-btn-primary modal-btn-ok">OK</button>
+        </div>
     </div>
 </div>
 
@@ -140,4 +147,5 @@
         </div>
     </div>
 </div>
+
 </html>

@@ -12,9 +12,10 @@ const createPurchase = async (req, res) => {
 
         // Generar el ID único de compra
         const purchaseId = generateUniqueId();
-
+        const date = new Date().toISOString().split('T')[0];
         const newPurchase = new Purchase({
             purchaseId,
+            date,
             symbol,
             companyName,
             stockPrice,

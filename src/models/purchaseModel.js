@@ -7,6 +7,10 @@ const purchaseSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    date: {
+        type: String,
+        required: true,
+    },
     symbol: {
         type: String,
         required: true,

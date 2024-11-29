@@ -49,4 +49,25 @@ async function attemptPurchase(simboloAccion, nombreEmpresa, precioPorAccion, ca
     }
 }
 
-export { attemptPurchase };
+/**
+ * Elimina una compra del sistema por su ID.
+ *
+ * @param {number} id - Identificador de la compra a eliminar.
+ * @returns {Promise<{success: boolean}>}
+ */
+async function deletePurchase(id) {
+    const url = `http://localhost:3000/db/delete-purchase/${id}`;
+
+    try {
+        const respuesta = await fetch(url, { method: 'DELETE' });
+        if (!respuesta.ok) {
+            throw new Error('Error al eliminar la compra');
+        }
+        return { success: true };
+    } catch (error) {
+        console.error('Error al eliminar la compra:', error.message);
+        return { success: false, message: error.message };
+    }
+}
+
+export { attemptPurchase, deletePurchase };

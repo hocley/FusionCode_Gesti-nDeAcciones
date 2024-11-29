@@ -1,11 +1,18 @@
+/**
+ * Módulo para interactuar con la API de Finnhub
+ */
 const axios = require('axios');
 const dotenv = require('dotenv');
-
 dotenv.config({ path: '../../config/.env' });
 
-const API_KEY = process.env.FINNHUB_API_KEY;
+const API_KEY = process.env.FINNHUB_API_KEY; // Clave de API para autenticación
 
-// Función para obtener el precio actual de una acción
+/**
+ * Obtiene el precio actual de una acción
+ * @param {string} symbol - Símbolo de la acción
+ * @returns {Promise<number>} - Precio actual de la acción
+ * @throws {Error} - Si no se puede obtener el precio de la acción
+ */
 const getStockPrice = async (symbol) => {
     const url = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`;
 
@@ -29,7 +36,12 @@ const getStockPrice = async (symbol) => {
     }
 };
 
-// Funcion para buscar el nombre de la empresa por el símbolo
+/**
+ * Busca el nombre de la empresa por el símbolo
+ * @param {string} symbol - Símbolo de la acción
+ * @returns {Promise<Object>} - Nombre de la empresa
+ * @throws {Error} - Si no se puede obtener el símbolo
+ */
 const getOneSymbolSearch = async (symbol) => {
     const url = `https://finnhub.io/api/v1/search?q=${symbol}&token=${API_KEY}`;
 
@@ -57,9 +69,13 @@ const getOneSymbolSearch = async (symbol) => {
     }
 };
 
-// Funcion para obtener el cambio de precio de una acción
+/**
+ * Obtiene el cambio de precio de una acción
+ * @param {string} symbol - Símbolo de la acción
+ * @returns {Promise<Object>} - Último precio y precio de cierre previo
+ * @throws {Error} - Si no se pueden obtener los precios
+ */
 const getStockChange = async (symbol) => {
-
     const url = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`;
 
     try {
@@ -81,4 +97,5 @@ const getStockChange = async (symbol) => {
 };
 
 
+// Exporta las funciones del módulo
 module.exports = { getStockPrice, getOneSymbolSearch, getStockChange };

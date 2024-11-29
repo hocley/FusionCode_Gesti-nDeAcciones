@@ -1,6 +1,6 @@
 // Importaciones de módulos
-import {attemptPurchase} from './integration/stockPurchases.js';
-import {updateTable, deletePurchase} from './integration/updateTables.js';
+import {attemptPurchase, deletePurchase} from './integration/stockPurchases.js';
+import {updateTable} from './integration/updateTables.js';
 import {fetchAndDisplaySearchResults} from './integration/updatePanel.js';
 
 // Constantes para elementos DOM

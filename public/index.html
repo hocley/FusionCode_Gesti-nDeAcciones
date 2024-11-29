@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShareFlow</title>
+    <link rel="icon" href="../src/content/icon_fusioncode.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../src/css/styles.css">
+</head>
+<body>
+<!-- Header -->
+<nav class="header">
+    <div class="header__logo-container">
+        <div class="header__logo" style="background-image: url('../src/content/logo_fusioncode80.png')"></div>
+        <div class="header__logo-text">ShareFlow</div>
+    </div>
+    <div class="header__datetime">
+        <div class="header__time"></div>
+        <div class="header__date"></div>
+    </div>
+    <div class="header__created-by">Powered by FusionCode</div>
+</nav>
+
+<!-- Panel de búsqueda -->
+<div class="search-hint">Buscar Símbolos</div>
+<button class="menu-toggle">
+    <i class="fas fa-bars"></i>
+</button>
+<div class="search-panel">
+    <div class="search-panel__container">
+        <input type="text" class="search-panel__input" placeholder="Buscar empresa...">
+        <button class="search-panel__btn">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+    <div class="search-panel__results">
+        <div class="search-panel__no-results">Ingresa el nombre de la compañía</div>
+    </div>
+</div>
+
+<!-- Main -->
+<main class="main">
+    <!-- Sección de compra -->
+    <div class="trading">
+        <h2 class="transactions__title">Trading</h2>
+        <form class="trading__form">
+            <div class="trading__form-group">
+                <label class="trading__label">Símbolo</label>
+                <div class="trading__input-container">
+                    <input type="text" class="trading__input trading-symbol" placeholder="e.j. AAPL">
+                    <button type="button" class="trading__validate-btn">Validar</button>
+                </div>
+            </div>
+            <div class="trading__form-group">
+                <label class="trading__label">Compañía</label>
+                <input type="text" class="trading__input input-readonly company-name" readonly value="">
+            </div>
+            <div class="trading__form-group">
+                <label class="trading__label">Precio por acción ($)</label>
+                <input type="number" class="trading__input price-share" step="0.01" placeholder="0.00" min="0.01">
+            </div>
+            <div class="trading__form-group">
+                <label class="trading__label">Número de acciones</label>
+                <input type="number" class="trading__input number-shares" placeholder="0" min="1">
+            </div>
+            <div class="trading__validations">
+                <ul class="trading__validation-list">
+                    <li class="trading__validation-item"></li>
+                </ul>
+            </div>
+            <div class="trading__button-container">
+                <button type="submit" class="trading__buy-btn">Registrar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Sección de transacciones recientes -->
+    <div class="transactions">
+        <div class="transactions__header-container">
+            <h2 class="transactions__title">Transacciones Recientes</h2>
+            <button class="transactions__refresh-btn">Actualizar</button>
+        </div>
+        <div class="transactions__wrapper">
+            <table class="transactions__table">
+                <thead>
+                <tr class="transactions__header">
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Símbolo</th>
+                    <th>Compañía</th>
+                    <th>Precio/Acción ($)</th>
+                    <th>Acciones</th>
+                    <th>Total ($)</th>
+                    <th>Cambio 24h</th>
+                    <th>Precio actual ($)</th>
+                    <th>Ganancia/ Pérdida %</th>
+                    <th>Ganancia/ Pérdida ($)</th>
+                    <th>Total Actual ($)</th>
+                    <th>Eliminar</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer__content">
+        <div class="footer__logo-container">
+            <div class="footer__logo" style="background-image: url('../src/content/logo_fusioncode_white80.png')"></div>
+            <span class="footer__text">FusionCode</span>
+        </div>
+        <div class="footer__links"></div>
+    </div>
+    <div class="footer__copyright">© 2024 FusionCode. Todos los derechos reservados.</div>
+</footer>
+
+<!-- Ventanas modales -->
+<div id="purchase-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Confirmar transacción</h2>
+        <p>Datos de transacción:</p>
+        <ul>
+            <li class="li__company-name">Compañia:<span></span></li>
+            <li class="li__symbol">Símbolo:<span></span></li>
+            <li class="li__price">Precio:<span></span></li>
+            <li class="li__shares">Acciones:<span></span></li>
+            <li class="total-purchase">Total:<span></span></li>
+        </ul>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-secondary purchase-modal-btn-cancel">Cancelar</button>
+            <button class="modal-btn modal-btn-primary purchase-modal-btn-confirm">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+<div id="delete-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal close-delete-modal">&times;</span>
+        <h2>Eliminar Transacción</h2>
+        <p>Datos de transacción:</p>
+        <ul>
+            <li class="li__id-purchase">ID:<span></span></li>
+        </ul>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-secondary delete-modal-btn-cancel">Cancelar</button>
+            <button class="modal-btn modal-btn-primary delete-modal-btn-confirm">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+<div id="one-btn-modal" class="modal">
+    <div class="modal-content">
+        <h2>¡Transacción Exitosa!</h2>
+        <div class="success-icon">✓</div>
+        <p class="modal-message">Compra realizada con éxito</p>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-primary modal-btn-ok">OK</button>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="../src/index.js" type="module"></script>
+</body>
+</html>

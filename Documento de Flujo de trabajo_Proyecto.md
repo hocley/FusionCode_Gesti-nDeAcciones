@@ -1,8 +1,8 @@
-﻿**Documento de Flujo de Trabajo: Git Feature Branch Workflow**
+﻿# **Documento de Flujo de Trabajo: Gitflow Workflow**
 
 **Proyecto:** Gestión de Acciones
 
-1\. Principales Ramas
+## 1\. Principales Ramas
 
 - **main:**
   - Representa la rama de producción.
@@ -17,7 +17,7 @@
   - bugfix/<nombre>: Ramas creadas para solucionar errores encontrados en develop.
   - hotfix/<nombre>: Ramas creadas para solucionar errores críticos en producción y que deben ser aplicado a main.
 
-2\. Convenciones de Nombres de Ramas
+## 2\. Convenciones de Nombres de Ramas
 
 Usar nombres descriptivos para las ramas que identifiquen claramente el propósito de la misma:
 
@@ -30,7 +30,7 @@ Usar nombres descriptivos para las ramas que identifiquen claramente el propósi
 - **Lanzamientos**:
   - release/<versión>: release/1.0, release/2.1
 
-3\. Reglas del Flujo de Trabajo
+## 3\. Reglas del Flujo de Trabajo
 
 - **No trabajar directamente en main o develop**:
   - Todas las tareas deben desarrollarse en ramas específicas.
@@ -41,27 +41,27 @@ Usar nombres descriptivos para las ramas que identifiquen claramente el propósi
 - **Mantener actualizado el entorno local**:
   - Antes de comenzar cualquier trabajo, actualiza tu rama: git pull origin develop
 
-4\. Ejemplo de Flujo Completo
+## 4\. Ejemplo de Flujo Completo
 
-1. **Crear una nueva funcionalidad para registrar compras:**
+### 1. **Crear una nueva funcionalidad para registrar compras:**
 
    git checkout develop
 
    git checkout -b feature/registro-compra
 
-1. **Desarrollar y realizar commits:**
+### 2. **Desarrollar y realizar commits:**
 
    git commit -m "feat(compra): agregar formulario para registro de compras"
 
    git push origin feature/registro-compra
 
-1. **Fusionar la rama en develop:**
+### 3. **Fusionar la rama en develop:**
 
    git checkout develop
 
    git merge feature/registro-compra
 
-1. **Lanzar una nueva versión desde develop hacia main:**
+### 4. **Lanzar una nueva versión desde develop hacia main:**
 
    git checkout main
 

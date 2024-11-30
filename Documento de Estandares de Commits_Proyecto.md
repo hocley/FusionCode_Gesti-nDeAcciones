@@ -1,12 +1,12 @@
-**Documento de Estándares de Commits**
+# **Documento de Estándares de Commits**
 
 **Proyecto:** Gestión de Acciones
 
-1\. Objetivo
+## 1\. Objetivo
 
 Definir un estándar para los mensajes de commit en el repositorio del proyecto "Gestión de Acciones". Seguir estas convenciones ayudará a que el historial de commits sea claro, consistente y fácil de seguir, facilitando la colaboración y revisión de código y auditoria en cambios en el proyecto.
 
-2\. Formato del Mensaje de Commit
+## 2\. Formato del Mensaje de Commit
 
 Cada mensaje de commit debe seguir el siguiente formato:
 
@@ -20,7 +20,7 @@ Ejemplo:
 
 feat(compra): agregar función de registro de compra de acciones
 
-3\. Tipos de Commit
+## 3\. Tipos de Commit
 
 Se presenta una lista de los tipos de commit que se deben utilizar en el punto 2.
 
@@ -37,7 +37,7 @@ Se presenta una lista de los tipos de commit que se deben utilizar en el punto 2
 - _task_: Cambios menores o tareas de mantenimiento que no afectan la funcionalidad (actualización de configuraciones).
 - **Ejemplo:** task: actualizar dependencias en package.json
 
-4\. Buenas prácticas de los Commits
+## 4\. Buenas prácticas de los Commits
 
 - **Usar el tiempo presente**: Los mensajes deben describir lo que hace el commit, no lo que hizo.
   - Correcto: fix(api): corregir error en la consulta
@@ -46,7 +46,7 @@ Se presenta una lista de los tipos de commit que se deben utilizar en el punto 2
 - **Evitar mensajes genéricos**: Mensajes como update o changes, ya que no son descriptivos y dificultan la comprensión del historial.
 - **Incluir detalles adicionales cuando sea relevante:** Para cambios complejos, agrega una descripción detallada en el cuerpo del commit.
 
-Formato:
+### Formato:
 
 &lt;tipo&gt;(&lt;módulo&gt;): &lt;mensaje breve&gt;
 
@@ -54,14 +54,14 @@ Formato:
 
 - **Realizar commits frecuentemente:** Es mejor hacer varios commits pequeños con cambios específicos que un commit grande con múltiples cambios. Esto facilita la revisión y el control de versiones.
 
-5\. Control de versiones del producto
+## 5\. Control de versiones del producto
 
 **Formato: Mayor.Menor (XY)**
 
 - **Mayor (X)** : Incrementa cuando se realizan cambios importantes o incompatibles con versiones anteriores.
 - **Menor (Y)** : Incrementa cuando se agregan nuevas funciones o mejoras que son compatibles con versiones anteriores.
 
-**Ejemplos de cuándo incrementar cada versión:**
+### **Ejemplos de cuándo incrementar cada versión:**
 
 **1\. Versión Mayor (X)** : Cambios importantes
 

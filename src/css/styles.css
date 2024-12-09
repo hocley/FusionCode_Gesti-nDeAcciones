@@ -1,3 +1,31 @@
+@font-face {
+    font-family: 'SF Custom';
+    src: url('../fonts/SFUIText-RegularG3.otf') format('opentype'); /* Fuente regular */
+    font-weight: 400; /* Regular */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Custom';
+    src: url('../fonts/SFUIText-BoldG3.otf') format('opentype'); /* Fuente bold */
+    font-weight: 700; /* Bold */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Custom';
+    src: url('../fonts/SFUIText-BoldItalicG3.otf') format('opentype'); /* Fuente regular italic */
+    font-weight: 400; /* Regular */
+    font-style: italic; /* Italic */
+}
+
+@font-face {
+    font-family: 'SF Custom';
+    src: url('../fonts/SFUIText-BoldItalicG3.otf') format('opentype'); /* Fuente bold italic */
+    font-weight: 700; /* Bold */
+    font-style: italic; /* Italic */
+}
+
 :root {
     --primary-blue: #0F29F4;
     --secondary-blue: #47A7FF;
@@ -13,7 +41,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: "SF Custom", sans-serif;
 }
 
 body {

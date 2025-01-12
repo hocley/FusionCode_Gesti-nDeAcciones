@@ -36,3 +36,25 @@
     --success-green: #22c55e;
     --danger-red: #ef4444;
 }
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "SF Custom", sans-serif;
+}
+
+body {
+    background-color: var(--light-gray);
+}
+
+
+/* Adjust main content to account for footer */
+.main {
+    padding: 2rem;
+    max-width: 1200px;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-bottom: 100px; /* Add margin to prevent content from being hidden by footer */
+}

@@ -1,6 +1,6 @@
 // Importaciones de módulos
 import {attemptPurchase} from '../../backend/src/domain/tradingPanel.js';
-import {updateTable} from '../../backend/src/domain/recentTransactionsPanel.js';
+import {updateTable, sortTableRows} from '../../backend/src/domain/recentTransactionsPanel.js';
 import {fetchAndDisplaySearchResults} from '../../backend/src/domain/searchPanel.js';
 
 // Constantes para elementos DOM
@@ -187,8 +187,9 @@ function clearTable(tableBody) {
 async function manageUpdateTable() {
     const refreshBtn = DOM_ELEMENTS.refreshBtn;
     const tableBody = document.querySelector('.transactions__table tbody');
-
-    // Cambiar el texto del botón a "Actualizando..."
+    const sortDropdown = document.getElementById('sort-transactions'); // Selecciona el dropdown de filtros
+    sortDropdown.value = 'default';
+    
     refreshBtn.textContent = 'Actualizando...';
 
     clearTable(tableBody);
@@ -324,13 +325,14 @@ function initializeEventListeners() {
 
     // Validate button
     DOM_ELEMENTS.validateBtn.addEventListener('click', async () => {
-        const tradingSymbol = document.querySelector('.trading-symbol').value;
+        const tradingSymbol = document.querySelector('.trading-symbol').value.toUpperCase();
         const companyName = document.querySelector('.company-name');
 
         DOM_ELEMENTS.validationList.innerHTML = '';
         DOM_ELEMENTS.validateBtn.textContent = 'Validando...';
 
-        const data = await validateSymbol(tradingSymbol.toUpperCase());
+
+        const data = await validateSymbol(tradingSymbol);
         handleValidationResult(data, companyName);
 
         DOM_ELEMENTS.validateBtn.textContent = 'Validar';
@@ -357,6 +359,13 @@ function initializeEventListeners() {
 
     // Search button
     DOM_ELEMENTS.searchBtn.addEventListener('click', handleSearch);
+
+    // Dropdown de filtros para ordenar la tabla
+    document.getElementById('sort-transactions').addEventListener('change', (event) => {
+        const criterio = event.target.value;
+        sortTableRows(criterio);
+    });
+
 
     // Table and search results delegates
     initializeTableDelegate();
@@ -418,7 +427,7 @@ async function handleBuyButtonClick(event) {
  */
 function getPurchaseFormData() {
     return {
-        tradingSymbol: document.querySelector('.trading-symbol').value,
+        tradingSymbol: document.querySelector('.trading-symbol').value.toUpperCase(),
         date: document.querySelector('.trading__date-picker').value,
         companyName: document.querySelector('.company-name').value,
         pricePerShare: parseFloat(document.querySelector('.price-share').value),
@@ -567,11 +576,28 @@ function animateCopyButton(element) {
     }, 2000);
 }
 
+function styleBuyButton() {
+    // Selecciona el botón con la clase `header__btn--buy`
+    const buyButton = document.querySelector('.header__btn--buy');
+
+    if (buyButton) {
+        // Obtiene las variables CSS definidas en el archivo main.css
+        const primaryBlue = getComputedStyle(document.documentElement).getPropertyValue('--primary-blue').trim();
+
+        // Aplica los estilos dinámicamente al botón
+        buyButton.style.backgroundColor = primaryBlue;
+        buyButton.style.color = 'white';
+    } else {
+        console.error('No se encontró ningún botón con la clase "header__btn--buy".');
+    }
+}
+
 /**
  * Inicializa la aplicación
  */
 function initializeApp() {
     initializeEventListeners();
+    styleBuyButton();
     setInterval(updateDateTime, CONFIG.UPDATE_INTERVAL);
     updateDateTime();
     window.addEventListener('load', manageUpdateTable);

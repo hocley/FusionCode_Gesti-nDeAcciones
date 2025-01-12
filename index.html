@@ -97,6 +97,13 @@
     <div class="transactions">
         <div class="transactions__header-container">
             <h2 class="transactions__title">Transacciones Recientes</h2>
+            <select class="transactions__sort-dropdown" id="sort-transactions">
+                <option value="default" disabled selected>Orden de Registro</option>
+                <option value="az" class="transactions__sort-option">A-Z</option>
+                <option value="za" class="transactions__sort-option">Z-A</option>
+                <option value="profit-asc" class="transactions__sort-option">Ganancia ↑</option>
+                <option value="profit-desc" class="transactions__sort-option">Ganancia ↓</option>
+            </select>
             <button class="transactions__refresh-btn">Actualizar</button>
         </div>
         <div class="transactions__wrapper">

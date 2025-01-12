@@ -4,28 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShareFlow</title>
-    <link rel="icon" href="src/content/icon_fusioncode.png">
+    <link rel="icon" href="./frontend/src/content/icon_fusioncode.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="src/css/styles.css">
+    <link rel="stylesheet" href="./frontend/src/css/header.css">
+    <link rel="stylesheet" href="./frontend/src/css/footer.css">
+    <link rel="stylesheet" href="./frontend/src/css/responsive.css">
+    <link rel="stylesheet" href="./frontend/src/css/searchPanel.css">
+    <link rel="stylesheet" href="./frontend/src/css/trading.css">
+    <link rel="stylesheet" href="./frontend/src/css/transactions.css">
+    <link rel="stylesheet" href="./frontend/src/css/modal.css">
 </head>
 <body>
 <!-- Header -->
 <nav class="header">
     <div class="header__logo-container">
-        <div class="header__logo" style="background-image: url('src/content/logo_fusioncode80.png')"></div>
+        <div class="header__logo" style="background-image: url('frontend/src/content/logo_fusioncode80.png')"></div>
         <div class="header__logo-text">ShareFlow</div>
     </div>
     <div class="header__datetime">
         <div class="header__time"></div>
         <div class="header__date"></div>
     </div>
-    <div class="header__created-by">Powered by FusionCode</div>
+    <div class="header__actions">
+        <button class="header__btn header__btn--buy" title="Registrar Compra">
+            <i class="fas fa-shopping-cart"></i>
+        </button>
+        <button class="header__btn header__btn--consolidation" title="Consolidar Acciones">
+            <i class="fas fa-chart-line"></i>
+        </button>
+    </div>
 </nav>
 
 <!-- Panel de búsqueda -->
 <div class="search-hint">Buscar Símbolos</div>
 <button class="menu-toggle">
-    <i class="fas fa-bars"></i>
+    <i class="fas fa-search"></i>
 </button>
 <div class="search-panel">
     <div class="search-panel__container">
@@ -50,18 +63,23 @@
                 <div class="trading__input-container">
                     <input type="text" class="trading__input trading-symbol" placeholder="e.j. AAPL">
                     <button type="button" class="trading__validate-btn">Validar</button>
+                    
                 </div>
             </div>
-            <div class="trading__form-group">
+            <div class="trading__form-group trading-company-name">
                 <label class="trading__label">Compañía</label>
                 <input type="text" class="trading__input input-readonly company-name" readonly value="">
             </div>
-            <div class="trading__form-group">
+            <div class="trading__form-group trading-date">
+                <label class="trading__label">Fecha de compra</label>
+                <input type="date" class="trading__date-picker" title="Selecciona la fecha">
+            </div>
+            <div class="trading__form-group trading-price">
                 <label class="trading__label">Precio por acción ($)</label>
                 <input type="number" class="trading__input price-share" step="0.01" placeholder="0.00" min="0.01">
             </div>
             <div class="trading__form-group">
-                <label class="trading__label">Número de acciones</label>
+                <label class="trading__label trading-number-shares">Número de acciones</label>
                 <input type="number" class="trading__input number-shares" placeholder="0" min="1">
             </div>
             <div class="trading__validations">
@@ -97,7 +115,6 @@
                     <th>Ganancia/ Pérdida %</th>
                     <th>Ganancia/ Pérdida ($)</th>
                     <th>Total Actual ($)</th>
-                    <th>Eliminar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -111,8 +128,8 @@
 <footer class="footer">
     <div class="footer__content">
         <div class="footer__logo-container">
-            <div class="footer__logo" style="background-image: url('src/content/logo_fusioncode_white80.png')"></div>
-            <span class="footer__text">FusionCode</span>
+            <div class="footer__logo" style="background-image: url('frontend/src/content/logo_fusioncode_white80.png')"></div>
+            <span class="footer__text">Powered by FusionCode</span>
         </div>
         <div class="footer__links"></div>
     </div>
@@ -139,21 +156,6 @@
     </div>
 </div>
 
-<div id="delete-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal close-delete-modal">&times;</span>
-        <h2>Eliminar Transacción</h2>
-        <p>Datos de transacción:</p>
-        <ul>
-            <li class="li__id-purchase">ID:<span></span></li>
-        </ul>
-        <div class="modal-buttons">
-            <button class="modal-btn modal-btn-secondary delete-modal-btn-cancel">Cancelar</button>
-            <button class="modal-btn modal-btn-primary delete-modal-btn-confirm">Confirmar</button>
-        </div>
-    </div>
-</div>
-
 <div id="one-btn-modal" class="modal">
     <div class="modal-content">
         <h2>¡Transacción Exitosa!</h2>
@@ -166,6 +168,6 @@
 </div>
 
 <!-- Scripts -->
-<script src="src/index.js" type="module"></script>
+<script src="./frontend/src/index.js" type="module"></script>
 </body>
 </html>

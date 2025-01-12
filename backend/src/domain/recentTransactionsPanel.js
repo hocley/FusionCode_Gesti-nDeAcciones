@@ -4,7 +4,6 @@
  * @returns {Promise<Object>} Objeto con estado de éxito de la actualización.
  */
 async function updateTable() {
-    console.log('Actualizando tabla de transacciones...');
     const url = 'http://localhost:3000/db/get-purchases';
 
     try {
@@ -152,11 +151,6 @@ function addRowToTable(datos) {
         <td class="${clasesPerdidaGanancia}">${datos.gainLossPercentage.toFixed(2)}%</td>
         <td class="transactions__cell">${datos.gainLossDollar.toFixed(2)}</td>
         <td class="transactions__cell">${datos.totalCurrentValue.toFixed(2)}</td>
-        <td class="transactions__cell transactions__cell--action">
-            <button class="transactions__delete-btn" id="${datos.id}">
-                <i class="fas fa-trash"></i>
-            </button>
-        </td>
     `;
     cuerpoTabla.appendChild(fila);
 }

@@ -1,7 +1,7 @@
 // Importaciones de módulos
-import {attemptPurchase, deletePurchase} from './integration/stockPurchases.js';
-import {updateTable} from './integration/updateTables.js';
-import {fetchAndDisplaySearchResults} from './integration/updatePanel.js';
+import {attemptPurchase} from '../../backend/src/domain/tradingPanel.js';
+import {updateTable} from '../../backend/src/domain/recentTransactionsPanel.js';
+import {fetchAndDisplaySearchResults} from '../../backend/src/domain/searchPanel.js';
 
 // Constantes para elementos DOM
 const DOM_ELEMENTS = {
@@ -304,9 +304,6 @@ function initializeEventListeners() {
     DOM_ELEMENTS.confirmTransactionBtn.addEventListener('click', handleConfirmTransaction);
     DOM_ELEMENTS.cancelTransactionBtn.addEventListener('click', closePurchaseModal);
     DOM_ELEMENTS.closeModalBtn.addEventListener('click', closePurchaseModal);
-    DOM_ELEMENTS.confirmDeleteBtn.addEventListener('click', manageDeletePurchase);
-    DOM_ELEMENTS.cancelDeleteBtn.addEventListener('click', closeDeleteModal);
-    DOM_ELEMENTS.closeDeleteModalBtn.addEventListener('click', closeDeleteModal);
 
 
     // Modal button

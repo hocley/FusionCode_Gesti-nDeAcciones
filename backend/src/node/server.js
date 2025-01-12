@@ -2,9 +2,9 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('../services/database');
-const stockRoutes = require('../routes/stockRoutes');
-const purchaseRoutes = require('../routes/purchaseRoutes');
-const searchRoutes = require('../routes/searchRoutes'); // Importar searchRoutes
+const stockRoutes = require('../routes/recentTransaction.route');
+const purchaseRoutes = require('../routes/trading.route');
+const searchRoutes = require('../routes/search.route'); // Importar searchRoutes
 
 // Cargar las variables de entorno
 dotenv.config({ path: '../../config/.env' });

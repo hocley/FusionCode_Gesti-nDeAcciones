@@ -4,7 +4,7 @@ const {
     createPurchase,
     getAllPurchases,
     deletePurchase
-} = require('../controllers/purchaseController');
+} = require('../controllers/trading.controller');
 
 // Nombres de rutas en kebab-case según el estándar
 router.post('/create-purchase', createPurchase); // /db/purchase

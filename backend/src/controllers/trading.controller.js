@@ -24,6 +24,7 @@ const generateUniqueId = () => {
 const createPurchase = async (req, res) => {
     try {
         const {
+            date,
             symbol,
             companyName,
             stockPrice,
@@ -33,7 +34,7 @@ const createPurchase = async (req, res) => {
 
         const purchaseData = {
             purchaseId: generateUniqueId(),
-            date: new Date().toISOString().split('T')[0],
+            date,
             symbol,
             companyName,
             stockPrice,
@@ -73,40 +74,8 @@ const getAllPurchases = async (req, res) => {
     }
 };
 
-/**
- * Elimina una compra por su ID único
- * @param {Object} req - Request de Express
- * @param {Object} req.params - Parámetros de la petición
- * @param {string} req.params.purchaseId - ID único de la compra a eliminar
- * @param {Object} res - Response de Express
- * @returns {Promise<void>}
- */
-const deletePurchase = async (req, res) => {
-    try {
-        const { purchaseId } = req.params;
-        const deletedPurchase = await Purchase.findOneAndDelete({ purchaseId });
-
-        if (!deletedPurchase) {
-            return res.status(404).json({
-                message: 'Compra no encontrada'
-            });
-        }
-
-        res.status(200).json({
-            message: 'Compra eliminada con éxito',
-            purchase: deletedPurchase
-        });
-    } catch (error) {
-        console.error('Error al eliminar la compra:', error.message);
-        res.status(500).json({
-            message: 'Error al eliminar la compra',
-            error: error.message
-        });
-    }
-};
 
 module.exports = {
     createPurchase,
     getAllPurchases,
-    deletePurchase
 };

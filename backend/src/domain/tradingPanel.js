@@ -7,12 +7,13 @@
  * @param {number} cantidadAcciones - Número de acciones a comprar.
  * @returns {Promise<Object>} Resultado de la operación de compra.
  */
-async function attemptPurchase(simboloAccion, nombreEmpresa, precioPorAccion, cantidadAcciones) {
+async function attemptPurchase(fechaCompra, simboloAccion, nombreEmpresa, precioPorAccion, cantidadAcciones) {
     // Calcular el valor total de la compra
     const valorTotal = precioPorAccion * cantidadAcciones;
 
     // Preparar datos para enviar al servidor
     const datosCompra = {
+        date: fechaCompra,
         symbol: simboloAccion,
         companyName: nombreEmpresa,
         stockPrice: precioPorAccion,

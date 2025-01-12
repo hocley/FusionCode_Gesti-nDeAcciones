@@ -1,0 +1,38 @@
+@font-face {
+    font-family: 'SF Custom';
+    src: url('../fonts/SFUIText-RegularG3.otf') format('opentype'); /* Fuente regular */
+    font-weight: 400; /* Regular */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Custom';
+    src: url('../fonts/SFUIText-BoldG3.otf') format('opentype'); /* Fuente bold */
+    font-weight: 700; /* Bold */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Custom';
+    src: url('../fonts/SFUIText-BoldItalicG3.otf') format('opentype'); /* Fuente regular italic */
+    font-weight: 400; /* Regular */
+    font-style: italic; /* Italic */
+}
+
+@font-face {
+    font-family: 'SF Custom';
+    src: url('../fonts/SFUIText-BoldItalicG3.otf') format('opentype'); /* Fuente bold italic */
+    font-weight: 700; /* Bold */
+    font-style: italic; /* Italic */
+}
+
+:root {
+    --primary-blue: #0F29F4;
+    --secondary-blue: #47A7FF;
+    --dark-blue: #0035D9;
+    --gray: #666666;
+    --medium-gray: #cccccc;
+    --light-gray: #f5f5f5;
+    --success-green: #22c55e;
+    --danger-red: #ef4444;
+}

@@ -1,0 +1,130 @@
+@import "variables.css";
+
+/* Header */
+.header {
+    height: 80px;
+    background-color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center; /* Alinea verticalmente */
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Contenedor para el logo y el texto */
+.header__logo-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Logo */
+.header__logo {
+    background-size: contain; /* Asegura que la imagen del logo se ajuste al contenedor */
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-blue);
+    margin-right: 1rem;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    background-repeat: no-repeat;
+}
+
+.header__logo-text {
+    font-size: 2rem; /* Aumenta el tamaño del texto "FC ShareFlow" */
+    margin-left: 10px;
+    font-weight: bold;
+    color: var(--primary-blue);
+    /* Añade un margen entre el logo y el texto */
+}
+
+/* Logo de reemplazo */
+.header__logo-placeholder {
+    width: 40px;
+    height: 40px;
+    background-color: var(--secondary-blue);
+    margin-right: 1rem;
+}
+
+/* Contenedor de botones del Header */
+.header__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre botones */
+}
+
+/* Botones del Header */
+.header__btn {
+    border: 1px solid var(--primary-blue);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.header__btn--buy {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+/* Botón Activo */
+.header__btn--active {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+/* Botón Inactivo */
+.header__btn:not(.header__btn--active) {
+    background-color: white;
+    color: var(--primary-blue);
+}
+
+/* Efecto Hover */
+.header__btn:hover {
+    background-color: var(--dark-blue);
+    color: white;
+    border-color: var(--dark-blue);
+}
+
+
+/* DateTime styles */
+.header {
+    height: 80px;
+    background-color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative; /* Added for absolute positioning of datetime */
+}
+
+/* DateTime styles - now absolutely positioned */
+.header__datetime {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    padding: 0.5rem 1.5rem;
+}
+
+.header__time {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-blue);
+    text-align: center;
+}
+
+

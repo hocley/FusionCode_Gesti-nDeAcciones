@@ -185,16 +185,26 @@ function clearTable(tableBody) {
  * @returns {Promise<boolean>} - Estado de la actualización
  */
 async function manageUpdateTable() {
+    const refreshBtn = DOM_ELEMENTS.refreshBtn;
     const tableBody = document.querySelector('.transactions__table tbody');
+
+    // Cambiar el texto del botón a "Actualizando..."
+    refreshBtn.textContent = 'Actualizando...';
+
     clearTable(tableBody);
 
     const tableUpdated = await updateTable();
+
+    // Restablecer el texto del botón a "Actualizar"
+    refreshBtn.textContent = 'Actualizar';
+
     if (!tableUpdated.success) {
         showErrorModal('¡Error en la Tabla!', '⚠️', tableUpdated.message);
         return false;
     }
     return true;
 }
+
 
 /**
  * Gestiona la creación de una compra

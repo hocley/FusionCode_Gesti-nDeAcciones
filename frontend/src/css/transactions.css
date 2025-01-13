@@ -1,0 +1,138 @@
+/* Transactions Section */
+.transactions {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+}
+
+/* Estilos para el botón de refresco en las transacciones */
+.transactions__refresh-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.transactions__refresh-btn i {
+    margin-right: 8px;
+}
+
+.transactions__refresh-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Update Transactions Header Section */
+.transactions__header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.transactions__title {
+    color: var(--gray);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0 0 15px;
+}
+
+.transactions__refresh-btn {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    transition: background-color 0.2s ease;
+    margin: 0;
+}
+
+.transactions__refresh-btn i {
+    text-align: center;
+    margin-right: 8px;
+}
+
+.transactions__refresh-btn:hover {
+    background-color: #0035D9;
+}
+
+.transactions__wrapper {
+    overflow-x: auto;
+}
+
+.transactions__table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.transactions__header th {
+    background: #f8fafc;
+    color: var(--gray);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+td {
+    text-align: center;
+}
+
+.transactions__cell {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+.transactions__row:hover {
+    background-color: #f8fafc;
+}
+
+.transactions__cell--symbol {
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+.transactions__cell--change {
+    color: var(--success-green);
+    font-weight: 500;
+}
+
+.transactions__cell--change.down {
+    color: var(--danger-red);
+}
+
+.transactions__cell--action {
+    text-align: center;
+}
+
+.transactions__delete-btn {
+    background: var(--danger-red);
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.transactions__delete-btn:hover {
+    opacity: 1;
+}

@@ -1,0 +1,196 @@
+/* Trading Section */
+.trading {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+/* Estilos para los nuevos botones */
+.trading__input-container {
+    display: flex;
+    align-items: center;
+}
+
+.trading__validate-btn {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.trading__validate-btn i {
+    margin-right: 4px;
+}
+
+.trading__validate-btn:hover {
+    background: #0035D9;
+}
+
+/* Trading Form */
+.trading__form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas de igual ancho */
+    grid-template-rows: repeat(2, auto);
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.trading__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.trading__label {
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-right: 0px;
+}
+
+.trading__date-picker {
+    padding: 0.75rem;
+    margin-left: 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: var(--gray);
+    text-align: center;
+    width: auto;
+}
+
+.trading__date-picker:hover {
+    border-color: var(--primary-blue);
+}
+
+.trading__input {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+
+}
+
+.input-readonly {
+    cursor: default;
+    pointer-events: none;
+}
+
+.trading__validations {
+    /*Poner flex para mostrar las validaciones*/
+    display: flex;
+    grid-column: 1 / -1;
+    margin: 0 auto !important;
+}
+
+.trading__validation-list {
+    display: none;
+    list-style: none;
+    padding: 0;
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: center;
+}
+
+.trading__validation-item {
+    width: 100%;
+    text-align: center;
+    color: #ff9999;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem;
+    background: rgba(255, 153, 153, 0.1);
+    border-radius: 4px;
+}
+
+.trading__button-container {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+}
+
+.trading__buy-btn {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 1rem 3rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+    min-width: 200px;
+}
+
+.trading__buy-btn:hover {
+    background: #0035D9;
+}
+
+/* Trading Form Layout */
+
+
+/* First row - Symbol and Company */
+.trading-symbol,
+.trading-company-name {
+    grid-row: 1;
+}
+
+.trading-symbol {
+    grid-column: 1;
+}
+
+.trading-company-name {
+    grid-column: 2;
+}
+
+/* Second row - Date, Price, and Shares */
+.trading-date,
+.trading-price,
+.trading-number-shares {
+    grid-row: 2;
+}
+
+.trading-date {
+    grid-column: 1;
+}
+
+.trading-price {
+    grid-column: 2;
+}
+
+.trading-number-shares {
+    grid-column: 3;
+}
+
+
+/* Center the input fields */
+.trading__input,
+.trading__date-picker {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Adjust validate button container */
+.trading__input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+

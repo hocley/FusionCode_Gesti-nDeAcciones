@@ -1,0 +1,156 @@
+/* Responsive Design */
+@media (max-width: 768px) {
+    .trading__form {
+        grid-template-columns: 1fr;
+    }
+
+    .transactions__table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .header__created-by {
+        display: none;
+    }
+}
+
+@media (min-width: 1024px) {
+    .trading__form {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .trading__form-group {
+        align-items: flex-start;
+    }
+
+    .trading__input {
+        width: 80%;
+        margin: 0 10%;
+    }
+}
+
+/* Update header media query */
+@media (max-width: 768px) {
+    .header__datetime {
+        padding: 0.3rem 0.8rem;
+    }
+
+    .header__time {
+        font-size: 1.2rem;
+    }
+
+    .header__date {
+        font-size: 0.8rem;
+    }
+
+    /* Ensure the datetime component doesn't overlap with the logo on small screens */
+    .header__logo-container {
+        margin-right: auto;
+    }
+}
+/* Estilo responsivo para el panel de búsqueda */
+@media (max-width: 768px) {
+    .search-panel {
+        width: 90%; /* Se ajusta a un ancho menor */
+        right: -100%; /* Inicialmente fuera de la pantalla */
+        top: 20%; /* Ajusta la posición superior */
+        height: auto; /* Altura automática para adaptarse al contenido */
+        max-height: 70%; /* Limitar la altura máxima */
+        padding: 1rem;
+        border-radius: 8px; /* Bordes ligeramente redondeados */
+    }
+
+    .search-panel--active {
+        right: 5%; /* Centrarse en dispositivos pequeños */
+    }
+
+    .search-panel__container {
+        flex-direction: column; /* Los inputs y botones estarán en una sola columna */
+        gap: 1rem;
+    }
+
+    .search-panel__input {
+        width: 100%; /* Toma todo el ancho */
+        font-size: 1rem; /* Ajusta el tamaño de fuente */
+    }
+
+    .search-panel__btn {
+        width: 100%; /* Botón ancho completo */
+        font-size: 1rem; /* Ajusta el tamaño de fuente */
+    }
+
+    .search-panel__results {
+        font-size: 0.9rem; /* Ajustar fuente para pantallas pequeñas */
+    }
+
+    .search-panel__no-results {
+        font-size: 1rem; /* Ajusta el mensaje "sin resultados" */
+    }
+}
+
+@media (max-width: 480px) {
+    .search-panel {
+        top: 10%; /* Baja un poco en pantallas muy pequeñas */
+        height: auto; /* Altura automática */
+        padding: 0.5rem; /* Espaciado reducido */
+    }
+
+    .search-panel__container {
+        gap: 0.5rem; /* Espaciado reducido entre elementos */
+    }
+
+    .search-panel__input,
+    .search-panel__btn {
+        font-size: 0.85rem; /* Tamaño reducido en pantallas extra pequeñas */
+    }
+
+    .search-panel__results {
+        font-size: 0.8rem; /* Texto más pequeño en la lista de resultados */
+    }
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .trading__form {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .trading-symbol,
+    .trading-company-name,
+    .trading-date,
+    .trading-price,
+    .trading-number-shares {
+        grid-column: 1;
+    }
+
+    .trading-symbol,
+    .trading-company-name {
+        grid-row: auto;
+    }
+
+    .trading-date,
+    .trading-price,
+    .trading-number-shares {
+        grid-row: auto;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer__links {
+        display: none;
+    }
+
+    .footer__copyright {
+        font-size: 0.8rem;
+    }
+
+    .search-hint {
+        bottom: 110px;
+    }
+
+    .menu-toggle {
+        bottom: 90px;
+    }
+}
+

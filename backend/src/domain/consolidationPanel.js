@@ -269,4 +269,74 @@ async function fetchCurrentPrice(symbol) {
     }
 }
 
-export { populateSymbolDropdown, updateConsolidationPage };
+/**
+ * Exporta una tabla a un archivo CSV.
+ * @param {string} tableId - ID de la tabla HTML a exportar.
+ * @param {string} fileName - Nombre del archivo CSV.
+ * @param {string} title - Título del reporte.
+ */
+function exportTableToCSV(tableId, fileName, title) {
+    const table = document.getElementById(tableId);
+    if (!table) {
+        console.error(`La tabla con ID "${tableId}" no existe.`);
+        return;
+    }
+
+    const rows = table.querySelectorAll("tr");
+    const csvData = [];
+
+    // Añadir encabezado personalizado
+    csvData.push(title, "");
+
+    // Extraer datos de las filas de la tabla
+    rows.forEach((row) => {
+        const cells = row.querySelectorAll("th, td");
+        const rowData = [];
+        cells.forEach((cell) => {
+            rowData.push(`"${cell.textContent.trim().replace(/"/g, '""')}"`); // Escapa comillas dobles
+        });
+        csvData.push(rowData.join(","));
+    });
+
+    // Crear el archivo CSV con codificación UTF-8
+    const blob = new Blob(["\ufeff" + csvData.join("\n")], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+
+
+/**
+ * Exporta la tabla de resumen de compras.
+ * @param {string} companyName - Nombre de la compañía seleccionada.
+ * @param {string} symbol - Símbolo de la acción.
+ */
+function exportSummaryTable(companyName, symbol) {
+    const date = new Date().toLocaleDateString("es-ES", { year: "numeric", month: "2-digit", day: "2-digit" });
+    const time = new Date().toLocaleTimeString("es-ES", { hour12: false });
+    const header = `Resumen de compras ShareFlow\nCompañía: ${companyName}\nSímbolo: ${symbol}\nFecha y hora: ${date} ${time}`;
+    const fileName = `${symbol}_${companyName.replace(/\s+/g, "_")}_SUMMARY_${date.replace(/\//g, "-")}.csv`;
+
+    exportTableToCSV("summary-table", fileName, header);
+}
+
+/**
+ * Exporta la tabla de consolidación.
+ * @param {string} companyName - Nombre de la compañía seleccionada.
+ * @param {string} symbol - Símbolo de la acción.
+ */
+function exportConsolidationTable(companyName, symbol) {
+    const date = new Date().toLocaleDateString("es-ES", { year: "numeric", month: "2-digit", day: "2-digit" });
+    const time = new Date().toLocaleTimeString("es-ES", { hour12: false });
+    const header = `Resumen de consolidación ShareFlow\nCompañía: ${companyName}\nSímbolo: ${symbol}\nFecha y hora: ${date} ${time}`;
+    const fileName = `${symbol}_${companyName.replace(/\s+/g, "_")}_CONSOLIDATION_${date.replace(/\//g, "-")}.csv`;
+
+    exportTableToCSV("consolidation-table", fileName, header);
+}
+
+
+export { populateSymbolDropdown, updateConsolidationPage, exportSummaryTable, exportConsolidationTable };

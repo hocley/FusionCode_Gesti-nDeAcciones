@@ -24,7 +24,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 1rem; /* Agrega un pequeño espacio interno para evitar bordes extremos */
+    padding: 0 1rem;
 }
 
 /* Canvas for Chart */

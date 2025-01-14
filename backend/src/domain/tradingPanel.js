@@ -50,11 +50,4 @@ async function attemptPurchase(fechaCompra, simboloAccion, nombreEmpresa, precio
     }
 }
 
-/**
- * Elimina una compra del sistema por su ID.
- *
- * @param {number} id - Identificador de la compra a eliminar.
- * @returns {Promise<{success: boolean}>}
- */
-
 export { attemptPurchase};

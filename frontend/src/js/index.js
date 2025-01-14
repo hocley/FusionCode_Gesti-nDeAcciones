@@ -1,7 +1,7 @@
 // Importaciones de módulos
-import {attemptPurchase} from '../../backend/src/domain/tradingPanel.js';
-import {updateTable, sortTableRows} from '../../backend/src/domain/recentTransactionsPanel.js';
-import {fetchAndDisplaySearchResults} from '../../backend/src/domain/searchPanel.js';
+import {attemptPurchase} from '../../../backend/src/domain/tradingPanel.js';
+import {updateTable, sortTableRows} from '../../../backend/src/domain/recentTransactionsPanel.js';
+import {fetchAndDisplaySearchResults} from '../../../backend/src/domain/searchPanel.js';
 
 // Constantes para elementos DOM
 const DOM_ELEMENTS = {
@@ -365,7 +365,6 @@ function initializeEventListeners() {
         const criterio = event.target.value;
         sortTableRows(criterio);
     });
-
 
     // Table and search results delegates
     initializeTableDelegate();

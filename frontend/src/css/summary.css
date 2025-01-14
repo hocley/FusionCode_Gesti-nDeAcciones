@@ -1,0 +1,128 @@
+/* Summary Section */
+.summary {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Summary Header */
+.summary__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.summary__title {
+    color: var(--gray);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.summary__export-btn {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.summary__export-btn i {
+    font-size: 1.1rem;
+}
+
+.summary__export-btn:hover {
+    background-color: #0035D9;
+}
+
+/* Summary Table */
+.summary__table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.summary__table th {
+    background: #f8fafc;
+    color: var(--gray);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.summary__table td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+.summary__table tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Filter Dropdown */
+.filter {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.filter__title {
+    color: var(--gray);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.filter__dropdown {
+    background-color: transparent;
+    color: #334155;
+    border: 1px solid #ffffff;
+    border-bottom: 2px solid var(--primary-blue);
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    outline: none;
+}
+
+.filter__dropdown:hover {
+    border-bottom-color: var(--primary-blue);
+}
+
+
+.filter__error-list {
+    display: none; /* Inline-flex para que tome el ancho del contenido */
+    text-align: center;
+    color: #ff9999;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem;
+    background: rgba(255, 153, 153, 0.1);
+    border-radius: 4px;
+    max-width: 100%; /* Opcional: Evita que el contenido exceda el contenedor principal */
+    white-space: nowrap; /* Mantiene el texto en una sola línea (opcional) */
+}
+
+
+
+.highlight {
+    font-weight: bold;
+    color: var(--primary-blue);
+}

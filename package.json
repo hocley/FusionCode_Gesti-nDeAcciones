@@ -4,7 +4,12 @@
   "description": "RAMA DOCUMENTS\r Esta rama contiene los documentos que se consideran importantes para el desarrollo del proyecto:\r - Flujo de trabajo.\r - Estándares de codificación.\r - Estándares de commits.\r - Documento de requisitos (Historias de Usuario, Casos de Uso, etc).\r - Casos de Prueba.\r - Criterios de aceptacion.\r - Diagramas de diseño.\r - Etc.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:e2e": "cypress run",
+    "test:e2e:open": "cypress open",
+    "start:frontend": "http-server ./ -p 8080",
+    "start:backend": "nodemon backend/src/node/server.js"
   },
   "keywords": [],
   "author": "",
@@ -20,5 +25,12 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.10.0",
     "mongoose": "^8.8.1"
+  },
+  "devDependencies": {
+    "cypress": "^13.17.0",
+    "http-server": "^14.1.1",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0"
   }
 }

@@ -3,12 +3,12 @@
 /* Header */
 .header {
     height: 80px;
-    background-color: white;
+    background-color: var(--white);
     padding: 1rem 2rem;
     display: flex;
     align-items: center; /* Alinea verticalmente */
     justify-content: space-between;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px var(--div-shadow);
 }
 
 /* Contenedor para el logo y el texto */
@@ -29,7 +29,7 @@
     line-height: 40px;
     font-size: 1.5rem;
     font-weight: bold;
-    color: white;
+    color: var(--white);
     background-repeat: no-repeat;
 }
 
@@ -73,19 +73,19 @@
 /* Botón Activo */
 .header__btn--active {
     background-color: var(--primary-blue);
-    color: white;
+    color: var(--white);
 }
 
 /* Botón Inactivo */
 .header__btn:not(.header__btn--active) {
-    background-color: white;
+    background-color: var(--white);
     color: var(--primary-blue);
 }
 
 /* Efecto Hover */
 .header__btn:hover {
     background-color: var(--dark-blue);
-    color: white;
+    color: var(--white);
     border-color: var(--dark-blue);
 }
 
@@ -93,12 +93,12 @@
 /* DateTime styles */
 .header {
     height: 80px;
-    background-color: white;
+    background-color: var(--white);
     padding: 1rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px var(--div-shadow);
     position: relative; /* Added for absolute positioning of datetime */
 }
 
@@ -111,7 +111,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: white;
+    background: var(--white);
     padding: 0.5rem 1.5rem;
 }
 

@@ -7,8 +7,8 @@
     top: 100px; /* Changed from bottom to top */
     width: 350px;
     height: 500px;
-    background: white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background: var(--white);
+    box-shadow: 0 4px 12px var(--div-shadow);
     transition: right 0.3s ease; /* Changed from left to right */
     z-index: 1000;
     padding: 1rem;
@@ -32,13 +32,13 @@
 .search-panel__input {
     flex: 1;
     padding: 0.5rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--input-border);
     border-radius: 4px;
 }
 
 .search-panel__btn {
     background: var(--primary-blue);
-    color: white;
+    color: var(--white);
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 4px;
@@ -47,12 +47,12 @@
 
 .search-panel__result {
     padding: 1rem;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--input-border);
     max-height: 300px; /* Ajusta la altura máxima según sea necesario */
     overflow-y: auto; /* Añade un scrollbar vertical */
     flex: 1; /* Takes up remaining space */
     margin-right: -1rem; /* Compensates for parent padding */
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--input-border);
 }
 
 .search-panel__results {
@@ -96,17 +96,17 @@
 }
 
 .search-panel__results::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--scrollbar-track);
     border-radius: 4px;
 }
 
 .search-panel__results::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--scrollbar-thumb);
     border-radius: 4px;
 }
 
 .search-panel__results::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--scrollbar-thumb-hover);
 }
 
 
@@ -125,7 +125,7 @@
     right: 1rem;
     bottom: 65px; /* Increased to avoid footer */
     background: var(--primary-blue);
-    color: white;
+    color: var(--white);
     border: none;
     width: 40px;
     height: 40px;
@@ -136,6 +136,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px var(--div-shadow);
     transition: transform 0.3s ease;
 }

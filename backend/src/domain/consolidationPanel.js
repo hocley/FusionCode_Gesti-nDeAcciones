@@ -81,7 +81,7 @@ async function populateSummaryTable(companyName) {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${purchase.date}</td>
-                <td>${purchase.symbol}</td>
+                <td class="transactions__cell--company-name">${purchase.symbol}</td>
                 <td>${purchase.stockPrice.toFixed(2)}</td>
                 <td>${purchase.numOfShares}</td>
                 <td>${purchase.totalValue.toFixed(2)}</td>
@@ -128,14 +128,17 @@ async function populateConsolidationTable(companyName) {
         const gainLossPercentage = ((CURRENT_PRICE - COST_PRICE) / COST_PRICE) * 100;
         const gainLossDollar = (gainLossPercentage / 100) * COST_PRICE * totalShares;
 
+        const clasesCambio24h = gainLossPercentage < 0 ? 'transactions__cell--change--down' : 'transactions__cell--change';
+
+
         // Llena la tabla de consolidación
         consolidationTableBody.innerHTML = `
             <tr>
-                <td>${symbol || 'N/A'}</td>
+                <td class="transactions__cell--company-name">${symbol || 'N/A'}</td>
                 <td>${totalShares}</td>
                 <td>${totalUSD.toFixed(2)}</td>
                 <td>${COST_PRICE.toFixed(2)}</td>
-                <td>${gainLossPercentage.toFixed(2)}%</td>
+                <td class='${clasesCambio24h}'>${gainLossPercentage.toFixed(2)}%</td>
                 <td>${gainLossDollar.toFixed(2)}</td>
             </tr>
         `;
@@ -146,19 +149,21 @@ async function populateConsolidationTable(companyName) {
 }
 
 /**
- * Genera las gráficas (pastel y barras) para la compañía seleccionada.
+ * Genera las gráficas (tendencia y barras) para la compañía seleccionada.
  * @param {string} companyName - Nombre de la compañía seleccionada.
  */
 async function generateCharts(companyName) {
-    const pieChartCanvas = document.getElementById('chart-pie');
-    const barChartCanvas = document.getElementById('bar-graph');
+    const lineChartCanvas = document.getElementById('chart-line'); // Gráfico de línea
+    const barChartCanvas = document.getElementById('bar-graph'); // Gráfico de barras
 
     // Destruye los gráficos existentes si ya están creados
     if (pieChartInstance) {
         pieChartInstance.destroy();
+        pieChartInstance = null; // Liberar la instancia del gráfico de línea
     }
     if (barChartInstance) {
         barChartInstance.destroy();
+        barChartInstance = null; // Liberar la instancia del gráfico de barras
     }
 
     try {
@@ -171,35 +176,58 @@ async function generateCharts(companyName) {
 
         const purchases = await response.json();
 
-        // Datos para el gráfico de pastel
-        const transactionIds = purchases.map((purchase) => purchase.purchaseId);
-        const shares = purchases.map((purchase) => purchase.numOfShares);
+        // Datos para el gráfico de línea
+        const dates = purchases.map((purchase) => purchase.date); // Eje X: fechas de compra
+        const costs = purchases.map((purchase) => purchase.stockPrice.toFixed(2)); // Eje Y: precios de compra
 
-        // Datos para el gráfico de barras
-        const costPrices = COST_PRICE;
-        const currentPrice = CURRENT_PRICE;
-
-        // Generar el gráfico de pastel
-        pieChartInstance = new Chart(pieChartCanvas, {
-            type: 'pie',
+        // Generar el gráfico de línea
+        pieChartInstance = new Chart(lineChartCanvas, {
+            type: 'line',
             data: {
-                labels: transactionIds,
+                labels: dates,
                 datasets: [{
-                    label: 'Distribución de Acciones',
-                    data: shares,
-                    backgroundColor: ['#FFCE56', '#FF6384', '#36A2EB', '#4CAF50', '#FF5722'],
+                    label: 'COSTO DE COMPRA (USD)',
+                    data: costs,
+                    borderColor: '#8AF626FF',
+                    fill: false,
+                    tension: 0.1, // Suavizado de líneas
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                aspectRatio: 1,
                 plugins: {
                     legend: {
+                        display: true,
                         position: 'top',
                     },
-                }
-            }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'FECHA DE COMPRA',
+                        },
+                        ticks: {
+                            maxRotation: 90,
+                            minRotation: 90, // Asegura que las fechas se muestren verticalmente
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Costo de Compra (USD)',
+                        },
+                        beginAtZero: true,
+                    },
+                },
+            },
         });
+
+        // Datos para el gráfico de barras
+        const costPrices = COST_PRICE;
+        const currentPrice = CURRENT_PRICE;
 
         // Generar el gráfico de barras
         barChartInstance = new Chart(barChartCanvas, {
@@ -217,6 +245,7 @@ async function generateCharts(companyName) {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                aspectRatio: 1,
                 plugins: {
                     legend: {
                         display: true,
@@ -248,6 +277,8 @@ async function generateCharts(companyName) {
         chartContainer.innerHTML = `<p style="color: #ef4444;">Error al cargar los datos: ${error.message}</p>`;
     }
 }
+
+
 
 /**
  * Obtiene el precio actual de una acción desde el servidor.

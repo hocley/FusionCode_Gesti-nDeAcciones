@@ -1,15 +1,15 @@
 /* Transactions Section */
 .transactions {
-    background: white;
+    background: var(--white);
     border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px var(--div-shadow);
     padding: 1.5rem;
 }
 
 /* Estilos para el botón de refresco en las transacciones */
 .transactions__refresh-btn {
-    background-color: #007bff;
-    color: white;
+    background-color: var(--primary-blue);
+    color: var(--white);
     border: none;
     padding: 10px 15px;
     cursor: pointer;
@@ -25,7 +25,7 @@
 }
 
 .transactions__refresh-btn:hover {
-    background-color: #0056b3;
+    background-color: var(--dark-blue);
 }
 
 /* Update Transactions Header Section */
@@ -46,8 +46,8 @@
 
 .transactions__sort-dropdown {
     background-color: transparent; /* Fondo transparente */
-    color: #334155; /* Texto oscuro */
-    border: 1px solid #ffffffff;
+    color: var(--table-row-content); /* Texto oscuro */
+    border: 1px solid var(--white);
     border-bottom: 2px solid var(--primary-blue); /* Borde inferior azul */
     padding: 0.5rem 0.8rem; /* Espaciado interno */
     font-size: 1.1rem; /* Tamaño de texto más grande */
@@ -61,7 +61,7 @@
 
 /* Hover: Cambia ligeramente el borde inferior */
 .transactions__sort-dropdown:hover {
-    border-bottom-color: #0056b3; /* Color azul más oscuro */
+    border-bottom-color: var(--dark-blue); /* Color azul más oscuro */
 }
 
 /* Ajustes específicos para móviles */
@@ -84,7 +84,7 @@
 
 .transactions__refresh-btn {
     background-color: var(--primary-blue);
-    color: white;
+    color: var(--white);
     border: none;
     padding: 10px 15px;
     cursor: pointer;
@@ -103,7 +103,7 @@
 }
 
 .transactions__refresh-btn:hover {
-    background-color: #0035D9;
+    background-color: var(--dark-blue);
 }
 
 .transactions__wrapper {
@@ -117,7 +117,7 @@
 }
 
 .transactions__header th {
-    background: #f8fafc;
+    background: var(--table-row-hover);
     color: var(--gray);
     font-weight: 600;
     text-transform: uppercase;
@@ -125,7 +125,7 @@
     letter-spacing: 0.05em;
     padding: 1rem;
     text-align: center;
-    border-bottom: 2px solid #e2e8f0;
+    border-bottom: 2px solid var(--table-header-border);
 }
 
 td {
@@ -134,13 +134,13 @@ td {
 
 .transactions__cell {
     padding: 1rem;
-    border-bottom: 1px solid #f1f5f9;
-    color: #334155;
+    border-bottom: 1px solid var(--table-header-border);
+    color: var(--table-row-content);
     font-size: 0.95rem;
 }
 
 .transactions__row:hover {
-    background-color: #f8fafc;
+    background-color: var(--table-row-hover);
 }
 
 .transactions__cell--symbol {
@@ -163,7 +163,7 @@ td {
 
 .transactions__delete-btn {
     background: var(--danger-red);
-    color: white;
+    color: var(--white);
     border: none;
     padding: 0.5rem;
     border-radius: 4px;

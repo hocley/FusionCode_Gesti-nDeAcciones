@@ -1,9 +1,9 @@
 /* Trading Section */
 .trading {
-    background: white;
+    background: var(--white);
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px var(--div-shadow);
     margin-bottom: 2rem;
 }
 
@@ -15,7 +15,7 @@
 
 .trading__validate-btn {
     background-color: var(--primary-blue);
-    color: white;
+    color: var(--white);
     border: none;
     padding: 8px 12px;
     margin-left: 8px;
@@ -32,7 +32,7 @@
 }
 
 .trading__validate-btn:hover {
-    background: #0035D9;
+    background: var(--primary-blue);
 }
 
 /* Trading Form */
@@ -62,7 +62,7 @@
 .trading__date-picker {
     padding: 0.75rem;
     margin-left: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--input-border);
     border-radius: 6px;
     font-size: 0.95rem;
     color: var(--gray);
@@ -76,7 +76,7 @@
 
 .trading__input {
     padding: 0.75rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--input-border);
     border-radius: 6px;
     font-size: 0.95rem;
     width: 80%;
@@ -109,11 +109,11 @@
 .trading__validation-item {
     width: 100%;
     text-align: center;
-    color: #ff9999;
+    color: var(--danger-red);
     font-size: 0.85rem;
     font-weight: 600;
     padding: 0.5rem;
-    background: rgba(255, 153, 153, 0.1);
+    background: var(--danger-background);
     border-radius: 4px;
 }
 
@@ -125,7 +125,7 @@
 
 .trading__buy-btn {
     background: var(--primary-blue);
-    color: white;
+    color: var(--white);
     border: none;
     padding: 1rem 3rem;
     border-radius: 6px;
@@ -137,7 +137,7 @@
 }
 
 .trading__buy-btn:hover {
-    background: #0035D9;
+    background: var(--dark-blue);
 }
 
 /* Trading Form Layout */

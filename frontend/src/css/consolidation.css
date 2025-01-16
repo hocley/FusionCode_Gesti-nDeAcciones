@@ -1,8 +1,8 @@
 /* Consolidation Section */
 .consolidation {
-    background: white;
+    background: var(--white);
     border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px var(--div-shadow);
     padding: 1.5rem;
     margin-bottom: 2rem;
 }
@@ -24,8 +24,7 @@
 
 .consolidation__export-btn {
     background-color: var(--primary-blue);
-    color: white;
-    border: none;
+    color: var(--white);
     padding: 10px 15px;
     cursor: pointer;
     font-size: 0.9rem;
@@ -35,6 +34,7 @@
     align-items: center;
     gap: 0.5rem;
     transition: background-color 0.2s ease;
+    border: none;
 }
 
 .consolidation__export-btn i {
@@ -42,7 +42,7 @@
 }
 
 .consolidation__export-btn:hover {
-    background-color: #0035D9;
+    background-color: var(--dark-blue);
 }
 
 /* Consolidation Table */
@@ -53,24 +53,24 @@
 }
 
 .consolidation__table th {
-    background: #f8fafc;
+    background: var(--white);
     color: var(--gray);
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.85rem;
     padding: 1rem;
     text-align: center;
-    border-bottom: 2px solid #e2e8f0;
+    border-bottom: 2px solid var(--table-header-border);
 }
 
 .consolidation__table td {
     padding: 1rem;
     text-align: center;
-    border-bottom: 1px solid #f1f5f9;
-    color: #334155;
+    border-bottom: 1px solid var(--table-header-border);
+    color: var(--table-row-content);
     font-size: 0.95rem;
 }
 
 .consolidation__table tr:hover {
-    background-color: #f8fafc;
+    background-color: var(--table-row-hover);
 }

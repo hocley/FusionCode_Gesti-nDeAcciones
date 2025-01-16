@@ -6,7 +6,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--modal-background);
     z-index: 1000;
     justify-content: center;
     align-items: center;
@@ -23,13 +23,13 @@
 }
 
 .modal-content {
-    background-color: white;
+    background-color: var(--white);
     padding: 2.5rem;
     border-radius: 16px;
     width: 90%;
     max-width: 500px;
     position: relative;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 20px var(--div-shadow);
     animation: slideIn 0.3s ease;
 }
 
@@ -120,7 +120,7 @@
 
 .modal-btn-primary {
     background-color: var(--primary-blue);
-    color: white;
+    color: var(--white);
     margin: auto;
 }
 
@@ -165,12 +165,12 @@
 }
 
 .modal-btn-secondary {
-    background-color: #e0e0e0;
+    background-color: var(--modal-secondary-button);
     color: var(--gray);
 }
 
 .modal-btn-secondary:hover {
-    background-color: #d0d0d0;
+    background-color: var(--modal-secondary-button-hover);
     transform: translateY(-2px);
 }
 /* Modal list styles */
@@ -195,7 +195,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 0;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--modal-secondary-button);
 }
 
 .modal-content li:last-child {
@@ -246,7 +246,7 @@
 
 .modal-btn-primary {
     background-color: var(--primary-blue);
-    color: white;
+    color: var(--white);
 }
 
 .modal-btn-primary:hover {
@@ -255,11 +255,11 @@
 }
 
 .modal-btn-secondary {
-    background-color: #e0e0e0;
+    background-color: var(--modal-secondary-button);
     color: var(--gray);
 }
 
 .modal-btn-secondary:hover {
-    background-color: #d0d0d0;
+    background-color: var(--modal-secondary-button-hover);
     transform: translateY(-2px);
 }

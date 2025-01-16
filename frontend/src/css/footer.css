@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 -2px 4px var(--div-shadow);
     position: fixed;
     bottom: 0;
     left: 0;
@@ -36,7 +36,7 @@
 }
 
 .footer__text {
-    color: white;
+    color: var(--white);
     font-size: 0.9rem;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .footer__link {
-    color: white;
+    color: var(--white);
     text-decoration: none;
     font-size: 0.9rem;
     transition: color 0.2s ease;
@@ -57,6 +57,6 @@
 }
 
 .footer__copyright {
-    color: white;
+    color: var(--white);
     font-size: 0.9rem;
 }

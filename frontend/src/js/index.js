@@ -569,7 +569,7 @@ async function handleSymbolCopy(symbol) {
  * @param {HTMLElement} element - Elemento a animar
  */
 function animateCopyButton(element) {
-    element.style.color = '#47A7FF';
+    element.style.color = '#22598c';
     setTimeout(() => {
         element.style.color = '#0041FF';
     }, 2000);

@@ -7,7 +7,7 @@
     top: 100px; /* Changed from bottom to top */
     width: 350px;
     height: 500px;
-    background: var(--white);
+    background: var(--div-background);
     box-shadow: 0 4px 12px var(--div-shadow);
     transition: right 0.3s ease; /* Changed from left to right */
     z-index: 1000;
@@ -34,11 +34,13 @@
     padding: 0.5rem;
     border: 1px solid var(--input-border);
     border-radius: 4px;
+    background: var(--div-background);
+    color: var(--label-color);
 }
 
 .search-panel__btn {
     background: var(--primary-blue);
-    color: var(--white);
+    color: var(--button-color);
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 4px;
@@ -63,7 +65,7 @@
 }
 
 .search-panel__no-results {
-    color: var(--medium-gray);
+    color: var(--searchPanel-color);
     font-size: 2.0rem;
     font-weight: bolder;
     text-align: center;
@@ -71,6 +73,7 @@
 }
 
 .search-panel__company-name {
+    color: var(--company-name-color);
     font-size: 1.2rem;
     font-weight: bold;
 }
@@ -78,7 +81,7 @@
 .search-panel__company-details {
     display: flex;
     gap: 0.5rem;
-    color: var(--gray);
+    color: var(--label-color);
     font-size: 0.9rem;
     margin-top: 0.5rem;
 }
@@ -109,13 +112,12 @@
     background: var(--scrollbar-thumb-hover);
 }
 
-
 /* Adjust search button and hint positioning */
 .search-hint {
     position: fixed;
     right: 1rem;
     bottom: 110px; /* Increased to avoid footer */
-    color: var(--gray);
+    color: var(--label-color);
     font-size: 0.9rem;
     font-weight: bold;
 }
@@ -125,7 +127,7 @@
     right: 1rem;
     bottom: 65px; /* Increased to avoid footer */
     background: var(--primary-blue);
-    color: var(--white);
+    color: var(--button-color);
     border: none;
     width: 40px;
     height: 40px;

@@ -252,4 +252,22 @@
     }
 }
 
+/* Ajustes específicos para móviles */
+@media (max-width: 768px) {
+    .transactions__header-container {
+        flex-direction: column; /* Cambia a formato de columna */
+        align-items: stretch; /* Asegura que se estire */
+        gap: 0.5rem;
+    }
+
+    .transactions__sort-dropdown {
+        width: 100%; /* Ocupa todo el ancho */
+    }
+
+    .transactions__refresh-btn {
+        width: 100%; /* Ocupa todo el ancho */
+        text-align: center;
+    }
+}
+
 

@@ -13,6 +13,13 @@
     <link rel="stylesheet" href="./frontend/src/css/trading.css">
     <link rel="stylesheet" href="./frontend/src/css/transactions.css">
     <link rel="stylesheet" href="./frontend/src/css/modal.css">
+    <script>
+        // Verifica el tema almacenado en localStorage
+        const preferredTheme = localStorage.getItem('preferredTheme');
+        if (preferredTheme === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
 </head>
 <body>
 <!-- Header -->
@@ -24,6 +31,11 @@
     <div class="header__datetime">
         <div class="header__time"></div>
         <div class="header__date"></div>
+    </div>
+    <div class="theme-switch">
+        <i class="fas fa-sun theme-switch__icon theme-switch__icon--sun"></i>
+        <div class="theme-switch__slider"></div>
+        <i class="fas fa-moon theme-switch__icon theme-switch__icon--moon"></i>
     </div>
     <div class="header__actions">
         <button class="header__btn header__btn--buy" title="Registrar Compra" onclick="window.location.href='index.html'">
@@ -138,7 +150,6 @@
             <div class="footer__logo" style="background-image: url('frontend/src/content/logo_fusioncode_white80.png')"></div>
             <span class="footer__text">Powered by FusionCode</span>
         </div>
-        <div class="footer__links"></div>
     </div>
     <div class="footer__copyright">© 2025 FusionCode. Todos los derechos reservados.</div>
 </footer>

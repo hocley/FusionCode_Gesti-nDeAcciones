@@ -9,7 +9,8 @@ const DOM_ELEMENTS = {
     highlightHeaders: document.querySelectorAll('h2.highlight'),
     timeElement: document.querySelector('.header__time'),
     dateElement: document.querySelector('.header__date'),
-    buyButton: document.querySelector('.header__btn--consolidation')
+    buyButton: document.querySelector('.header__btn--consolidation'),
+    themeSwitch: document.querySelector('.theme-switch')
 };
 
 // Constantes de configuración
@@ -112,8 +113,10 @@ function handleConsolidationExport() {
 function styleBuyButton() {
     if (DOM_ELEMENTS.buyButton) {
         const primaryBlue = getComputedStyle(document.documentElement).getPropertyValue('--primary-blue').trim();
+        const buttonColor = getComputedStyle(document.documentElement).getPropertyValue('--header-button-color').trim();
+
         DOM_ELEMENTS.buyButton.style.backgroundColor = primaryBlue;
-        DOM_ELEMENTS.buyButton.style.color = 'white';
+        DOM_ELEMENTS.buyButton.style.color = buttonColor;
     } else {
         console.error('No se encontró ningún botón con la clase "header__btn--buy".');
     }
@@ -132,15 +135,43 @@ function initializeEventListeners() {
 }
 
 /**
+ * Cambia el tema y almacena la preferencia en localStorage
+ */
+function toggleTheme() {
+    const isDarkMode = document.documentElement.classList.toggle('dark-mode');
+    DOM_ELEMENTS.themeSwitch.classList.toggle('active');
+    // Guardar la preferencia en localStorage
+    localStorage.setItem('preferredTheme', isDarkMode ? 'dark' : 'light');
+}
+
+/**
+ * Aplica el tema basado en la preferencia guardada
+ */
+function applyStoredTheme() {
+    const storedTheme = localStorage.getItem('preferredTheme');
+    if (storedTheme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+        DOM_ELEMENTS.themeSwitch.classList.add('active');
+    } else {
+        document.documentElement.classList.remove('dark-mode');
+        DOM_ELEMENTS.themeSwitch.classList.remove('active');
+    }
+}
+
+
+/**
  * Inicializa la aplicación.
  */
 function initializeApp() {
+    applyStoredTheme();
+    DOM_ELEMENTS.themeSwitch.addEventListener('click', toggleTheme);
     populateSymbolDropdown();
     disableExportButtons();
-    initializeEventListeners();
     styleBuyButton();
     setInterval(updateDateTime, CONFIG.UPDATE_INTERVAL);
     updateDateTime();
+
+    initializeEventListeners();
 }
 
 // Inicialización de la aplicación

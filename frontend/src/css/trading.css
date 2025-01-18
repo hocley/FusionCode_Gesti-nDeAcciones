@@ -1,6 +1,6 @@
 /* Trading Section */
 .trading {
-    background: var(--white);
+    background: var(--div-background);
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 8px 16px var(--div-shadow);
@@ -15,7 +15,7 @@
 
 .trading__validate-btn {
     background-color: var(--primary-blue);
-    color: var(--white);
+    color: var(--button-color);
     border: none;
     padding: 8px 12px;
     margin-left: 8px;
@@ -54,28 +54,31 @@
 }
 
 .trading__label {
-    color: var(--gray);
+    color: var(--label-color);
     font-size: 0.9rem;
-    margin-right: 0px;
+    margin-right: 0;
 }
 
 .trading__date-picker {
     padding: 0.75rem;
     margin-left: 20px;
+    background-color: var(--input-background);
     border: 1px solid var(--input-border);
     border-radius: 6px;
     font-size: 0.95rem;
-    color: var(--gray);
+    color: var(--label-color);
     text-align: center;
     width: auto;
 }
 
-.trading__date-picker:hover {
-    border-color: var(--primary-blue);
+.trading__date-picker::-webkit-calendar-picker-indicator {
+    filter: var(--datepicker-filter);
 }
 
 .trading__input {
+    color: var(--input-color);
     padding: 0.75rem;
+    background-color: var(--input-background);
     border: 1px solid var(--input-border);
     border-radius: 6px;
     font-size: 0.95rem;
@@ -83,6 +86,10 @@
     margin: 0 auto;
     text-align: center;
 
+}
+
+.trading__input::placeholder {
+    color: var(--label-color);
 }
 
 .input-readonly {
@@ -125,7 +132,7 @@
 
 .trading__buy-btn {
     background: var(--primary-blue);
-    color: var(--white);
+    color: var(--button-color);
     border: none;
     padding: 1rem 3rem;
     border-radius: 6px;
@@ -192,5 +199,6 @@
     justify-content: center;
     width: 100%;
 }
+
 
 

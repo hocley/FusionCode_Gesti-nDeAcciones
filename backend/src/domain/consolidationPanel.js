@@ -178,19 +178,23 @@ async function generateCharts(companyName) {
 
         // Datos para el gráfico de línea
         const dates = purchases.map((purchase) => purchase.date); // Eje X: fechas de compra
-        const costs = purchases.map((purchase) => purchase.stockPrice.toFixed(2)); // Eje Y: precios de compra
+        const costs = purchases.map((purchase) => purchase.stockPrice.toFixed(2));
+
+        // Verificar si solo hay un punto
+        const isSinglePoint = costs.length === 1;
 
         // Generar el gráfico de línea
         pieChartInstance = new Chart(lineChartCanvas, {
             type: 'line',
             data: {
-                labels: dates,
+                labels: isSinglePoint ? ['', dates[0], ''] : dates, // Etiquetas para centrar el único punto
                 datasets: [{
                     label: 'COSTO DE COMPRA (USD)',
-                    data: costs,
+                    data: isSinglePoint ? [null, costs[0], null] : costs, // Punto centrado si hay uno solo
+                    backgroundColor: '#8AF626FF',
                     borderColor: '#8AF626FF',
                     fill: false,
-                    tension: 0.1, // Suavizado de líneas
+                    tension: 0.01,
                 }]
             },
             options: {

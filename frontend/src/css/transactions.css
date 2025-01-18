@@ -1,15 +1,14 @@
 /* Transactions Section */
 .transactions {
-    background: var(--white);
+    background: var(--div-background);
     border-radius: 10px;
     box-shadow: 0 8px 16px var(--div-shadow);
     padding: 1.5rem;
 }
 
-/* Estilos para el botón de refresco en las transacciones */
 .transactions__refresh-btn {
     background-color: var(--primary-blue);
-    color: var(--white);
+    color: var(--button-color);
     border: none;
     padding: 10px 15px;
     cursor: pointer;
@@ -18,6 +17,8 @@
     margin-top: 20px;
     display: inline-flex;
     align-items: center;
+    transition: background-color 0.2s ease;
+
 }
 
 .transactions__refresh-btn i {
@@ -38,16 +39,16 @@
 }
 
 .transactions__title {
-    color: var(--gray);
+    color: var(--label-color);
     font-size: 1.5rem;
     font-weight: 500;
     margin: 0 0 15px;
 }
 
 .transactions__sort-dropdown {
-    background-color: transparent; /* Fondo transparente */
-    color: var(--table-row-content); /* Texto oscuro */
-    border: 1px solid var(--white);
+    background-color: var(--div-background); /* Fondo transparente */
+    color: var(--table-tittle-color); /* Texto oscuro */
+    border: 1px solid var(--div-background);
     border-bottom: 2px solid var(--primary-blue); /* Borde inferior azul */
     padding: 0.5rem 0.8rem; /* Espaciado interno */
     font-size: 1.1rem; /* Tamaño de texto más grande */
@@ -58,52 +59,9 @@
     transition: border-color 0.2s ease;
 }
 
-
 /* Hover: Cambia ligeramente el borde inferior */
 .transactions__sort-dropdown:hover {
-    border-bottom-color: var(--dark-blue); /* Color azul más oscuro */
-}
-
-/* Ajustes específicos para móviles */
-@media (max-width: 768px) {
-    .transactions__header-container {
-        flex-direction: column; /* Cambia a formato de columna */
-        align-items: stretch; /* Asegura que se estire */
-        gap: 0.5rem;
-    }
-
-    .transactions__sort-dropdown {
-        width: 100%; /* Ocupa todo el ancho */
-    }
-
-    .transactions__refresh-btn {
-        width: 100%; /* Ocupa todo el ancho */
-        text-align: center;
-    }
-}
-
-.transactions__refresh-btn {
-    background-color: var(--primary-blue);
-    color: var(--white);
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: bold;
-    border-radius: 4px;
-    display: inline-flex;
-    align-items: center;
-    transition: background-color 0.2s ease;
-    margin: 0;
-}
-
-.transactions__refresh-btn i {
-    text-align: center;
-    margin-right: 8px;
-}
-
-.transactions__refresh-btn:hover {
-    background-color: var(--dark-blue);
+    border-bottom-color: var(--dark-blue);
 }
 
 .transactions__wrapper {
@@ -117,15 +75,15 @@
 }
 
 .transactions__header th {
-    background: var(--table-row-hover);
-    color: var(--gray);
+    background: var(--table-hover);
+    color: var(--label-color);
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.75rem;
     letter-spacing: 0.05em;
     padding: 1rem;
     text-align: center;
-    border-bottom: 2px solid var(--table-header-border);
+    border-bottom: 2px solid var(--table-border);
 }
 
 td {
@@ -134,13 +92,13 @@ td {
 
 .transactions__cell {
     padding: 1rem;
-    border-bottom: 1px solid var(--table-header-border);
-    color: var(--table-row-content);
+    border-bottom: 1px solid var(--table-border);
+    color: var(--table-content-color);
     font-size: 0.95rem;
 }
 
 .transactions__row:hover {
-    background-color: var(--table-row-hover);
+    background-color: var(--table-hover);
 }
 
 .transactions__cell--symbol {
@@ -159,19 +117,4 @@ td {
 
 .transactions__cell--action {
     text-align: center;
-}
-
-.transactions__delete-btn {
-    background: var(--danger-red);
-    color: var(--white);
-    border: none;
-    padding: 0.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.2s ease;
-}
-
-.transactions__delete-btn:hover {
-    opacity: 1;
 }

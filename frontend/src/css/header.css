@@ -3,12 +3,14 @@
 /* Header */
 .header {
     height: 80px;
-    background-color: var(--white);
+    background-color: var(--header-background);
     padding: 1rem 2rem;
     display: flex;
     align-items: center; /* Alinea verticalmente */
     justify-content: space-between;
     box-shadow: 0 2px 4px var(--div-shadow);
+    position: relative; /* Added for absolute positioning of datetime */
+
 }
 
 /* Contenedor para el logo y el texto */
@@ -22,30 +24,26 @@
     background-size: contain; /* Asegura que la imagen del logo se ajuste al contenedor */
     width: 40px;
     height: 40px;
-    background-color: var(--primary-blue);
     margin-right: 1rem;
     border-radius: 50%;
     text-align: center;
     line-height: 40px;
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--white);
+    color: transparent;
     background-repeat: no-repeat;
 }
 
 .header__logo-text {
     font-size: 2rem; /* Aumenta el tamaño del texto "FC ShareFlow" */
-    margin-left: 10px;
     font-weight: bold;
     color: var(--primary-blue);
-    /* Añade un margen entre el logo y el texto */
 }
 
 /* Logo de reemplazo */
 .header__logo-placeholder {
     width: 40px;
     height: 40px;
-    background-color: var(--secondary-blue);
     margin-right: 1rem;
 }
 
@@ -56,9 +54,104 @@
     gap: 10px; /* Espacio entre botones */
 }
 
+@keyframes rotate-icon-clockwise {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate-icon-counterclockwise {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+/* Estilo general del switch */
+.theme-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60px; /* Ajusta el ancho del switch para hacerlo más pequeño */
+    height: 35px; /* Reduce la altura */
+    background-color: var(--div-background);
+    box-shadow: 0 0 4px var(--header-switch-shadow);
+    border-radius: 100px;
+    padding: 3px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-left: auto; /* Asegura que esté hacia la derecha */
+    margin-right: 50px; /* Espaciado del switch hacia los botones */
+}
+
+/* Iconos del switch */
+.theme-switch__icon {
+    font-size: 1.2rem; /* Reduce el tamaño de los iconos */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 4px;
+    z-index: 100;
+}
+
+.theme-switch__icon--sun {
+    background-color: transparent;
+    color: var(--button-color);
+    animation: rotate-icon-clockwise 0.8s ease;
+
+}
+
+.theme-switch__icon--moon {
+    background-color: transparent;
+    color: var(--label-color);
+    animation: rotate-icon-counterclockwise 0.8s ease;
+
+}
+
+/* Slider que se mueve entre los iconos */
+.theme-switch__slider {
+    position: absolute;
+    top: 50%;
+    left: 4px; /* Posición inicial para el sol */
+    width: 24px; /* Ajusta el tamaño del slider */
+    height: 24px;
+    background-color: var(--primary-blue);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    transition: left 0.3s ease;
+}
+
+.theme-switch.active .theme-switch__slider {
+    left: calc(100% - 29px); /* Asegura que el slider no se salga del div */
+}
+
+.theme-switch.active .theme-switch__icon--sun {
+    background-color: transparent;
+    color: var(--label-color);
+    animation: rotate-icon-counterclockwise 0.8s ease;
+
+}
+
+.theme-switch.active .theme-switch__icon--moon {
+    background-color: transparent;
+    color: var(--button-color);
+    animation: rotate-icon-clockwise 0.8s ease;
+}
+
 /* Botones del Header */
 .header__btn {
     border: 1px solid var(--primary-blue);
+    color: var(--header-button-color);
+    background-color: transparent;
     padding: 8px 12px;
     border-radius: 4px;
     font-size: 1rem;
@@ -73,37 +166,25 @@
 /* Botón Activo */
 .header__btn--active {
     background-color: var(--primary-blue);
-    color: var(--white);
+    color: var(--header-button-color);
 }
 
 /* Botón Inactivo */
 .header__btn:not(.header__btn--active) {
-    background-color: var(--white);
+    background-color: var(--header-button-color);
     color: var(--primary-blue);
 }
 
 /* Efecto Hover */
 .header__btn:hover {
     background-color: var(--dark-blue);
-    color: var(--white);
+    color: var(--header-button-color);
     border-color: var(--dark-blue);
-}
-
-
-/* DateTime styles */
-.header {
-    height: 80px;
-    background-color: var(--white);
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 2px 4px var(--div-shadow);
-    position: relative; /* Added for absolute positioning of datetime */
 }
 
 /* DateTime styles - now absolutely positioned */
 .header__datetime {
+    color: var(--header-date-color);
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -111,7 +192,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: var(--white);
+    background: transparent;
     padding: 0.5rem 1.5rem;
 }
 

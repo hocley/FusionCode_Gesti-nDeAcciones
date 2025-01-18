@@ -18,7 +18,8 @@ const DOM_ELEMENTS = {
     confirmDeleteBtn: document.querySelector('.delete-modal-btn-confirm'),
     cancelDeleteBtn: document.querySelector('.delete-modal-btn-cancel'),
     closeDeleteModalBtn: document.querySelector('.close-delete-modal'),
-    closeModalBtn: document.querySelector('.close-modal')
+    closeModalBtn: document.querySelector('.close-modal'),
+    themeSwitch: document.querySelector('.theme-switch')
 };
 
 // Constantes de configuración
@@ -189,7 +190,7 @@ async function manageUpdateTable() {
     const tableBody = document.querySelector('.transactions__table tbody');
     const sortDropdown = document.getElementById('sort-transactions'); // Selecciona el dropdown de filtros
     sortDropdown.value = 'default';
-    
+
     refreshBtn.textContent = 'Actualizando...';
 
     clearTable(tableBody);
@@ -369,6 +370,7 @@ function initializeEventListeners() {
     // Table and search results delegates
     initializeTableDelegate();
     initializeSearchResultsDelegate();
+    initializeDarkModeToggle();
 }
 
 /**
@@ -582,12 +584,38 @@ function styleBuyButton() {
     if (buyButton) {
         // Obtiene las variables CSS definidas en el archivo main.css
         const primaryBlue = getComputedStyle(document.documentElement).getPropertyValue('--primary-blue').trim();
+        const buttonColor = getComputedStyle(document.documentElement).getPropertyValue('--header-button-color').trim();
+
 
         // Aplica los estilos dinámicamente al botón
         buyButton.style.backgroundColor = primaryBlue;
-        buyButton.style.color = 'white';
+        buyButton.style.color = buttonColor;
     } else {
         console.error('No se encontró ningún botón con la clase "header__btn--buy".');
+    }
+}
+
+/**
+ * Cambia el tema y almacena la preferencia en localStorage
+ */
+function toggleTheme() {
+    const isDarkMode = document.documentElement.classList.toggle('dark-mode');
+    DOM_ELEMENTS.themeSwitch.classList.toggle('active');
+    // Guardar la preferencia en localStorage
+    localStorage.setItem('preferredTheme', isDarkMode ? 'dark' : 'light');
+}
+
+/**
+ * Aplica el tema basado en la preferencia guardada
+ */
+function applyStoredTheme() {
+    const storedTheme = localStorage.getItem('preferredTheme');
+    if (storedTheme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+        DOM_ELEMENTS.themeSwitch.classList.add('active');
+    } else {
+        document.documentElement.classList.remove('dark-mode');
+        DOM_ELEMENTS.themeSwitch.classList.remove('active');
     }
 }
 
@@ -595,12 +623,15 @@ function styleBuyButton() {
  * Inicializa la aplicación
  */
 function initializeApp() {
-    initializeEventListeners();
+    applyStoredTheme();
+    DOM_ELEMENTS.themeSwitch.addEventListener('click', toggleTheme);
     styleBuyButton();
     setInterval(updateDateTime, CONFIG.UPDATE_INTERVAL);
     updateDateTime();
     window.addEventListener('load', manageUpdateTable);
+    initializeEventListeners();
 }
+
 
 // Inicialización de la aplicación
 initializeApp();

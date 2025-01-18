@@ -1,6 +1,6 @@
 /* Summary Section */
 .summary {
-    background: var(--white);
+    background: var(--div-background);
     border-radius: 10px;
     box-shadow: 0 8px 16px var(--div-shadow);
     padding: 1.5rem;
@@ -16,7 +16,7 @@
 }
 
 .summary__title {
-    color: var(--gray);
+    color: var(--label-color);
     font-size: 1.5rem;
     font-weight: 500;
     margin: 0;
@@ -24,7 +24,7 @@
 
 .summary__export-btn {
     background-color: var(--primary-blue);
-    color: var(--white);
+    color: var(--button-color);
     border: none;
     padding: 10px 15px;
     cursor: pointer;
@@ -53,26 +53,26 @@
 }
 
 .summary__table th {
-    background: var(--table-row-hover);
-    color: var(--gray);
+    background: var(--table-hover);
+    color: var(--label-color);
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.85rem;
     padding: 1rem;
     text-align: center;
-    border-bottom: 2px solid var(--table-header-border);
+    border-bottom: 2px solid var(--table-border);
 }
 
 .summary__table td {
     padding: 1rem;
     text-align: center;
-    border-bottom: 1px solid var(--table-header-border);
-    color: var(--table-row-content);
+    border-bottom: 1px solid var(--table-border);
+    color: var(--table-content-color);
     font-size: 0.95rem;
 }
 
 .summary__table tr:hover {
-    background-color: var(--table-row-hover);
+    background-color: var(--table-hover);
 }
 
 /* Filter Dropdown */
@@ -84,15 +84,15 @@
 }
 
 .filter__title {
-    color: var(--gray);
+    color: var(--label-color);
     font-size: 1.2rem;
     font-weight: 500;
 }
 
 .filter__dropdown {
-    background-color: transparent;
-    color: var(--table-row-content);
-    border: 1px solid var(--white);
+    background-color: var(--body-background);
+    color: var(--table-content-color);
+    border: 1px solid var(--body-background);
     border-bottom: 2px solid var(--primary-blue);
     padding: 0.5rem 1rem;
     font-size: 1.1rem;

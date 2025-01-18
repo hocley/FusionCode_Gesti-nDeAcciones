@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="../css/summary.css">
     <link rel="stylesheet" href="../css/consolidation.css">
     <link rel="stylesheet" href="../css/graph.css">
+    <script>
+        // Verifica el tema almacenado en localStorage
+        const preferredTheme = localStorage.getItem('preferredTheme');
+        if (preferredTheme === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
 </head>
 <body>
 <!-- Header -->
@@ -23,6 +30,11 @@
     <div class="header__datetime">
         <div class="header__time"></div>
         <div class="header__date"></div>
+    </div>
+    <div class="theme-switch">
+        <i class="fas fa-sun theme-switch__icon theme-switch__icon--sun"></i>
+        <div class="theme-switch__slider"></div>
+        <i class="fas fa-moon theme-switch__icon theme-switch__icon--moon"></i>
     </div>
     <div class="header__actions">
         <button class="header__btn header__btn--buy" title="Registrar Compra" onclick="window.location.href='../../../index.html'">

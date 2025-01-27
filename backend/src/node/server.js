@@ -2,12 +2,13 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('../services/database');
-const stockRoutes = require('../routes/api.route');
-const purchaseRoutes = require('../routes/database.route');
-const searchRoutes = require('../routes/python.route'); // Importar searchRoutes
+const stockRoutes = require('../routes/recentTransaction.route');
+const purchaseRoutes = require('../routes/trading.route');
+const searchRoutes = require('../routes/search.route');
+const path = require("path"); // Importar searchRoutes
 
 // Cargar las variables de entorno
-dotenv.config({ path: '../../config/.env' });
+dotenv.config({ path: path.resolve(__dirname, '../config/.env') });
 
 const app = express();
 

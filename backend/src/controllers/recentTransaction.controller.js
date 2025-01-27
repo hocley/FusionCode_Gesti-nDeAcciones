@@ -1,4 +1,3 @@
-const Stock = require('../models/purchaseModel');
 const { getStockPrice: fetchStockPrice, getOneSymbolSearch, getStockChange } = require('../api/stockAPI');
 
 /**

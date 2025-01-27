@@ -13,6 +13,13 @@
     <link rel="stylesheet" href="./frontend/src/css/trading.css">
     <link rel="stylesheet" href="./frontend/src/css/transactions.css">
     <link rel="stylesheet" href="./frontend/src/css/modal.css">
+    <script>
+        // Verifica el tema almacenado en localStorage
+        const preferredTheme = localStorage.getItem('preferredTheme');
+        if (preferredTheme === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
 </head>
 <body>
 <!-- Header -->
@@ -25,11 +32,16 @@
         <div class="header__time"></div>
         <div class="header__date"></div>
     </div>
+    <div class="theme-switch">
+        <i class="fas fa-sun theme-switch__icon theme-switch__icon--sun"></i>
+        <div class="theme-switch__slider"></div>
+        <i class="fas fa-moon theme-switch__icon theme-switch__icon--moon"></i>
+    </div>
     <div class="header__actions">
-        <button class="header__btn header__btn--buy" title="Registrar Compra">
+        <button class="header__btn header__btn--buy" title="Registrar Compra" onclick="window.location.href='index.html'">
             <i class="fas fa-shopping-cart"></i>
         </button>
-        <button class="header__btn header__btn--consolidation" title="Consolidar Acciones">
+        <button class="header__btn header__btn--consolidation" title="Consolidar Acciones" onclick="window.location.href='./frontend/src/html/consolidation.html'">
             <i class="fas fa-chart-line"></i>
         </button>
     </div>
@@ -56,7 +68,7 @@
 <main class="main">
     <!-- Sección de compra -->
     <div class="trading">
-        <h2 class="transactions__title">Trading</h2>
+        <h2 class="transactions__title">Registrar Acción</h2>
         <form class="trading__form">
             <div class="trading__form-group">
                 <label class="trading__label">Símbolo</label>
@@ -97,6 +109,13 @@
     <div class="transactions">
         <div class="transactions__header-container">
             <h2 class="transactions__title">Transacciones Recientes</h2>
+            <select class="transactions__sort-dropdown" id="sort-transactions">
+                <option value="default" disabled selected>Orden de Registro</option>
+                <option value="az" class="transactions__sort-option">A-Z</option>
+                <option value="za" class="transactions__sort-option">Z-A</option>
+                <option value="profit-asc" class="transactions__sort-option">Ganancia ↑</option>
+                <option value="profit-desc" class="transactions__sort-option">Ganancia ↓</option>
+            </select>
             <button class="transactions__refresh-btn">Actualizar</button>
         </div>
         <div class="transactions__wrapper">
@@ -131,9 +150,8 @@
             <div class="footer__logo" style="background-image: url('frontend/src/content/logo_fusioncode_white80.png')"></div>
             <span class="footer__text">Powered by FusionCode</span>
         </div>
-        <div class="footer__links"></div>
     </div>
-    <div class="footer__copyright">© 2024 FusionCode. Todos los derechos reservados.</div>
+    <div class="footer__copyright">© 2025 FusionCode. Todos los derechos reservados.</div>
 </footer>
 
 <!-- Ventanas modales -->
@@ -168,6 +186,6 @@
 </div>
 
 <!-- Scripts -->
-<script src="./frontend/src/index.js" type="module"></script>
+<script src="frontend/src/js/index.js" type="module"></script>
 </body>
 </html>

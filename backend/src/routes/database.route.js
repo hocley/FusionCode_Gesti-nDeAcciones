@@ -4,9 +4,11 @@ const {
     createPurchase,
     getAllPurchases
 } = require('../controllers/trading.controller');
+const {getSymbols, getPurchasesByName} = require('../controllers/consolidation.controller');
 
-// Nombres de rutas en kebab-case según el estándar
 router.post('/create-purchase', createPurchase); // /db/purchase
 router.get('/get-purchases', getAllPurchases); // /db/purchases
+router.get('/get-symbols', getSymbols); // /db/purchases/:id
+router.get('/get-purchases-name/:company', getPurchasesByName); // /db/purchases/:id
 
 module.exports = router;

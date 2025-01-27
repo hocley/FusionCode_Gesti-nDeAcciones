@@ -21,7 +21,7 @@ app.use(cors());
 // Usar las rutas
 app.use('/api', stockRoutes);
 app.use('/db', purchaseRoutes);
-app.use('/py', searchRoutes); // Usar el prefijo /py para searchRoutes
+app.use('/py', searchRoutes);
 
 // Conectar a la base de datos de MongoDB
 connectDB();

@@ -27,14 +27,104 @@
 }
 
 :root {
+    /*Colores globales*/
     --primary-blue: #0F29F4;
     --secondary-blue: #47A7FF;
     --dark-blue: #0035D9;
-    --gray: #666666;
-    --medium-gray: #cccccc;
-    --light-gray: #f5f5f5;
     --success-green: #22c55e;
     --danger-red: #ef4444;
+    --danger-background: rgba(255, 153, 153, 0.1);
+    --div-shadow: rgba(0,0,0,0.1);
+    --selected-icon-color: #0F29F4;
+    --non-selected-icon-color: #666666;
+
+     /*Colores del header*/
+    --header-background: #ffffff;
+    --header-date-color: #000000;
+    --header-button-color: #ffffff;
+    --header-switch-shadow: rgba(0,0,0);
+
+    /*Colores del body*/
+    --body-background: #f5f5f5;
+    --div-background: #ffffff;
+    --button-color: #ffffff;
+    --label-color: #666666;
+    --input-color: #000000;
+    --input-border: #dddddd;
+    --input-background: #ffffff;
+    --datepicker-filter: invert(67%) sepia(6%) saturate(4%) hue-rotate(180deg) brightness(88%) contrast(89%);
+    --table-tittle-color: #334155;
+    --table-hover: #f8fafc;
+    --table-border: #e2e8f0;
+    --table-content-color: #334155;
+
+    /*Colores del panel de búsqueda*/
+    --searchPanel-color: #cccccc;
+    --scrollbar-track: #f1f1f1;
+    --scrollbar-thumb: #888;
+    --scrollbar-thumb-hover: #555;
+    --company-name-color: #000000;
+
+    /*Colores de ventanas modales*/
+    --modal-shadow: rgba(45, 45, 45, 0.4);
+    --modal-background: var(--div-background);
+    --modal-secondary-button: #e0e0e0;
+    --modal-secondary-button-hover: #d0d0d0;
+
+    /*Colores del footer*/
+    --footer-color: #ffffff;
+}
+
+:root.dark-mode {
+
+    /*Colores globales*/
+    --primary-blue: #0F29F4;
+    --secondary-blue: #47A7FF;
+    --dark-blue: #0035D9;
+    --success-green: #22c55e;
+    --danger-red: #ef4444;
+    --danger-background: rgba(250, 169, 169, 0.1);
+    --div-shadow: rgba(0,0,0,0.1);
+
+    /*Colores del header*/
+    --header-background: #121212;
+    --header-date-color: #ffffff;
+    --header-button-color: #121212;
+    --header-switch-shadow: rgb(44, 44, 44);
+
+    /* Colores del body para modo oscuro */
+    --body-background: #0a0a0a; /* Fondo general oscuro */
+    --div-background: #121212; /* Fondo de los contenedores ligeramente más claro */
+    --button-color: #ffffff; /* Azul brillante para destacar botones */
+    --label-color: #a3a3a3; /* Gris claro para etiquetas */
+    --input-color: #a3a3a3;
+    --input-border: #333333; /* Borde oscuro pero visible */
+    --input-background: #1e1e1e; /* Fondo de inputs coherente con los contenedores */
+    --datepicker-filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    --table-tittle-color: #e5e5e5; /* Blanco/gris claro para encabezados de tabla */
+    --table-hover: #2a2a2a; /* Fondo más claro para hover */
+    --table-border: #444444; /* Gris oscuro para bordes */
+    --table-content-color: #d1d5db; /* Gris claro para contenido */
+
+
+    /* Colores del panel de búsqueda para modo oscuro */
+    --searchPanel-color: #3a3a3a; /* Gris oscuro para fondo del panel */
+    --scrollbar-track: #2a2a2a; /* Pista del scrollbar en gris más oscuro */
+    --scrollbar-thumb: #555555; /* Color del scrollbar */
+    --scrollbar-thumb-hover: #777777; /* Color del scrollbar en hover */
+    --company-name-color: #ffffff;
+
+
+    /* Colores de ventanas modales para modo oscuro */
+    --modal-shadow: rgba(236, 236, 236, 0.1);
+    --modal-background: var(--div-background);
+    --modal-secondary-button: #333333;
+    --modal-secondary-button-hover: #444444;
+
+
+    /*Colores del footer*/
+    --footer-color: #ffffff;
+
 }
 
 
@@ -46,7 +136,7 @@
 }
 
 body {
-    background-color: var(--light-gray);
+    background-color: var(--body-background);
 }
 
 

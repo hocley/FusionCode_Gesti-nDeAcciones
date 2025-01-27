@@ -6,8 +6,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    background-color: var(--modal-shadow);
+    z-index: 30000;
     justify-content: center;
     align-items: center;
     animation: fadeIn 0.3s ease;
@@ -23,13 +23,13 @@
 }
 
 .modal-content {
-    background-color: white;
+    background-color: var(--modal-background);
     padding: 2.5rem;
     border-radius: 16px;
     width: 90%;
     max-width: 500px;
     position: relative;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 20px var(--div-shadow);
     animation: slideIn 0.3s ease;
 }
 
@@ -51,7 +51,7 @@
     top: 1rem;
     font-size: 1.8rem;
     cursor: pointer;
-    color: var(--gray);
+    color: var(--label-color);
     transition: color 0.3s ease;
 }
 
@@ -69,7 +69,7 @@
 
 /* Modal content */
 .modal-content p {
-    color: var(--gray);
+    color: var(--label-color);
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 1.5rem;
@@ -120,7 +120,7 @@
 
 .modal-btn-primary {
     background-color: var(--primary-blue);
-    color: white;
+    color: var(--button-color);
     margin: auto;
 }
 
@@ -165,12 +165,12 @@
 }
 
 .modal-btn-secondary {
-    background-color: #e0e0e0;
-    color: var(--gray);
+    background-color: var(--modal-secondary-button);
+    color: var(--label-color);
 }
 
 .modal-btn-secondary:hover {
-    background-color: #d0d0d0;
+    background-color: var(--modal-secondary-button-hover);
     transform: translateY(-2px);
 }
 /* Modal list styles */
@@ -183,7 +183,7 @@
 }
 
 .modal-content p {
-    color: var(--gray);
+    color: var(--label-color);
     font-size: 1.1rem;
     font-weight: bolder;
     line-height: 1.6;
@@ -195,7 +195,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 0;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--modal-secondary-button);
 }
 
 .modal-content li:last-child {
@@ -203,7 +203,7 @@
 }
 
 .modal-content li span {
-    color: var(--gray);
+    color: var(--label-color);
     font-weight: 600;
     text-align: right;
     flex: 1 1 auto;
@@ -246,7 +246,7 @@
 
 .modal-btn-primary {
     background-color: var(--primary-blue);
-    color: white;
+    color: var(--button-color);
 }
 
 .modal-btn-primary:hover {
@@ -255,11 +255,11 @@
 }
 
 .modal-btn-secondary {
-    background-color: #e0e0e0;
-    color: var(--gray);
+    background-color: var(--modal-secondary-button);
+    color: var(--label-color);
 }
 
 .modal-btn-secondary:hover {
-    background-color: #d0d0d0;
+    background-color: var(--modal-secondary-button-hover);
     transform: translateY(-2px);
 }

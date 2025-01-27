@@ -9,12 +9,12 @@ const getStockInfo = (req, res) => {
     const { name } = req.params; // Obtener el nombre de los parámetros de la ruta
 
     // Comando para ejecutar el script Python con el nombre como argumento
-    const pythonCommand = `python ../services/app.py "${name}"`;
+    const pythonCommand = `python ../services/search.py "${name}"`;
 
     exec(pythonCommand, (err, stdout, stderr) => {
         if (err) {
             console.error(`Error ejecutando app.py: ${err.message}`);
-            return res.status(500).json({ error: 'Error ejecutando app.py' });
+            return res.status(500).json({ error: 'Error ejecutando search.py' });
         }
         if (stderr) {
             console.error(`Salida de error de app.py: ${stderr}`);

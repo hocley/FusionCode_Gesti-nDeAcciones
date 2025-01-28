@@ -1,6 +1,6 @@
 {
   "watch": ["backend/src"],
-  "ext": "js,json,env",
+  "ext": "js,json,env,py",
   "ignore": ["node_modules"],
   "exec": "node backend/src/node/server.js"
 }

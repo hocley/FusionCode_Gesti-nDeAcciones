@@ -32,6 +32,33 @@ const createPurchase = async (req, res) => {
             totalValue
         } = req.body;
 
+        // Validación: El símbolo de la acción es obligatorio
+        if (!symbol) {
+            return res.status(400).json({ message: 'El símbolo de la acción es obligatorio.' });
+        }
+
+        // Validación: La empresa es obligatoria
+        if (!companyName) {
+            return res.status(400).json({ message: 'El nombre de la empresa es obligatorio.' });
+        }
+
+        // Validación: No se permiten precios negativos
+        if (stockPrice <= 0 || totalValue <= 0) {
+            return res.status(400).json({ message: 'El precio y el valor total deben ser mayores a 0.' });
+        }
+
+        // Validación: La cantidad de acciones debe ser mayor a 0
+        if (numOfShares <= 0) {
+            return res.status(400).json({ message: 'El número de acciones debe ser mayor a 0.' });
+        }
+
+        // Validación: No se permiten fechas futuras
+        const today = new Date();
+        const purchaseDate = new Date(date);
+        if (purchaseDate > today) {
+            return res.status(400).json({ message: 'Fecha no válida. No se pueden registrar compras con fechas futuras.' });
+        }
+
         const purchaseData = {
             purchaseId: generateUniqueId(),
             date,

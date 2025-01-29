@@ -20,21 +20,17 @@ const getStockPrice = async (symbol) => {
         const response = await axios.get(url);
         const data = response.data;
 
-        console.log(data);
-
-        if (data.c !== undefined) {  // 'c' es el precio de cierre más reciente
-            const latestPrice = data.c;
-            return parseFloat(latestPrice);
+        if (data.c !== undefined) {
+            return parseFloat(data.c);
         } else {
             throw new Error('No se encontraron datos de precios');
         }
     } catch (error) {
-        const response = await axios.get(url);
-        const data = response.data;
         console.error('Error al obtener el precio de la acción:', error.message);
-        throw new Error('No se pudo obtener el precio de la acción' + data);
+        throw new Error('No se pudo obtener el precio de la acción'); // 🔹 Eliminamos `data`
     }
 };
+
 
 /**
  * Busca el nombre de la empresa por el símbolo

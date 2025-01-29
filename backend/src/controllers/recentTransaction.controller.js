@@ -40,13 +40,26 @@ const searchSymbolByName = async (req, res) => {
 const calculateStockChange = async (req, res) => {
     const { symbol } = req.params;
 
-    try {
-        const { latestPrice, previousPrice } = await getStockChange(symbol);
+    // Validar que el símbolo esté definido
+    if (!symbol) {
+        return res.status(400).json({ error: 'Símbolo no proporcionado' });
+    }
 
-        const cambioPortentual = ((latestPrice - previousPrice) / previousPrice) * 100;
+    try {
+        const stockData = await getStockChange(symbol);
+
+        // Validar que la API devuelva datos válidos
+        if (!stockData || stockData.latestPrice === undefined || stockData.previousPrice === undefined) {
+            return res.status(500).json({ error: 'No se pudo obtener los precios' });
+        }
+
+        const { latestPrice, previousPrice } = stockData;
+        const cambioPorcentual = ((latestPrice - previousPrice) / previousPrice) * 100;
+        const estado = cambioPorcentual > 0 ? "ganancia" : cambioPorcentual < 0 ? "pérdida" : "sin cambios";
 
         res.json({
-            percentageChange: cambioPortentual.toFixed(2),
+            percentageChange: cambioPorcentual.toFixed(2) + "%",
+            estado
         });
     } catch (error) {
         console.error('Error al calcular el cambio porcentual:', error);

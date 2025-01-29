@@ -196,4 +196,4 @@ function addRowToTable(datos) {
     cuerpoTabla.appendChild(fila);
 }
 
-export { updateTable, addRowToTable, sortTableRows };
+export { updateTable, addRowToTable, sortTableRows, calculateTableValues };

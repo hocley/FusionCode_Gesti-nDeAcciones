@@ -254,55 +254,55 @@
 
 #### 3.2.2. **Prueba INTEG-02: Actualización de Ganancias/Pérdidas**
 
-| **Campo**                 | **Descripción**                                                                                                 |
-|---------------------------|-----------------------------------------------------------------------------------------------------------------|
-| **ID de la Prueba**        | INTEG-02                                                                                                       |
-| **Requisito Relacionado**  | RF2: El sistema debe actualizar automáticamente las ganancias/pérdidas cuando se obtienen los precios actuales. |
-| **Nombre de la Prueba**    | Actualización de Ganancias/Pérdidas                                                                            |
-| **Tipo de Prueba**         | Integración                                                                                                    |
-| **Prioridad**              | Alta                                                                                                           |
-| **Estado Actual**          | Por realizar                                                                                                   |
-| **Autor**                  | Ariel Amaguaña                                                                                                |
-| **Fecha de Creación**      | 2025-01-28                                                                                                     |
-| **Fecha de Ejecución**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Versión del Sistema**    | 1.0                                                                                                            |
-| **Descripción General**    | Validar que al obtener datos de la API, las ganancias/pérdidas se actualicen automáticamente en el sistema.    |
-| **Objetivo**               | Asegurar que los cálculos de ganancias/pérdidas sean actualizados en tiempo real.                             |
-| **Entorno de Prueba**      | Node.js 18, conexión activa a la API de precios.                                                               |
-| **Precondiciones**         | - API disponible. <br> - Base de datos con acciones previamente registradas.                                   |
+| **Campo**                 | **Descripción**                                                                                                                                   |
+|---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| **ID de la Prueba**        | INTEG-02                                                                                                                                          |
+| **Requisito Relacionado**  | RF2: El sistema debe actualizar automáticamente las ganancias/pérdidas cuando se obtienen los precios actuales.                                   |
+| **Nombre de la Prueba**    | Actualización de Ganancias/Pérdidas                                                                                                               |
+| **Tipo de Prueba**         | Integración                                                                                                                                       |
+| **Prioridad**              | Alta                                                                                                                                              |
+| **Estado Actual**          | Ejecutada                                                                                                                                         |
+| **Autor**                  | Ariel Amaguaña                                                                                                                                    |
+| **Fecha de Creación**      | 2025-01-28                                                                                                                                        |
+| **Fecha de Ejecución**     | 2025-01-28                                                                                                                                        |
+| **Versión del Sistema**    | 1.0                                                                                                                                               |
+| **Descripción General**    | Validar que al obtener datos de la API, las ganancias/pérdidas se actualicen automáticamente en el sistema.                                       |
+| **Objetivo**               | Asegurar que los cálculos de ganancias/pérdidas sean actualizados en tiempo real.                                                                 |
+| **Entorno de Prueba**      | Node.js 22, conexión activa a la API de precios, Jest, MongoMemoryServer para pruebas aisladas.                                                   |
+| **Precondiciones**         | - API disponible. <br> - Base de datos con acciones previamente registradas.                                                                      |
 | **Pasos para Ejecutar**    | 1. Realizar una solicitud GET a la API para obtener los precios actuales. <br> 2. Validar que las ganancias/pérdidas se actualicen correctamente. |
-| **Criterios de Aceptación**| - Los cálculos de ganancias/pérdidas deben reflejar los nuevos precios de las acciones.                        |
-| **Resultado Esperado**     | Los valores de ganancias/pérdidas deben actualizarse sin errores en la interfaz.                              |
-| **Resultado Obtenido**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Estado Final**           | (Completar después de ejecutar la prueba: Aprobada o Fallida).                                                 |
-| **Observaciones**          | (Notas adicionales).                                                                                          |
-| **Evidencia**              | (Capturas de pantalla, logs, o resultados relacionados).                                                       |
+| **Criterios de Aceptación**| - Los cálculos de ganancias/pérdidas deben reflejar los nuevos precios de las acciones.                                                           |
+| **Resultado Esperado**     | - Los valores de currentPrice y gainLossPercentage deben actualizarse correctamente.                                                              |
+| **Resultado Obtenido**     | Los valores fueron actualizados correctamente en la prueba con un precio de 150.25 y ganancia de 25.21%.                                          |
+| **Estado Final**           | Aprobada                                                                                                                                          |
+| **Observaciones**          | - Se utilizó un mock de `getStockPrice` para evitar llamadas reales a la API. <br> - La prueba usó una base de datos en memoria para aislamiento.                                                               |
+| **Evidencia**              | ![Prueba de Integracion 2](/img/PruebaIntegracion2.png)                                                                                           |
 
 ### 3.2.3. **Prueba INTEG-03: Integración con la Base de Datos**
 
-| **Campo**                 | **Descripción**                                                                                                 |
-|---------------------------|-----------------------------------------------------------------------------------------------------------------|
-| **ID de la Prueba**        | INTEG-03                                                                                                       |
-| **Requisito Relacionado**  | RF6: El sistema debe consolidar los datos de las acciones registradas en el portafolio.                        |
-| **Nombre de la Prueba**    | Consolidación de Datos en el Portafolio                                                                        |
-| **Tipo de Prueba**         | Integración                                                                                                    |
-| **Prioridad**              | Media                                                                                                          |
-| **Estado Actual**          | Por realizar                                                                                                   |
-| **Autor**                  | Ariel Amaguaña                                                                                                |
-| **Fecha de Creación**      | 2025-01-28                                                                                                     |
-| **Fecha de Ejecución**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Versión del Sistema**    | 1.0                                                                                                            |
-| **Descripción General**    | Validar que el sistema consolide correctamente los datos de las acciones registradas en el portafolio.         |
-| **Objetivo**               | Asegurar que los datos del portafolio sean consolidados correctamente y reflejen los valores correctos.        |
-| **Entorno de Prueba**      | Node.js 18, conexión activa a la base de datos.                                                               |
-| **Precondiciones**         | - Base de datos con acciones previamente registradas.                                                          |
-| **Pasos para Ejecutar**    | 1. Registrar múltiples compras de acciones. <br> 2. Validar que el sistema consolide correctamente la información. |
-| **Criterios de Aceptación**| - Los datos deben consolidarse correctamente sin inconsistencias.                                              |
-| **Resultado Esperado**     | La consolidación de datos debe reflejar correctamente los valores del portafolio.                             |
-| **Resultado Obtenido**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Estado Final**           | (Completar después de ejecutar la prueba: Aprobada o Fallida).                                                 |
-| **Observaciones**          | (Notas adicionales).                                                                                          |
-| **Evidencia**              | (Capturas de pantalla, logs, o resultados relacionados).                                                       |
+| **Campo**                 | **Descripción**                                                                                                          |
+|---------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| **ID de la Prueba**        | INTEG-03                                                                                                                 |
+| **Requisito Relacionado**  | RF6: El sistema debe consolidar los datos de las acciones registradas en el portafolio.                                  |
+| **Nombre de la Prueba**    | Consolidación de Datos en el Portafolio                                                                                  |
+| **Tipo de Prueba**         | Integración                                                                                                              |
+| **Prioridad**              | Media                                                                                                                    |
+| **Estado Actual**          | Ejecutada                                                                                                                |
+| **Autor**                  | Ariel Amaguaña                                                                                                           |
+| **Fecha de Creación**      | 2025-01-28                                                                                                               |
+| **Fecha de Ejecución**     | 2025-01-28                                                                                                               |
+| **Versión del Sistema**    | 1.0                                                                                                                      |
+| **Descripción General**    | Validar que el sistema consolide correctamente los datos de las acciones registradas en el portafolio.                   |
+| **Objetivo**               | Asegurar que los datos del portafolio sean consolidados correctamente y reflejen los valores correctos.                  |
+| **Entorno de Prueba**      | Node.js 22, conexión activa a la base de datos.                                                                          |
+| **Precondiciones**         | - Base de datos con acciones previamente registradas.                                                                    |
+| **Pasos para Ejecutar**    | 1. Registrar múltiples compras de acciones. <br> 2. Validar que el sistema consolide correctamente la información.       |
+| **Criterios de Aceptación**| - Los datos deben consolidarse correctamente sin inconsistencias.                                                        |
+| **Resultado Esperado**     | La consolidación de datos debe reflejar correctamente los valores del portafolio.                                        |
+| **Resultado Obtenido**     | Consolidación de datos realizada con éxito, con valores correctos para total de acciones, valor total y precio promedio. |
+| **Estado Final**           | Aprobada                                                                                                                 |
+| **Observaciones**          | Se corrigió el formato de averagePrice para asegurarse de que se devuelva como número en lugar de string.                |
+| **Evidencia**              | ![Prueba de integracion 3](/img/PruebaIntegracion3.png)                                                                  |
 
 ### 3.2.4. **Prueba INTEG-04: Exportación a CSV**
 

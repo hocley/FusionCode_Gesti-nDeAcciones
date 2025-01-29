@@ -370,7 +370,6 @@ function initializeEventListeners() {
     // Table and search results delegates
     initializeTableDelegate();
     initializeSearchResultsDelegate();
-    initializeDarkModeToggle();
 }
 
 /**

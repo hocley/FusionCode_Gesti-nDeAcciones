@@ -32,10 +32,10 @@ pip install sys json pandas
 ````
 
 ### 2. Configuración del Servidor Node.js
-Diríjase al directorio ```src/node``` desde la raíz del proyecto:
+Diríjase al directorio ```backend/src/node``` desde la raíz del proyecto:
 
 ```
-cd src/node
+cd backend/src/node
 ```
 Inicie el servidor ejecutando el archivo server.js desde la terminal:
 

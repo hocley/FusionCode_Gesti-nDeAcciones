@@ -1,4 +1,4 @@
-# **Documento de Requisitos**
+# **Documento de Diseño de Arquitectura**
 
 **Proyecto:** Gestión de Transacciones y Búsqueda de Símbolos
 

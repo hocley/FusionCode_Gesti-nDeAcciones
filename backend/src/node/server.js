@@ -2,9 +2,9 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('../services/database');
-const stockRoutes = require('../routes/recentTransaction.route');
-const purchaseRoutes = require('../routes/trading.route');
-const searchRoutes = require('../routes/search.route'); // Importar searchRoutes
+const stockRoutes = require('../routes/api.route');
+const purchaseRoutes = require('../routes/database.route');
+const searchRoutes = require('../routes/python.route'); // Importar searchRoutes
 
 // Cargar las variables de entorno
 dotenv.config({ path: '../../config/.env' });
@@ -20,7 +20,7 @@ app.use(cors());
 // Usar las rutas
 app.use('/api', stockRoutes);
 app.use('/db', purchaseRoutes);
-app.use('/py', searchRoutes); // Usar el prefijo /py para searchRoutes
+app.use('/py', searchRoutes);
 
 // Conectar a la base de datos de MongoDB
 connectDB();

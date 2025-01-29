@@ -1,0 +1,43 @@
+/* Graph Section */
+.chart {
+    background: var(--div-background);
+    border-radius: 10px;
+    box-shadow: 0 8px 16px var(--div-shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.chart__title {
+    color: var(--label-color);
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.chart__container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+/* Canvas for Chart */
+.chart__container canvas {
+    width: 100%;
+    height: auto;
+    max-width: 100%; /* Se asegura de que el canvas no exceda el contenedor */
+    max-height: 300px; /* Limita la altura máxima del gráfico */
+    display: block;
+    margin: 0 auto;
+}
+
+.highlight {
+    text-align: center;
+    margin-bottom: 1rem;
+}

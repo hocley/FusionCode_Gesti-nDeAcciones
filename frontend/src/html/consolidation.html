@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShareFlow - Consolidación</title>
+    <link rel="icon" href="../content/icon_fusioncode.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/summary.css">
+    <link rel="stylesheet" href="../css/consolidation.css">
+    <link rel="stylesheet" href="../css/graph.css">
+    <script>
+        // Verifica el tema almacenado en localStorage
+        const preferredTheme = localStorage.getItem('preferredTheme');
+        if (preferredTheme === 'dark') {
+            document.documentElement.classList.add('dark-mode');
+        }
+    </script>
+</head>
+<body>
+<!-- Header -->
+<nav class="header">
+    <div class="header__logo-container">
+        <div class="header__logo" style="background-image: url('../content/logo_fusioncode80.png')"></div>
+        <div class="header__logo-text">ShareFlow</div>
+    </div>
+    <div class="header__datetime">
+        <div class="header__time"></div>
+        <div class="header__date"></div>
+    </div>
+    <div class="theme-switch">
+        <i class="fas fa-sun theme-switch__icon theme-switch__icon--sun"></i>
+        <div class="theme-switch__slider"></div>
+        <i class="fas fa-moon theme-switch__icon theme-switch__icon--moon"></i>
+    </div>
+    <div class="header__actions">
+        <button class="header__btn header__btn--buy" title="Registrar Compra" onclick="window.location.href='../../../index.html'">
+            <i class="fas fa-shopping-cart"></i>
+        </button>
+        <button class="header__btn header__btn--consolidation" title="Consolidar Acciones" onclick="window.location.href='consolidation.html'">
+            <i class="fas fa-chart-line"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+    <!-- Sección de Filtrado -->
+    <div class="filter">
+        <h2 class="filter__title">Filtrar por Acción</h2>
+        <select class="filter__dropdown" id="action-filter">
+            <option value="default" disabled selected>Cargando...</option>
+        </select>
+        <div class="filter__error-list"></div>
+    </div>
+
+
+
+    <!-- Sección de Resumen -->
+    <div class="summary">
+        <div class="summary__header">
+            <h2 class="summary__title">Resumen</h2>
+            <h2 class="highlight"></h2>
+            <button class="summary__export-btn">
+                <i class="fas fa-file-csv"></i> Exportar CSV
+            </button>
+        </div>
+        <table class="summary__table" id="summary-table">
+            <thead>
+            <tr>
+                <th>FECHA</th>
+                <th>SÍMBOLO</th>
+                <th>PRECIO/ACCIÓN ($)</th>
+                <th>ACCIONES</th>
+                <th>TOTAL ($)</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Sección de Consolidación -->
+    <div class="consolidation">
+        <div class="consolidation__header">
+            <h2 class="consolidation__title">Consolidación</h2>
+            <h2 class="highlight"></h2>
+            <button class="consolidation__export-btn">
+                <i class="fas fa-file-csv"></i> Exportar CSV
+            </button>
+        </div>
+        <table class="consolidation__table" id="consolidation-table">
+            <thead>
+            <tr>
+                <th>SÍMBOLO</th>
+                <th>TOTAL ACCIONES</th>
+                <th>TOTAL ($)</th>
+                <th>COSTO ($)</th>
+                <th>Ganancia/Pérdida %</th>
+                <th>Ganancia/Pérdida ($)</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <!-- Sección de Gráfica -->
+    <div class="chart">
+        <h2 class="chart__title">Distribución de Acciones</h2>
+        <h2 class="highlight"></h2>
+        <div class="chart__container">
+            <!-- Gráfico pastel -->
+            <canvas id="chart-line"></canvas>
+            <canvas id="bar-graph"></canvas>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer__content">
+        <div class="footer__logo-container">
+            <div class="footer__logo" style="background-image: url('../content/logo_fusioncode_white80.png')"></div>
+            <span class="footer__text">Powered by FusionCode</span>
+        </div>
+        <div class="footer__links"></div>
+    </div>
+    <div class="footer__copyright">© 2025 FusionCode. Todos los derechos reservados.</div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/consolidation.js" type="module"></script>
+</body>
+</html>

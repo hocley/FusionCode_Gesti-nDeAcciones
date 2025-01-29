@@ -126,6 +126,47 @@ async function calculateTableValues(compra) {
 }
 
 /**
+ * Ordena las filas de la tabla de transacciones.
+ *
+ * @param {string} criterio - Criterio de ordenamiento ('az', 'za', 'gain-asc', 'gain-desc').
+ */
+function sortTableRows(criterio) {
+    const cuerpoTabla = document.querySelector('.transactions__table tbody');
+    const filas = Array.from(cuerpoTabla.querySelectorAll('tr')); // Obtiene las filas de la tabla como un array
+
+    // Función de comparación para diferentes criterios
+    const comparador = {
+        az: (a, b) => {
+            const simboloA = a.querySelector('.transactions__cell--symbol').textContent.trim();
+            const simboloB = b.querySelector('.transactions__cell--symbol').textContent.trim();
+            return simboloA.localeCompare(simboloB); // Orden alfabético ascendente
+        },
+        za: (a, b) => {
+            const simboloA = a.querySelector('.transactions__cell--symbol').textContent.trim();
+            const simboloB = b.querySelector('.transactions__cell--symbol').textContent.trim();
+            return simboloB.localeCompare(simboloA); // Orden alfabético descendente
+        },
+        'profit-asc': (a, b) => {
+            const gananciaA = parseFloat(a.querySelector('td:nth-child(11)').textContent.trim()); // Columna de ganancia en dólares
+            const gananciaB = parseFloat(b.querySelector('td:nth-child(11)').textContent.trim());
+            return gananciaA - gananciaB; // Orden ascendente
+        },
+        'profit-desc': (a, b) => {
+            const gananciaA = parseFloat(a.querySelector('td:nth-child(11)').textContent.trim()); // Columna de ganancia en dólares
+            const gananciaB = parseFloat(b.querySelector('td:nth-child(11)').textContent.trim());
+            return gananciaB - gananciaA; // Orden descendente
+        }
+    };
+
+    // Ordena las filas según el criterio
+    filas.sort(comparador[criterio]);
+
+    // Limpia la tabla y agrega las filas ordenadas
+    cuerpoTabla.innerHTML = '';
+    filas.forEach((fila) => cuerpoTabla.appendChild(fila));
+}
+
+/**
  * Agrega una nueva fila a la tabla de transacciones.
  *
  * @param {Object} datos - Datos de la transacción para crear la fila.
@@ -155,4 +196,4 @@ function addRowToTable(datos) {
     cuerpoTabla.appendChild(fila);
 }
 
-export { updateTable, addRowToTable };
+export { updateTable, addRowToTable, sortTableRows };

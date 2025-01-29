@@ -1,7 +1,7 @@
 // Importaciones de módulos
-import {attemptPurchase} from '../../backend/src/domain/tradingPanel.js';
-import {updateTable} from '../../backend/src/domain/recentTransactionsPanel.js';
-import {fetchAndDisplaySearchResults} from '../../backend/src/domain/searchPanel.js';
+import {attemptPurchase} from '../../../backend/src/domain/tradingPanel.js';
+import {updateTable, sortTableRows} from '../../../backend/src/domain/recentTransactionsPanel.js';
+import {fetchAndDisplaySearchResults} from '../../../backend/src/domain/searchPanel.js';
 
 // Constantes para elementos DOM
 const DOM_ELEMENTS = {
@@ -18,7 +18,8 @@ const DOM_ELEMENTS = {
     confirmDeleteBtn: document.querySelector('.delete-modal-btn-confirm'),
     cancelDeleteBtn: document.querySelector('.delete-modal-btn-cancel'),
     closeDeleteModalBtn: document.querySelector('.close-delete-modal'),
-    closeModalBtn: document.querySelector('.close-modal')
+    closeModalBtn: document.querySelector('.close-modal'),
+    themeSwitch: document.querySelector('.theme-switch')
 };
 
 // Constantes de configuración
@@ -63,6 +64,35 @@ function validateSymbolChange(tradingSymbol) {
         DOM_ELEMENTS.validationList.appendChild(sharesItem);
         return false;
     }
+    return true;
+}
+
+/**
+ * Valida la fecha de compra
+ * @returns {boolean} - Estado de validación
+ */
+function validatePurchaseDate(date) {
+    const validationList = DOM_ELEMENTS.validationList; // Asumiendo que ya está declarado en el código principal
+    validationList.innerHTML = ''; // Limpia mensajes de validación previos
+
+    const selectedDate = date;
+    const sharesItem = createValidationItem(); // Usa la función auxiliar ya definida para crear elementos de validación
+
+    if (!selectedDate) {
+        sharesItem.textContent = 'Debe seleccionar una fecha de compra.';
+        validationList.appendChild(sharesItem);
+        return false;
+    }
+
+    const currentDate = new Date();
+    const selectedDateObject = new Date(selectedDate);
+
+    if (selectedDateObject > currentDate) {
+        sharesItem.textContent = 'La fecha de compra no puede ser mayor a la fecha actual.';
+        validationList.appendChild(sharesItem);
+        return false;
+    }
+
     return true;
 }
 
@@ -156,16 +186,27 @@ function clearTable(tableBody) {
  * @returns {Promise<boolean>} - Estado de la actualización
  */
 async function manageUpdateTable() {
+    const refreshBtn = DOM_ELEMENTS.refreshBtn;
     const tableBody = document.querySelector('.transactions__table tbody');
+    const sortDropdown = document.getElementById('sort-transactions'); // Selecciona el dropdown de filtros
+    sortDropdown.value = 'default';
+
+    refreshBtn.textContent = 'Actualizando...';
+
     clearTable(tableBody);
 
     const tableUpdated = await updateTable();
+
+    // Restablecer el texto del botón a "Actualizar"
+    refreshBtn.textContent = 'Actualizar';
+
     if (!tableUpdated.success) {
         showErrorModal('¡Error en la Tabla!', '⚠️', tableUpdated.message);
         return false;
     }
     return true;
 }
+
 
 /**
  * Gestiona la creación de una compra
@@ -174,8 +215,8 @@ async function manageUpdateTable() {
  * @param {number} pricePerShare - Precio por acción
  * @param {number} numberOfShares - Número de acciones
  */
-async function managePurchase(tradingSymbol, companyName, pricePerShare, numberOfShares) {
-    const result = await attemptPurchase(tradingSymbol, companyName, pricePerShare, numberOfShares);
+async function managePurchase(date, tradingSymbol, companyName, pricePerShare, numberOfShares) {
+    const result = await attemptPurchase(date, tradingSymbol, companyName, pricePerShare, numberOfShares);
 
     if (result.success) {
         clearPurchaseForm();
@@ -260,7 +301,7 @@ async function validateSymbol(symbol) {
         try {
             const response = await fetch(url);
             const data = await response.json();
-            if (data.error === error) {
+            if (data.error === error || data.name === undefined) {
                 showValidationError('El símbolo no existe');
                 return 0;
             }
@@ -285,13 +326,14 @@ function initializeEventListeners() {
 
     // Validate button
     DOM_ELEMENTS.validateBtn.addEventListener('click', async () => {
-        const tradingSymbol = document.querySelector('.trading-symbol').value;
+        const tradingSymbol = document.querySelector('.trading-symbol').value.toUpperCase();
         const companyName = document.querySelector('.company-name');
 
         DOM_ELEMENTS.validationList.innerHTML = '';
         DOM_ELEMENTS.validateBtn.textContent = 'Validando...';
 
-        const data = await validateSymbol(tradingSymbol.toUpperCase());
+
+        const data = await validateSymbol(tradingSymbol);
         handleValidationResult(data, companyName);
 
         DOM_ELEMENTS.validateBtn.textContent = 'Validar';
@@ -319,9 +361,16 @@ function initializeEventListeners() {
     // Search button
     DOM_ELEMENTS.searchBtn.addEventListener('click', handleSearch);
 
+    // Dropdown de filtros para ordenar la tabla
+    document.getElementById('sort-transactions').addEventListener('change', (event) => {
+        const criterio = event.target.value;
+        sortTableRows(criterio);
+    });
+
     // Table and search results delegates
     initializeTableDelegate();
     initializeSearchResultsDelegate();
+    initializeDarkModeToggle();
 }
 
 /**
@@ -379,7 +428,8 @@ async function handleBuyButtonClick(event) {
  */
 function getPurchaseFormData() {
     return {
-        tradingSymbol: document.querySelector('.trading-symbol').value,
+        tradingSymbol: document.querySelector('.trading-symbol').value.toUpperCase(),
+        date: document.querySelector('.trading__date-picker').value,
         companyName: document.querySelector('.company-name').value,
         pricePerShare: parseFloat(document.querySelector('.price-share').value),
         numberOfShares: parseInt(document.querySelector('.number-shares').value)
@@ -395,9 +445,11 @@ function getPurchaseFormData() {
 function validatePurchaseData(data) {
     return isValidated() &&
         validateSymbolChange(data.tradingSymbol) &&
-        validatePricePerShare(data.pricePerShare) &&
-        validateNumberOfShares(data.numberOfShares);
-}
+        validateNumberOfShares(data.numberOfShares) &&
+        validatePurchaseDate(data.date) &&
+        validatePricePerShare(data.pricePerShare);
+};
+
 
 /**
  * Actualiza el modal de compra
@@ -445,7 +497,7 @@ function closeDeleteModal() {
 async function handleConfirmTransaction() {
     const data = getPurchaseFormData();
     closePurchaseModal();
-    await managePurchase(data.tradingSymbol, data.companyName, data.pricePerShare, data.numberOfShares);
+    await managePurchase(data.date, data.tradingSymbol, data.companyName, data.pricePerShare, data.numberOfShares);
 }
 
 /**
@@ -489,24 +541,6 @@ function initializeTableDelegate() {
 }
 
 /**
- * Maneja la eliminación de una compra
- */
-const manageDeletePurchase = async () => {
-    closeDeleteModal();
-    const purchaseDeleted = await deletePurchase(BTN_ID);
-    if (!purchaseDeleted.success) {
-        showValidationError(purchaseDeleted.message);
-        showErrorModal('¡Error al eliminar la compra!', '❌', purchaseDeleted.message);
-    } else {
-        const tableUpdated = await manageUpdateTable();
-        if (tableUpdated) {
-            showSuccessModal('¡Transacción Exitosa!', '✓', purchaseDeleted.message);
-            await manageUpdateTable();
-        }
-    }
-};
-
-/**
  * Inicializa el delegado de resultados de búsqueda
  */
 function initializeSearchResultsDelegate() {
@@ -537,21 +571,67 @@ async function handleSymbolCopy(symbol) {
  * @param {HTMLElement} element - Elemento a animar
  */
 function animateCopyButton(element) {
-    element.style.color = '#47A7FF';
+    element.style.color = '#22598c';
     setTimeout(() => {
         element.style.color = '#0041FF';
     }, 2000);
+}
+
+function styleBuyButton() {
+    // Selecciona el botón con la clase `header__btn--buy`
+    const buyButton = document.querySelector('.header__btn--buy');
+
+    if (buyButton) {
+        // Obtiene las variables CSS definidas en el archivo main.css
+        const primaryBlue = getComputedStyle(document.documentElement).getPropertyValue('--primary-blue').trim();
+        const buttonColor = getComputedStyle(document.documentElement).getPropertyValue('--header-button-color').trim();
+
+
+        // Aplica los estilos dinámicamente al botón
+        buyButton.style.backgroundColor = primaryBlue;
+        buyButton.style.color = buttonColor;
+    } else {
+        console.error('No se encontró ningún botón con la clase "header__btn--buy".');
+    }
+}
+
+/**
+ * Cambia el tema y almacena la preferencia en localStorage
+ */
+function toggleTheme() {
+    const isDarkMode = document.documentElement.classList.toggle('dark-mode');
+    DOM_ELEMENTS.themeSwitch.classList.toggle('active');
+    // Guardar la preferencia en localStorage
+    localStorage.setItem('preferredTheme', isDarkMode ? 'dark' : 'light');
+}
+
+/**
+ * Aplica el tema basado en la preferencia guardada
+ */
+function applyStoredTheme() {
+    const storedTheme = localStorage.getItem('preferredTheme');
+    if (storedTheme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+        DOM_ELEMENTS.themeSwitch.classList.add('active');
+    } else {
+        document.documentElement.classList.remove('dark-mode');
+        DOM_ELEMENTS.themeSwitch.classList.remove('active');
+    }
 }
 
 /**
  * Inicializa la aplicación
  */
 function initializeApp() {
-    initializeEventListeners();
+    applyStoredTheme();
+    DOM_ELEMENTS.themeSwitch.addEventListener('click', toggleTheme);
+    styleBuyButton();
     setInterval(updateDateTime, CONFIG.UPDATE_INTERVAL);
     updateDateTime();
     window.addEventListener('load', manageUpdateTable);
+    initializeEventListeners();
 }
+
 
 // Inicialización de la aplicación
 initializeApp();

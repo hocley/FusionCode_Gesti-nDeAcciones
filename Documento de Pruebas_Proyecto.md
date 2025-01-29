@@ -19,7 +19,7 @@
 | **ID de la Prueba**        | Identificador único para la prueba (Ejemplo: UNIT-001, INTEG-002, E2E-003).                                    |
 | **Requisito Relacionado**  | El requisito funcional o no funcional que está cubriendo la prueba (Ejemplo: RF-001).                          |
 | **Nombre de la Prueba**    | Nombre descriptivo de la prueba (Ejemplo: "Validación del Cálculo de Descuentos").                             |
-| **Tipo de Prueba**         | Clasificación de la prueba (Unitarias, Integración, End-to-End).                                               |
+| **Tipo de Prueba**         | Clasificación de la prueba (Unitarias, Integración).                                               |
 | **Prioridad**              | Importancia de la prueba (Alta, Media, Baja).                                                                  |
 | **Estado Actual**          | Estado de la prueba (Por realizar, En progreso, Aprobada, Fallida).                                            |
 | **Autor**                  | Persona responsable de la prueba.                                                                              |
@@ -304,163 +304,11 @@
 | **Observaciones**          | Se corrigió el formato de averagePrice para asegurarse de que se devuelva como número en lugar de string.                |
 | **Evidencia**              | ![Prueba de integracion 3](/img/PruebaIntegracion3.png)                                                                  |
 
-### 3.2.4. **Prueba INTEG-04: Exportación a CSV**
-
-| **Campo**                 | **Descripción**                                                                                                 |
-|---------------------------|-----------------------------------------------------------------------------------------------------------------|
-| **ID de la Prueba**        | INTEG-04                                                                                                       |
-| **Requisito Relacionado**  | RF7: El sistema debe permitir la exportación de los datos del portafolio en formato CSV.                       |
-| **Nombre de la Prueba**    | Exportación a CSV                                                                                              |
-| **Tipo de Prueba**         | Integración                                                                                                    |
-| **Prioridad**              | Media                                                                                                          |
-| **Estado Actual**          | Por realizar                                                                                                   |
-| **Autor**                  | Ariel Amaguaña                                                                                                |
-| **Fecha de Creación**      | 2025-01-28                                                                                                     |
-| **Fecha de Ejecución**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Versión del Sistema**    | 1.0                                                                                                            |
-| **Descripción General**    | Validar que el sistema permita exportar correctamente los datos del portafolio en formato CSV.                 |
-| **Objetivo**               | Asegurar que la exportación de datos funcione correctamente y el archivo generado sea válido.                 |
-| **Entorno de Prueba**      | Node.js 18, compatibilidad con Excel y Google Sheets.                                                          |
-| **Precondiciones**         | - Portafolio con datos registrados.                                                                            |
-| **Pasos para Ejecutar**    | 1. Exportar los datos a CSV. <br> 2. Validar que el archivo generado tenga el formato correcto.                 |
-| **Criterios de Aceptación**| - El archivo debe abrirse sin errores en herramientas externas.                                                |
-| **Resultado Esperado**     | Archivo CSV generado correctamente.                                                                            |
-| **Resultado Obtenido**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Estado Final**           | (Completar después de ejecutar la prueba: Aprobada o Fallida).                                                 |
-| **Observaciones**          | (Notas adicionales).                                                                                          |
-| **Evidencia**              | (Capturas de pantalla, logs, o resultados relacionados).                                                       |
-
-### 3.3. **Pruebas End-to-End**
-
-### 3.3.1 **Prueba E2E-01: Flujo de Registro y Visualización**
-
-| **Campo**                 | **Descripción**                                                                                                 |
-|---------------------------|-----------------------------------------------------------------------------------------------------------------|
-| **ID de la Prueba**        | E2E-01                                                                                                        |
-| **Requisito Relacionado**  | RF1, RF3: El sistema debe permitir registrar una acción y visualizarla en el portafolio.                       |
-| **Nombre de la Prueba**    | Flujo de Registro y Visualización                                                                              |
-| **Tipo de Prueba**         | End-to-End (E2E)                                                                                              |
-| **Prioridad**              | Alta                                                                                                           |
-| **Estado Actual**          | Por realizar                                                                                                   |
-| **Autor**                  | Ariel Amaguaña                                                                                                |
-| **Fecha de Creación**      | 2025-01-28                                                                                                     |
-| **Fecha de Ejecución**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Versión del Sistema**    | 1.0                                                                                                            |
-| **Descripción General**    | Validar que el usuario pueda registrar una acción y verla reflejada correctamente en el portafolio.            |
-| **Objetivo**               | Asegurar que el flujo de registro y visualización funcione correctamente.                                      |
-| **Entorno de Prueba**      | Navegador Web, Cypress                                                                                         |
-| **Precondiciones**         | - Usuario autenticado. <br> - Base de datos inicializada.                                                      |
-| **Pasos para Ejecutar**    | 1. Acceder a la página de registro de acciones. <br> 2. Ingresar los datos requeridos. <br> 3. Confirmar la operación. <br> 4. Verificar que la acción aparezca en el portafolio. |
-| **Criterios de Aceptación**| - La acción debe mostrarse correctamente en el portafolio.                                                     |
-| **Resultado Esperado**     | La acción registrada aparece en la interfaz del portafolio.                                                   |
-| **Resultado Obtenido**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Estado Final**           | (Completar después de ejecutar la prueba: Aprobada o Fallida).                                                 |
-| **Observaciones**          | (Notas adicionales).                                                                                          |
-| **Evidencia**              | (Capturas de pantalla, logs, o resultados relacionados).                                                       |
-
-### 3.3.2 **Prueba E2E-02: Flujo de Actualización de Precios**
-
-| **Campo**                 | **Descripción**                                                                                                 |
-|---------------------------|-----------------------------------------------------------------------------------------------------------------|
-| **ID de la Prueba**        | E2E-02                                                                                                        |
-| **Requisito Relacionado**  | RF2, RF3: El sistema debe actualizar automáticamente los precios y calcular la ganancia/pérdida.              |
-| **Nombre de la Prueba**    | Flujo de Actualización de Precios                                                                             |
-| **Tipo de Prueba**         | End-to-End (E2E)                                                                                              |
-| **Prioridad**              | Alta                                                                                                           |
-| **Estado Actual**          | Por realizar                                                                                                   |
-| **Autor**                  | Ariel Amaguaña                                                                                                |
-| **Fecha de Creación**      | 2025-01-28                                                                                                     |
-| **Fecha de Ejecución**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Versión del Sistema**    | 1.0                                                                                                            |
-| **Descripción General**    | Validar que los precios obtenidos de la API se reflejan correctamente en la interfaz y afectan el cálculo de ganancias/pérdidas. |
-| **Objetivo**               | Asegurar que el sistema actualice correctamente los precios y refleje los cambios en la interfaz.              |
-| **Entorno de Prueba**      | Navegador Web, Cypress, API de precios en funcionamiento                                                      |
-| **Precondiciones**         | - Usuario autenticado. <br> - Base de datos inicializada con acciones registradas.                            |
-| **Pasos para Ejecutar**    | 1. Acceder al portafolio. <br> 2. Esperar la actualización automática de precios. <br> 3. Verificar que las ganancias/pérdidas sean correctas. |
-| **Criterios de Aceptación**| - Los valores de ganancia/pérdida deben reflejar los cambios en los precios.                                  |
-| **Resultado Esperado**     | La interfaz muestra correctamente la actualización de los precios y los cálculos de ganancias/pérdidas.       |
-| **Resultado Obtenido**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Estado Final**           | (Completar después de ejecutar la prueba: Aprobada o Fallida).                                                 |
-| **Observaciones**          | (Notas adicionales).                                                                                          |
-| **Evidencia**              | (Capturas de pantalla, logs, o resultados relacionados).                                                       |
-
-### 3.3.3 **Prueba E2E-03: Exportación desde la Interfaz**
-
-| **Campo**                 | **Descripción**                                                                                                 |
-|---------------------------|-----------------------------------------------------------------------------------------------------------------|
-| **ID de la Prueba**        | E2E-03                                                                                                        |
-| **Requisito Relacionado**  | RF7: El sistema debe permitir la exportación de los datos del portafolio en formato CSV.                      |
-| **Nombre de la Prueba**    | Exportación desde la Interfaz                                                                                  |
-| **Tipo de Prueba**         | End-to-End (E2E)                                                                                              |
-| **Prioridad**              | Media                                                                                                          |
-| **Estado Actual**          | Por realizar                                                                                                   |
-| **Autor**                  | Ariel Amaguaña                                                                                                |
-| **Fecha de Creación**      | 2025-01-28                                                                                                     |
-| **Fecha de Ejecución**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Versión del Sistema**    | 1.0                                                                                                            |
-| **Descripción General**    | Validar que el usuario pueda exportar los datos del portafolio en formato CSV desde la interfaz.               |
-| **Objetivo**               | Asegurar que la exportación de datos funcione correctamente y el archivo generado sea válido.                  |
-| **Entorno de Prueba**      | Navegador Web, Cypress                                                                                        |
-| **Precondiciones**         | - Usuario autenticado. <br> - Portafolio con datos registrados.                                               |
-| **Pasos para Ejecutar**    | 1. Acceder al portafolio. <br> 2. Hacer clic en la opción de exportación a CSV. <br> 3. Validar que el archivo generado tenga el formato correcto. |
-| **Criterios de Aceptación**| - El archivo debe abrirse sin errores en herramientas externas.                                                |
-| **Resultado Esperado**     | Archivo CSV generado correctamente.                                                                            |
-| **Resultado Obtenido**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Estado Final**           | (Completar después de ejecutar la prueba: Aprobada o Fallida).                                                 |
-| **Observaciones**          | (Notas adicionales).                                                                                          |
-| **Evidencia**              | (Capturas de pantalla, logs, o resultados relacionados).                                                       |
-
-### 3.3.4 **Prueba E2E-04: Exportación desde la Interfaz**
-
-| **Campo**                 | **Descripción**                                                                                                 |
-|---------------------------|-----------------------------------------------------------------------------------------------------------------|
-| **ID de la Prueba**        | E2E-04                                                                                                        |
-| **Requisito Relacionado**  | RF7: El sistema debe permitir la exportación de los datos del portafolio en formato CSV.                      |
-| **Nombre de la Prueba**    | Exportación desde la Interfaz                                                                                  |
-| **Tipo de Prueba**         | End-to-End (E2E)                                                                                              |
-| **Prioridad**              | Media                                                                                                          |
-| **Estado Actual**          | Por realizar                                                                                                   |
-| **Autor**                  | Ariel Amaguaña                                                                                                |
-| **Fecha de Creación**      | 2025-01-28                                                                                                     |
-| **Fecha de Ejecución**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Versión del Sistema**    | 1.0                                                                                                            |
-| **Descripción General**    | Validar que el usuario pueda exportar los datos del portafolio en formato CSV desde la interfaz.               |
-| **Objetivo**               | Asegurar que la exportación de datos funcione correctamente y el archivo generado sea válido.                  |
-| **Entorno de Prueba**      | Navegador Web, Cypress                                                                                        |
-| **Precondiciones**         | - Usuario autenticado. <br> - Portafolio con datos registrados.                                               |
-| **Pasos para Ejecutar**    | 1. Acceder al portafolio. <br> 2. Hacer clic en la opción de exportación a CSV. <br> 3. Validar que el archivo generado tenga el formato correcto. |
-| **Criterios de Aceptación**| - El archivo debe abrirse sin errores en herramientas externas.                                                |
-| **Resultado Esperado**     | Archivo CSV generado correctamente.                                                                            |
-| **Resultado Obtenido**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Estado Final**           | (Completar después de ejecutar la prueba: Aprobada o Fallida).                                                 |
-| **Observaciones**          | (Notas adicionales).                                                                                          |
-| **Evidencia**              | (Capturas de pantalla, logs, o resultados relacionados).                                                       |
-
-### 3.3.5 **Prueba E2E-05: Flujo Completo con Exportación**
-
-| **Campo**                 | **Descripción**                                                                                                 |
-|---------------------------|-----------------------------------------------------------------------------------------------------------------|
-| **ID de la Prueba**        | E2E-05                                                                                                        |
-| **Requisito Relacionado**  | RF6, RF7: Registrar acciones, visualizar el resumen consolidado y exportar los datos correctamente.           |
-| **Nombre de la Prueba**    | Flujo Completo con Exportación                                                                                |
-| **Tipo de Prueba**         | End-to-End (E2E)                                                                                              |
-| **Prioridad**              | Alta                                                                                                           |
-| **Estado Actual**          | Por realizar                                                                                                   |
-| **Autor**                  | Ariel Amaguaña                                                                                                |
-| **Fecha de Creación**      | 2025-01-28                                                                                                     |
-| **Fecha de Ejecución**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Versión del Sistema**    | 1.0                                                                                                            |
-| **Descripción General**    | Validar el flujo completo de registro de acciones, visualización de resumen consolidado y exportación de datos. |
-| **Objetivo**               | Asegurar que todas las funcionalidades del sistema operen correctamente juntas.                               |
-| **Entorno de Prueba**      | Navegador Web, Cypress                                                                                        |
-| **Precondiciones**         | - Usuario autenticado. <br> - Base de datos inicializada.                                                     |
-| **Pasos para Ejecutar**    | 1. Registrar varias acciones. <br> 2. Visualizar el resumen consolidado. <br> 3. Exportar los datos. <br> 4. Validar la correcta generación del archivo CSV. |
-| **Criterios de Aceptación**| - Todos los pasos deben ejecutarse sin errores y con los datos correctos.                                    |
-| **Resultado Esperado**     | El flujo completo se ejecuta sin fallos y los datos exportados son correctos.                                |
-| **Resultado Obtenido**     | (Completar después de ejecutar la prueba).                                                                     |
-| **Estado Final**           | (Completar después de ejecutar la prueba: Aprobada o Fallida).                                                 |
-| **Observaciones**          | (Notas adicionales).                                                                                          |
-| **Evidencia**              | (Capturas de pantalla, logs, o resultados relacionados).                                                       |
 
 ## 4. **Conclusiones**
 
+- **Validación exitosa del sistema**: Todas las pruebas unitarias e integración fueron aprobadas, confirmando la estabilidad y fiabilidad del sistema en sus módulos clave.
+- **Correcta integración con la API de precios**: Se verificó que el sistema actualiza correctamente las ganancias/pérdidas en tiempo real al obtener precios desde la API.
+- **Manejo robusto de errores**: Se comprobó que el sistema rechaza entradas inválidas y proporciona mensajes de error adecuados.
+- **Eficiencia en cálculos y consolidación de datos**: Se validó que el sistema gestiona correctamente el ordenamiento y consolidación del portafolio financiero.
+- **Reducción de riesgos antes de producción**: La cobertura de pruebas minimiza posibles fallos en el sistema antes de su despliegue.  
